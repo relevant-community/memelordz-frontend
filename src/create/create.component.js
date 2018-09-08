@@ -70,10 +70,10 @@ class Create extends Component {
     let web3 = drizzle.web3;
 
     let numOfTokens = calculatePurchaseReturn({
-      exponent: 1,
+      exponent: 1000,
       totalSupply: 0,
       poolBalance: 0,
-      slope: 1,
+      slope: 2,
       amount: this.state.amount || 0,
     });
 
@@ -303,10 +303,10 @@ class Create extends Component {
 
     walletBalance = toNumber(this.props.accountBalances[this.props.account], 18);
     otherTokenValue = (calculatePurchaseReturn({
-      exponent: 1,
+      exponent: 2,
       totalSupply: 0,
       poolBalance: 0,
-      slope: 1,
+      slope: 1000,
       amount: this.state.amount || 0,
     }) || 0).toFixed(2);
     available = (

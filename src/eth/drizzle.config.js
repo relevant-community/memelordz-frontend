@@ -13,7 +13,7 @@ export {
 };
 
 export const PROXY_FACTORY = '0x28dfd076da75f43fdcb26c8ac7275d2e263bd366';
-export const BONDING_CURVE_CONTRACT = '0xe0a84ec927f7b10601c3cd7f32ff3648f0439512';
+export const BONDING_CURVE_CONTRACT = '0x95fd6d3e74696b07b9de42828aafd293b0fa31f6';
 
 export const options = {
   contracts: [
