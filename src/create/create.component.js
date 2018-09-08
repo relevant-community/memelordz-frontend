@@ -30,6 +30,7 @@ const initialState = {
   lastTxHash: null,
   amount: '',
   modal: false,
+  createStatus: '',
 };
 
 class Create extends Component {
@@ -139,7 +140,11 @@ class Create extends Component {
       if (this.state.processing) {
         return window.alert('still processing previous transaction');
       }
-      this.setState({ processing: true });
+      this.setState({
+        modal: false,
+        processing: true,
+        createStatus: 'Starting upload to IPFS',
+      });
 
       let { account, decimals } = this.props;
       let { amount } = this.state;
@@ -151,11 +156,31 @@ class Create extends Component {
       let file = this.fileInput.files[0];
       file = await loadFile(file);
       const buff = Buffer(file);
-      const result = await ipfs.add(buff, { progress: (prog) => console.log(prog) });
+      const result = await ipfs.add(buff, {
+        progress: (prog) => {
+          this.setState({
+            createStatus: 'Uploaded ' + prog + '% to IPFS',
+          });
+        }
+      });
       console.log(result);
+      this.setState({
+        createStatus: 'Creating contract...',
+      });
 
       this.setState({ hash: result[0].path });
       this.createMemeContract(result[0].path);
+
+      this.setState({
+        createStatus: 'Done!',
+      });
+      setTimeout(() => {
+        this.setState({
+          processing: false,
+          modal: false,
+          createStatus: '',
+        });
+      }, 1000);
 
       // TODO: execute initial trade when creating the contract
       // this was copied from the trade component:
@@ -180,7 +205,6 @@ class Create extends Component {
     } catch (err) {
       console.log(err);
     }
-    this.setState({ processing: false });
     return null;
   }
 
@@ -276,7 +300,22 @@ class Create extends Component {
           </div>
         </div>
 
-        {this.renderModal()}
+        {this.state.processing ? this.renderLoader() : this.renderModal()}
+      </div>
+    );
+  }
+
+  renderLoader() {
+    return (
+      <div className={'modal visible'}>
+        <div className='inner'>
+          <div className='heading'>
+            Posting Meme
+          </div>
+          <div className='content'>
+            {this.state.createStatus}
+          </div>
+        </div>
       </div>
     );
   }

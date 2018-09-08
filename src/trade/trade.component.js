@@ -136,8 +136,8 @@ class Trade extends Component {
         </a>
       );
       otherTokenValue = (calculatePurchaseReturn(this.state) || 0).toFixed(2);
-      thisTokenSymbol = 'ETH';
-      otherTokenSymbol = symbol;
+      thisTokenSymbol = ' ETH';
+      otherTokenSymbol = ' ' + symbol;
     } else {
       action = 'Sell';
       actionLabel = 'Sell';
@@ -147,8 +147,8 @@ class Trade extends Component {
         </a>
       );
       otherTokenValue = (calculateSaleReturn(this.state) || 0).toFixed(2);
-      thisTokenSymbol = symbol;
-      otherTokenSymbol = 'ETH';
+      thisTokenSymbol = ' ' + symbol;
+      otherTokenSymbol = ' ETH';
     }
 
     if (isNaN(otherTokenValue)) {
