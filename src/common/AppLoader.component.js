@@ -4,13 +4,31 @@ import { connect } from 'react-redux';
 function AppLoaderComponent(props) {
   return (
     <div className='appLoader'>
-      <div>{props.message}</div>
+      <div>{props.message || props.children}</div>
     </div>
   );
 }
 
 function AppLoaderContainer(props) {
-  if (!props.drizzleInitialized) {
+  if (props.drizzleStatus.error) {
+    switch (props.drizzleStatus.error) {
+      case 'network':
+        return <AppLoaderComponent>
+            <div className="error">
+              Please connect Metamask to the Rinkeby network"
+            </div>
+          </AppLoaderComponent>;
+      case 'Cannot read property \'web3\' of undefined':
+        return <AppLoaderComponent>
+            <div className='error'>
+              You need the <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Metamask</a> browser extention to use this app.
+            </div>
+          </AppLoaderComponent>;
+      default:
+        break;
+    }
+  }
+  if (!props.drizzleStatus.initialized) {
     return <AppLoaderComponent message="Connecting..." />;
   }
   if (!props.ProxyFactory || !props.ProxyFactory.events) {
@@ -21,7 +39,7 @@ function AppLoaderContainer(props) {
 
 const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory,
-  drizzleInitialized: state.drizzleStatus.initialized,
+  drizzleStatus: state.drizzleStatus,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Meme from './meme.component';
+import Create from '../create/create.component';
 
 class MemeIndex extends Component {
   render() {
@@ -15,7 +16,12 @@ class MemeIndex extends Component {
 
     return (
       <div>
-        {memes}
+        <hr />
+          <Create />
+        <hr />
+        <div>
+          {memes}
+        </div>
       </div>
     );
   }
