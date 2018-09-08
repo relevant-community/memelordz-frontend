@@ -34,6 +34,13 @@ body {
   text-align: center;
   margin: 20px;
 }
+.logo {
+  color: maroon;
+  text-decoration: none;
+}
+.logo:hover {
+  text-decoration: underline;
+}
 
 table.status {
   margin: 0 auto;
@@ -88,7 +95,7 @@ label {
   margin: 1px;
 }
 
-input {
+input[type=text] {
   margin: 1px;
   flex: 1;
   width: 100%;

@@ -2,15 +2,14 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-
 import { Route, Switch } from 'react-router';
 import { ConnectedRouter } from 'connected-react-router';
 
-import { drizzle } from './eth/drizzle.config';
-
 import { history } from './store';
-
-import { Header } from './common';
+import { drizzle, BondingCurveContract } from './eth/drizzle.config';
+import { AppLoader, Header } from './common';
+import { MemeIndex, Meme } from './memes';
+import actions from './actions';
 
 class App extends Component {
   componentDidUpdate(lastProps) {
@@ -18,19 +17,18 @@ class App extends Component {
     // todo move this to meme component?
     this.props.ProxyFactory.events.forEach(e => {
       let address = e.returnValues.proxyAddress;
-      console.log(e)
-      // if (this.props.memes.indexOf(address) === -1) return;
-      // drizzle.addContract(BondingCurveContract, {
-      //   name: address,
-      //   address,
-      //   events: [{
-      //     eventName: 'StoreHash',
-      //     eventOptions: {
-      //       fromBlock: e.blockNumber
-      //     }
-      //   }]
-      // });
-      // this.props.actions.addMeme(address);
+      if (this.props.memes.indexOf(address) !== -1) return;
+      drizzle.addContract(BondingCurveContract, {
+        name: address,
+        address,
+        events: [{
+          eventName: 'StoreHash',
+          eventOptions: {
+            fromBlock: e.blockNumber
+          }
+        }]
+      });
+      this.props.actions.addMeme(address);
     });
   }
 
@@ -40,11 +38,13 @@ class App extends Component {
         <div className="parent">
           <Header />
           <div className="container">
-            <div>
+            <AppLoader>
               <Switch>
+                <Route exact path="/" component={MemeIndex} />
+                <Route exact path="/meme/:address" render={(props) => <Meme address={props.match.params.address} />} />
                 <Route render={() => (<div>404</div>)} />
               </Switch>
-            </div>
+            </AppLoader>
           </div>
         </div>
       </ConnectedRouter>
@@ -53,16 +53,12 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  account: state.accounts[0],
   ProxyFactory: state.contracts.ProxyFactory || {},
-  network: state.web3.networkId,
-  status: state.web3.status,
-  drizzleStatus: state.drizzleStatus.initialized,
-  // memes: state.memes.all,
+  memes: state.memes.all,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // actions: bindActionCreators({ ...actions.memeActions }, dispatch)
+  actions: bindActionCreators({ ...actions.memeActions }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

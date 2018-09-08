@@ -11,7 +11,7 @@ function AppLoaderComponent(props) {
 
 function AppLoaderContainer(props) {
   if (!props.drizzleInitialized) {
-    return <AppLoaderComponent message="Connecting to the Rinkeby Testnet..." />;
+    return <AppLoaderComponent message="Connecting..." />;
   }
   if (!props.ProxyFactory || !props.ProxyFactory.events) {
     return <AppLoaderComponent message="Retrieving Memes..." />;

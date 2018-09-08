@@ -1,12 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 function Header(props) {
   return (
     <div className='header'>
-      <h1>
-        Meme Lordz
-      </h1>
+      <Link className='logo' to='/'>
+        <h1>
+          Meme Lordz
+        </h1>
+      </Link>
       <p>
         A fully decentralized curation market for memes! You can an ERC20 token
         by uploading a meme and invest in memes by buying their tokens!

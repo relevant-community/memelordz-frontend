@@ -1,0 +1,38 @@
+.memeImage {
+  max-width: 300px;
+  max-height: 300px;
+  flex: 1;
+}
+
+.memeImage img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.memeContainer {
+  display: flex;
+}
+
+.toggleBuy.active {
+  font-weight: bold;
+}
+
+.memeMeta {
+  margin-left: 20px;
+}
+
+.memeHeading {
+  margin-bottom: 10px;
+}
+.subject {
+  color: #0F0C5D;
+  font-weight: bold;
+}
+.name {
+  color: #117743;
+  font-weight: bold;
+}
+.subject:after,
+.name:after {
+  content: ' ';
+}
