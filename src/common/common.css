@@ -67,38 +67,16 @@ hr {
   height: 0;
 }
 hr.abovePostForm {
-    width: 90%;
+  width: 90%;
 }
 
-.newForm {
-  width: 320px;
-  margin: auto;
-  margin-bottom: 20px;
-}
-.newForm h2 {
-  text-align: center;
-}
-.newForm > div {
-  display: flex;
-}
 .hidden {
   opacity: 0;
 }
 
-label {
-  background-color: #ea8;
-  color: #800;
-  font-weight: 700;
-  border: 1px solid #800;
-  padding: 0 5px;
-  font-size: 10pt;
-  /*flex: 1;*/
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 120px;
-  min-height: 20px;
-  margin: 1px;
+button {
+  padding: 3px 10px;
+  font-size: 12px;
 }
 
 input[type=text],
@@ -106,16 +84,6 @@ input[type=file] {
   margin: 1px;
   flex: 1;
   width: 100%;
-}
-
-.uploadPreview {
-  margin: 20px auto;
-  width: 600px;
-  max-width: 90%;
-  text-align: center;
-  img {
-    max-width: 100%;
-  }
 }
 
 input[type=text], input[type=password], table.postForm>tbody textarea, #recaptcha_response_field {

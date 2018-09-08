@@ -4,10 +4,9 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as multihash from '../eth/multihash';
 import { BONDING_CURVE_CONTRACT } from '../eth/drizzle.config';
+import './create.css';
 
 const ipfs = ipfsAPI('ipfs.infura.io', '5001', { protocol: 'https' });
-
-
 const { Buffer } = ipfs;
 
 function loadFile(file) {
@@ -44,11 +43,11 @@ class Create extends Component {
 
       let { status, error } = props.transactions[lastTxHash];
       if (status === 'error') {
-        window.alert('You transaction failed :(' + error);
+        window.alert('Your transaction failed :(' + error);
         return { lastTx: null, processing: null };
       }
       if (status === 'success') {
-        window.alert('You transaction has been confirmed!');
+        window.alert('Your transaction has been confirmed!');
         return initialState;
       }
       return { lastTxHash };

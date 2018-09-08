@@ -1,0 +1,36 @@
+.newForm {
+  width: 320px;
+  margin: auto;
+  margin-bottom: 20px;
+}
+.newForm h2 {
+  text-align: center;
+}
+.newForm > div {
+  display: flex;
+}
+.newForm label {
+  background-color: #ea8;
+  color: #800;
+  font-weight: 700;
+  border: 1px solid #800;
+  padding: 0 5px;
+  font-size: 10pt;
+  /*flex: 1;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 120px;
+  min-height: 20px;
+  margin: 1px;
+}
+
+.uploadPreview {
+  margin: 20px auto;
+  width: 600px;
+  max-width: 90%;
+  text-align: center;
+}
+.uploadPreview img {
+  max-width: 100%;
+}

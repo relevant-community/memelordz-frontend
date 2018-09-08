@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-// import Trade from './trade.component';
+import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
 import * as multihash from '../eth/multihash';
 import './meme.css';
@@ -33,7 +33,7 @@ class Meme extends Component {
 
     let updatedState = {
       name: contract.methods.name.fromCache(),
-      symbol: contract.methods.symbol.fromCache(),
+      symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
       poolBalance: contract.methods.poolBalance.fromCache(),
       totalSupply: contract.methods.totalSupply.fromCache(),
     };
@@ -90,6 +90,8 @@ class Meme extends Component {
             {state.symbol && <div>Ticker: {state.symbol} </div>}
             {state.poolBalance && <div>Pool balance: {state.poolBalance} </div>}
             {state.totalSupply && <div>Total supply: {state.totalSupply} </div>}
+
+            <Trade address={this.props.address} contract={contract} />
           </div>
         </div>
         <hr />
@@ -97,7 +99,6 @@ class Meme extends Component {
     );
   }
 }
-// <Trade address={this.props.address} contract={contract} />
 
 // wrapper which helps with unnecessary re-rendering
 class MemeWrapper extends Component {

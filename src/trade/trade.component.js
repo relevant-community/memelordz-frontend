@@ -50,11 +50,12 @@ class Trade extends Component {
     let amount = Web3.utils.toWei(this.state.amount.toString());
     amount = new BN(amount.toString());
     this.props.contract.methods.buy.cacheSend({
-      value: amount, from: account
+      value: amount,
+      from: account,
     });
   }
 
-  static getDerivedStateFromProps(props, prevState) {
+  static getDerivedStateFromProps(props) {
     let { contract, accounts, accountBalances } = props;
 
     let decimals = contract.methods.decimals.fromCache();
@@ -62,7 +63,7 @@ class Trade extends Component {
     let poolBalance = toNumber(contract.methods.poolBalance.fromCache(), decimals);
     let exponent = toNumber(contract.methods.exponent.fromCache(), 1);
     let slope = toNumber(contract.methods.slope.fromCache(), 1);
-    let symbol = contract.methods.symbol.fromCache()
+    let symbol = contract.methods.symbol.fromCache();
 
     let account = accounts[0];
     let walletBalance = toNumber(accountBalances[account], 18);
@@ -75,7 +76,7 @@ class Trade extends Component {
       walletBalance,
       exponent,
       slope,
-      symbol
+      symbol: (symbol || 'MEME').toUpperCase(),
     };
   }
 
@@ -94,10 +95,14 @@ class Trade extends Component {
   }
 
   onChange(e) {
-    let value = e.target.value.toNumber();
+    let value = parseFloat(e.target.value);
     if (value > e.target.max) value = e.target.max;
     else if (!value || value < 0) value = '';
     this.setState({ amount: e.target.value });
+  }
+
+  handleSubmit() {
+    console.log(">> execute the trade")
   }
 
   render() {
@@ -105,47 +110,87 @@ class Trade extends Component {
 
     let placeholder = 'Enter amount... ';
 
-    let action = 'Pay With';
-    let available = <a onClick={() => this.setState({ amount: walletBalance })}>
-        Available: {toFixed(walletBalance, 2)} ETH
-      </a>;
+    let action;
+    let actionLabel;
+    let available;
+    let otherTokenValue;
+    let thisTokenSymbol;
+    let otherTokenSymbol;
 
-    if (!isBuy) {
+    let conversionRate = 10;
+
+    if (isBuy) {
+      actionLabel = 'Pay With';
+      action = 'Buy';
+      available = (
+        <a onClick={() => this.setState({ amount: walletBalance })}>
+          {walletBalance.toFixed(2)} ETH
+        </a>
+      );
+      otherTokenValue = this.calculatePurchaseReturn().toFixed(2);
+      thisTokenSymbol = 'ETH';
+      otherTokenSymbol = symbol;
+    } else {
       action = 'Sell';
-      available = <a onClick={() => this.setState({ amount: tokenBalance })}>
-        Available: {toFixed(tokenBalance, 2)} {symbol}
-      </a>;
+      actionLabel = 'Sell';
+      available = (
+        <a onClick={() => this.setState({ amount: tokenBalance })}>
+          {tokenBalance.toFixed(2)} {symbol}
+        </a>
+      );
+      otherTokenValue = this.calculateSaleReturn().toFixed(2);
+      thisTokenSymbol = symbol;
+      otherTokenSymbol = 'ETH';
+    }
+
+    if (isNaN(otherTokenValue)) {
+      otherTokenValue = '(computing)';
     }
 
     return (
       <div className="tradeContainer">
-        <div className="--tradeFlex">
-          <div className={'--toggleBuy'} onClick={this.toggleBuy}>
+        <div className="row">
+          <div className="row toggleBuy" onClick={this.toggleBuy}>
             <div className={isBuy ? 'active' : ''}>Buy</div>
             <div className={!isBuy ? 'active' : ''}>Sell</div>
           </div>
         </div>
 
-        <div className="--tradeSection">
-          <label className="--tradeFlex">
-            {action}{': '}
-          </label>
+        <div className="tradeSection">
+          <div>
+            <label>
+              {actionLabel}{': '}
+            </label>
 
-          <input
-            placeholder={placeholder}
-            onFocus={e => {
-              if (e.target.value === '0') this.setState({ amount: '' });
-            }}
-            type="text"
-            max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
-            value={amount}
-            onChange={this.onChange}
-          />
+            <input
+              placeholder={placeholder}
+              onFocus={e => {
+                if (e.target.value === '0') this.setState({ amount: '' });
+              }}
+              type="text"
+              max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
+              value={amount}
+              onChange={this.onChange.bind(this)}
+            />
+            {thisTokenSymbol}
+          </div>
 
-          <label>{this.state.isBuy ? 'ETH' : symbol}</label>
-        </div>
-        <div className={'--bondedToken-available'}>
-          {available}
+          <div>
+            <label>
+              Receive:
+            </label>
+            {otherTokenValue} {otherTokenSymbol}
+          </div>
+
+          <div>
+            <label></label>
+            <button onClick={this.handleSubmit.bind(this)}>{action}</button>
+          </div>
+
+          <div className={'bondedToken-available'}>
+            <label>Available:</label>
+            {available}
+          </div>
         </div>
       </div>
     );
