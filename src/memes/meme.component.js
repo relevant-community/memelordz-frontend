@@ -92,7 +92,7 @@ class Meme extends Component {
             {state.poolBalance && <div>Pool balance: {state.poolBalance} </div>}
             {state.totalSupply && <div>Total supply: {state.totalSupply} </div>}
 
-            <Trade address={this.props.address} contract={contract} />
+            <Trade address={this.props.address} contract={contract} showToggles />
           </div>
         </div>
         <hr />
