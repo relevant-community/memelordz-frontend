@@ -1,0 +1,64 @@
+{
+  "name": "memelordz",
+  "version": "0.0.1",
+  "description": "Meme Lordz",
+  "main": "index.js",
+  "dependencies": {
+    "bonded-token": "0.0.2",
+    "bs58": "^4.0.1",
+    "clean-webpack-plugin": "^0.1.19",
+    "connected-react-router": "^4.3.0",
+    "drizzle": "git+https://github.com/relevant-community/drizzle.git#fallback",
+    "eth-price": "^0.1.5",
+    "history": "^4.7.2",
+    "ipfs-api": "^22.0.1",
+    "prop-types": "^15.6.1",
+    "react": "^16.3.0",
+    "react-dom": "^16.3.0",
+    "react-hot-loader": "^4.3.0",
+    "react-redux": "^5.0.7",
+    "react-router": "^4.3.1",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-saga": "^0.16.0",
+    "web3": "^1.0.0-beta.34"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --watch",
+    "build": "webpack",
+    "dev": "webpack-dev-server --config ./webpack.config.dev.js --hot --inline",
+    "buildDev": "webpack --config ./webpack.config.dev.js --watch --colors"
+  },
+  "author": {
+    "name": "Slava Balasanov",
+    "email": "hello@relevant.community"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/relevant-community/bonding-curve-component"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^8.2.2",
+    "babel-loader": "^7.0.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.23.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-preset-env": "^1.5.1",
+    "css-loader": "^1.0.0",
+    "drizzle-react": "^1.0.1",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^13.0.0",
+    "eslint-plugin-class-property": "^1.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "eslint-plugin-react": "^7.7.0",
+    "html-webpack-plugin": "^3.0.4",
+    "style-loader": "^0.21.0",
+    "webpack": "3.x.x",
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "2.x.x"
+  }
+}
