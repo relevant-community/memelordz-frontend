@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import * as multihash from '../eth/multihash';
+import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
-import * as multihash from '../eth/multihash';
 
 import './meme.css';
 
@@ -71,7 +72,7 @@ class Meme extends Component {
         </div>
       );
     }
-    console.log('render meme', this.props.address);
+    // console.log('render meme', this.props.address);
     return (
       <div className={'meme'}>
         <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
@@ -93,6 +94,12 @@ class Meme extends Component {
             {state.totalSupply && <div>Total supply: {state.totalSupply} </div>}
 
             <Trade address={this.props.address} contract={contract} showToggles />
+
+            {this.props.showChart && (
+              <BondingCurveChart
+                data={state}
+              />
+            )}
           </div>
         </div>
         <hr />
