@@ -9,6 +9,7 @@ const { BN } = Web3.utils;
 
 class Trade extends Component {
   state = {
+    active: false,
     isBuy: true,
     amount: '',
   };
@@ -39,6 +40,10 @@ class Trade extends Component {
       amount: '',
       isBuy: !this.state.isBuy
     });
+  }
+
+  activate() {
+    this.setState({ active: true });
   }
 
   // submit() {
@@ -118,6 +123,18 @@ class Trade extends Component {
   }
 
   render() {
+    if (!this.state.active) {
+      return (
+        <div className="tradeContainer inactive">
+          <div className="row">
+            <div className="row toggleBuy" onClick={this.activate.bind(this)}>
+              <div>Buy</div>
+              <div>Sell</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     let { amount, walletBalance, tokenBalance, isBuy, symbol } = this.state;
 
     let action;
@@ -157,14 +174,12 @@ class Trade extends Component {
 
     return (
       <div className="tradeContainer">
-        {this.props.showToggles && (
-          <div className="row">
-            <div className="row toggleBuy" onClick={this.toggleBuy}>
-              <div className={isBuy ? 'active' : ''}>Buy</div>
-              <div className={!isBuy ? 'active' : ''}>Sell</div>
-            </div>
+        <div className="row">
+          <div className="row toggleBuy" onClick={this.toggleBuy}>
+            <div className={isBuy ? 'active' : ''}>Buy</div>
+            <div className={!isBuy ? 'active' : ''}>Sell</div>
           </div>
-        )}
+        </div>
 
         <div className="tradeSection">
           <div>
@@ -177,6 +192,7 @@ class Trade extends Component {
                 if (e.target.value === '0') this.setState({ amount: '' });
               }}
               type="number"
+              autoFocus
               min={0}
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
               autoComplete="off"

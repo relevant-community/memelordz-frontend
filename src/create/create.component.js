@@ -407,7 +407,7 @@ class Create extends Component {
               </div>
 
               <div className={'bondedToken-available'}>
-                Available: {available}
+                <b>Available:</b> {available}
               </div>
 
               <div>

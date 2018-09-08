@@ -31,6 +31,17 @@
   z-index: 1;
 }
 
+.inactive .toggleBuy div {
+  background: white;
+  color: #800;
+  font-weight: 700;
+  border: 1px solid #800;
+  z-index: 1;
+}
+.inactive .toggleBuy div:hover {
+  background-color: #ea8;
+}
+
 .tradeSection {
   background: white;
   border: 1px solid maroon;
