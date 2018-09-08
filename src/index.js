@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
-import { Router } from './router';
+import Router from './router';
 
 import { store } from './store';
 
