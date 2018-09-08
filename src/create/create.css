@@ -31,5 +31,6 @@
   text-align: center;
 }
 .uploadPreview img {
-  max-width: 100%;
+  max-width: 30vh;
+  max-height: 30vh;
 }

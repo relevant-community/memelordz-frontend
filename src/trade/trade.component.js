@@ -117,8 +117,6 @@ class Trade extends Component {
     let thisTokenSymbol;
     let otherTokenSymbol;
 
-    let conversionRate = 10;
-
     if (isBuy) {
       actionLabel = 'Pay With';
       action = 'Buy';

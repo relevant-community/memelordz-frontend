@@ -25,6 +25,7 @@ const initialState = {
   processing: false,
   lastTxId: null,
   lastTxHash: null,
+  modal: false,
 };
 
 class Create extends Component {
@@ -112,7 +113,6 @@ class Create extends Component {
       let data = this.getContractData();
       console.log('state', this.state);
       console.log('data ', data);
-
       let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(BONDING_CURVE_CONTRACT, data);
       console.log('tx ', txId);
       this.setState({ processing: true, lastTxId: txId });
@@ -141,22 +141,43 @@ class Create extends Component {
       console.log(result);
       this.setState({ hash: result[0].path });
       this.createMemeContract(result[0].path);
-
     } catch (err) {
       console.log(err);
     }
+    return null;
   }
 
   // <img src={'http://ipfs.io/ipfs/' + this.state.hash} />
 
   handleInputChange(event) {
-    const target = event.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
-
+    const { target } = event;
+    let { type, name, value } = target;
+    if (type === 'checkbox') {
+      value = target.checked;
+    } else if (name === 'symbol') {
+      value = (value || '').toUpperCase();
+    }
     this.setState({
       [name]: value
     });
+  }
+
+  showModal() {
+    if (!this.state.name) {
+      this.setState({ error: 'Please name your meme' });
+      this.nameInput.focus()
+    } else if (!this.state.symbol) {
+      this.setState({ error: 'Please pick a ticker symbol' });
+      this.symbolInput.focus()
+    } else if (this.fileInput.files.length === 0) {
+      this.setState({ error: 'Please select an image' });
+    } else {
+      this.setState({ modal: true, error: '' });
+    }
+  }
+
+  hideModal() {
+    this.setState({ modal: false });
   }
 
   render() {
@@ -175,6 +196,7 @@ class Create extends Component {
               maxLength="20"
               type='text'
               placeholder='meme name'
+              ref={c => this.nameInput = c}
               value={this.state.name}
               onChange={this.handleInputChange}
             />
@@ -186,6 +208,7 @@ class Create extends Component {
               maxLength="9"
               type='text'
               placeholder='SYMB'
+              ref={c => this.symbolInput = c}
               value={this.state.symbol}
               onChange={this.handleInputChange}
             />
@@ -201,15 +224,30 @@ class Create extends Component {
           </div>
           <div>
             <label className='hidden'></label>
-            <button onClick={this.upload.bind(this)}>Create Meme Contract</button>
+            <button onClick={this.showModal.bind(this)}>Create Meme Contract</button>
+          </div>
+          <div className='error'>
+            {this.state.error}
           </div>
         </div>
-        {processing}
-        { this.state.preview ?
-        <div className='uploadPreview'>
-          <img src={this.state.preview} />
+        <div className={this.state.modal ? 'modal visible' : 'modal'} onClick={this.hideModal.bind(this)}>
+          <div className='inner' onClick={e => e.stopPropagation()}>
+            <div className='heading'>
+               Almost there!
+               <div className='close' onClick={this.hideModal.bind(this)}>X</div>
+            </div>
+            <div className='content'>
+              Be the first to invest in your meme:
+              <b>{this.state.name}</b>
+              <div className='uploadPreview'>
+                <img src={this.state.preview} />
+              </div>
+              How much do you want to invest?
+
+              {processing}
+            </div>
+          </div>
         </div>
-        : null }
       </div>
     );
   }

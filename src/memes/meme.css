@@ -11,6 +11,7 @@
 
 .memeContainer {
   display: flex;
+  margin-top: 5px;
 }
 
 .toggleBuy.active {
