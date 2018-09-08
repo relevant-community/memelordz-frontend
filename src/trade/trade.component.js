@@ -18,7 +18,7 @@ class Trade extends Component {
 
   constructor(props) {
     super(props);
-    this.submit = this.submit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleBuy = this.toggleBuy.bind(this);
     this.calculatePurchaseReturn = this.calculatePurchaseReturn.bind(this);
     this.calculateSaleReturn = this.calculateSaleReturn.bind(this);
@@ -46,14 +46,14 @@ class Trade extends Component {
     });
   }
 
-  submit() {
-    let amount = Web3.utils.toWei(this.state.amount.toString());
-    amount = new BN(amount.toString());
-    this.props.contract.methods.buy.cacheSend({
-      value: amount,
-      from: account,
-    });
-  }
+  // submit() {
+  //   let amount = Web3.utils.toWei(this.state.amount.toString());
+  //   amount = new BN(amount.toString());
+  //   this.props.contract.methods.buy.cacheSend({
+  //     value: amount,
+  //     from: account,
+  //   });
+  // }
 
   static getDerivedStateFromProps(props) {
     let { contract, accounts, accountBalances } = props;
@@ -101,8 +101,42 @@ class Trade extends Component {
     this.setState({ amount: e.target.value });
   }
 
-  handleSubmit() {
-    console.log(">> execute the trade")
+  async handleSubmit() {
+    try {
+      let { account, decimals, amount } = this.state;
+      let { contract } = this.props;
+
+      if (!account) {
+        window.alert('Missing account — please log into Metamask');
+      }
+      // if (this.state.amount <= 0 || loading) return;
+      // this.setState({ loading: 'Please Review & Sign Transaction' });
+      if (this.state.isBuy) {
+        let numOfTokens = this.calculatePurchaseReturn();
+        numOfTokens = Web3.utils.toWei(amount.toString());
+        // numOfTokens = new BN(numOfTokens.toString());
+        // amount += .1;
+        amount = Web3.utils.toWei(amount.toString());
+        amount = new BN(amount.toString());
+
+        // let priceToMint = await this.props.contract.methods.priceToMint.call(amount);
+        // console.log('price to mint ', priceToMint);
+        // console.log('our price     ', amount);
+
+        contract.methods.mint.cacheSend(numOfTokens, {
+          value: amount, from: account
+        });
+      } else {
+        amount = new BN(this.state.amount.toString()).times(10 ** decimals);
+        contract.methods.burn.cacheSend(amount, {
+          from: account
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+
+    // console.log(">> execute the trade")
   }
 
   render() {

@@ -6,6 +6,7 @@ const { BN } = Web3.utils;
 export function toNumber(num, dec) {
   if (num === undefined || dec === undefined) return null;
   let n = new BN(num);
+  dec = (10 ** dec).toString();
   let d = new BN(dec);
   return Number(n.div(d));
 }
