@@ -147,8 +147,6 @@ class Trade extends Component {
         <div className={'--bondedToken-available'}>
           {available}
         </div>
-
-
       </div>
     );
   }

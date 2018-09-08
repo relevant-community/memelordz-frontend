@@ -15,7 +15,7 @@ class MemeIndex extends Component {
 
     return (
       <div>
-        {memes}
+        {memes.reverse()}
       </div>
     );
   }

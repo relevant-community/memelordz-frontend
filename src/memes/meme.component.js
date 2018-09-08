@@ -70,7 +70,7 @@ class Meme extends Component {
         </div>
       );
     }
-    console.log('render meme ', this.props.address);
+    console.log('render meme', this.props.address);
     return (
       <div className={'meme'}>
         <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
