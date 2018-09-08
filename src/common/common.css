@@ -9,16 +9,21 @@
   box-sizing: border-box;
 }
 
-body, html {
+html {
   margin: 0;
   padding: 0;
+  width: 100%;
+}
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
   color: maroon;
   font-family: arial,helvetica,sans-serif;
   background: linear-gradient(#FED7B0, #FFFFEE 20%);
   /*background: linear-gradient(#D1D5EE, #EEF2FF 20%);*/
+  background-attachment: fixed;
   font-size: 10pt;
-  width: 100%;
-  min-height: 100vh;
 }
 
 .container {

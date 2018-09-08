@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
 import { Provider } from 'react-redux';
 
-import Router from './router';
+import App from './app';
 
 import { store } from './store';
 
@@ -13,7 +13,7 @@ document.body.appendChild(dapp);
 ReactDOM.render(
   <Provider store={store}>
     <AppContainer>
-      <Router />
+      <App />
     </AppContainer>
   </Provider>, dapp
 );

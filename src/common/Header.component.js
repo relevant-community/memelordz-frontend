@@ -22,7 +22,7 @@ function Header(props) {
           </tr>
           <tr>
             <td>Drizzle</td>
-            <td>{props.drizzleStatus}</td>
+            <td>{props.drizzleStatus ? 'initialized' : 'initializing...'}</td>
           </tr>
           <tr>
             <td>Account</td>

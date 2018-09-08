@@ -5,7 +5,13 @@ import { store } from '../store';
 import ProxyFactory from './contracts/ProxyFactory.json';
 import BondingCurveContract from './contracts/BondingCurveContract.json';
 
+export {
+  ProxyFactory,
+  BondingCurveContract,
+};
+
 export const PROXY_FACTORY = '0xf25186b5081ff5ce73482ad761db0eb0d25abfbf';
+export const BONDING_CURVE_CONTRACT = '0xe0a84ec927f7b10601c3cd7f32ff3648f0439512';
 
 export const options = {
   contracts: [
@@ -28,8 +34,12 @@ export const options = {
     ignoreMetamask: true,
     useMetamask: true,
     fallback: {
+      // type: 'https',
+      // url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
+      // type: 'ws',
+      // url: 'wss://gethnode.com/ws',
       type: 'ws',
-      url: 'wss://rinkeby.infura.io/_ws',
+      url: 'wss://rinkeby.infura.io/ws',
       networkId: 4,
     }
   }
