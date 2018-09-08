@@ -158,3 +158,18 @@ input[type=text]:focus {
   padding: 10px;
   justify-content: center;
 }
+
+.modal.loader {
+  background: transparent;
+}
+.modal.loader .inner {
+  top: auto;
+  left: auto;
+  bottom: 10px;
+  right: 10px;
+  width: 300px;
+  transform: translateZ(0);
+}
+.modal.loader .content {
+  padding: 10px;
+}

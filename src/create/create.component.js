@@ -62,7 +62,7 @@ class Create extends Component {
         const { address } = props.transactions[lastTxHash].receipt.events[0];
         setTimeout(() => {
           window.location.hash = '#/meme/' + address;
-        }, 10000);
+        }, 5000);
         return { ...initialState, createStatus: 'Finalizing meme creation' };
       }
       return { lastTxHash };
@@ -300,21 +300,25 @@ class Create extends Component {
           </div>
           <div>
             <label className='hidden'></label>
-            <button onClick={this.showModal.bind(this)}>Create Meme Contract</button>
+            <button onClick={this.upload.bind(this)}>Create Meme Contract</button>
           </div>
           <div className='error'>
             {this.state.error}
           </div>
         </div>
 
-        {this.state.processing ? this.renderLoader() : this.renderModal()}
+        <div className='uploadPreview'>
+          <img src={this.state.preview} />
+        </div>
+
+        {this.state.processing && this.renderLoader()}
       </div>
     );
   }
 
   renderLoader() {
     return (
-      <div className={'modal visible'}>
+      <div className={'modal loader visible'}>
         <div className='inner'>
           <div className='heading'>
             Posting Meme
