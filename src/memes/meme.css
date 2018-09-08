@@ -37,3 +37,14 @@
 .name:after {
   content: ' ';
 }
+
+.sortLinks {
+  text-align: center;
+}
+.sortLinks u {
+  margin-left: 5px;
+  cursor: pointer;
+}
+.sortLinks u.active {
+  font-weight: bold;
+}
