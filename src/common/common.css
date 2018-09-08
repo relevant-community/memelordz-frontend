@@ -113,9 +113,10 @@ input[type=file] {
   width: 600px;
   max-width: 90%;
   text-align: center;
-  img {
-    max-width: 100%;
-  }
+}
+
+.uploadPreview img {
+  max-width: 100%;
 }
 
 input[type=text], input[type=password], table.postForm>tbody textarea, #recaptcha_response_field {
