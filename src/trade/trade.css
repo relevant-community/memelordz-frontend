@@ -1,0 +1,15 @@
+.--tradeFlex {
+  display: flex;
+  flex-direction: row;
+}
+
+.--toggleBuy > div {
+  border: 1px solid lightgrey;
+  padding: 5px 3px;
+}
+
+.--toggleBuy > div.active {
+  color: #800;
+  font-weight: 700;
+  border: 1px solid #800;
+}
