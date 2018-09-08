@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import Meme from './meme.component';
 import Create from '../create/create.component';
 
 class MemeIndex extends Component {
   render() {
-    if (!this.props.ProxyFactory.events) return null;
+    if (!this.props.ProxyFactory.events || this.props.ProxyFactory.events.length === 0) {
+      return (
+        <div>
+          <hr />
+          <div className='loadingMessage'>
+            Loading memes...
+          </div>
+        </div>
+      );
+    }
 
     let { events } = this.props.ProxyFactory;
     let memes = events.map(meme => {
@@ -14,13 +25,21 @@ class MemeIndex extends Component {
       return <Meme key={address} address={address} />;
     });
 
+    memes.reverse();
+
     return (
       <div>
         <hr />
           <Create />
         <hr />
+        <div className='sortLinks'>
+          Sort memes by:
+          <Link to="/" className='active'>[Recent]</Link>
+          <Link to="/leaderboard">[Price]</Link>
+        </div>
+        <hr />
         <div>
-          {memes.reverse()}
+          {memes}
         </div>
       </div>
     );

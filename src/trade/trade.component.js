@@ -9,6 +9,7 @@ const { BN } = Web3.utils;
 
 class Trade extends Component {
   state = {
+    active: false,
     isBuy: true,
     amount: '',
   };
@@ -39,6 +40,10 @@ class Trade extends Component {
       amount: '',
       isBuy: !this.state.isBuy
     });
+  }
+
+  activate() {
+    this.setState({ active: true });
   }
 
   // submit() {
@@ -75,11 +80,11 @@ class Trade extends Component {
     };
   }
 
-  onChange(e) {
+  onInput(e) {
     let value = parseFloat(e.target.value);
-    if (value > e.target.max) value = e.target.max;
+    if (value > parseFloat(e.target.max)) value = e.target.max;
     else if (!value || value < 0) value = '';
-    this.setState({ amount: e.target.value * 1 });
+    this.setState({ amount: value });
   }
 
   async handleSubmit() {
@@ -119,6 +124,18 @@ class Trade extends Component {
   }
 
   render() {
+    if (!this.state.active) {
+      return (
+        <div className="tradeContainer inactive">
+          <div className="row">
+            <div className="row toggleBuy" onClick={this.activate.bind(this)}>
+              <div>Buy</div>
+              <div>Sell</div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     let { amount, walletBalance, tokenBalance, isBuy, symbol } = this.state;
 
     let action;
@@ -137,8 +154,8 @@ class Trade extends Component {
         </a>
       );
       otherTokenValue = (calculatePurchaseReturn(this.state) || 0).toFixed(2);
-      thisTokenSymbol = 'ETH';
-      otherTokenSymbol = symbol;
+      thisTokenSymbol = ' ETH';
+      otherTokenSymbol = ' ' + symbol;
     } else {
       action = 'Sell';
       actionLabel = 'Sell';
@@ -148,8 +165,8 @@ class Trade extends Component {
         </a>
       );
       otherTokenValue = (calculateSaleReturn(this.state) || 0).toFixed(2);
-      thisTokenSymbol = symbol;
-      otherTokenSymbol = 'ETH';
+      thisTokenSymbol = ' ' + symbol;
+      otherTokenSymbol = ' ETH';
     }
 
     if (isNaN(otherTokenValue)) {
@@ -158,14 +175,12 @@ class Trade extends Component {
 
     return (
       <div className="tradeContainer">
-        {this.props.showToggles && (
-          <div className="row">
-            <div className="row toggleBuy" onClick={this.toggleBuy}>
-              <div className={isBuy ? 'active' : ''}>Buy</div>
-              <div className={!isBuy ? 'active' : ''}>Sell</div>
-            </div>
+        <div className="row">
+          <div className="row toggleBuy" onClick={this.toggleBuy}>
+            <div className={isBuy ? 'active' : ''}>Buy</div>
+            <div className={!isBuy ? 'active' : ''}>Sell</div>
           </div>
-        )}
+        </div>
 
         <div className="tradeSection">
           <div>
@@ -178,11 +193,13 @@ class Trade extends Component {
                 if (e.target.value === '0') this.setState({ amount: '' });
               }}
               type="number"
+              autoFocus
               min={0}
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
               autoComplete="off"
               value={amount}
-              onChange={this.onChange.bind(this)}
+              onInput={this.onInput.bind(this)}
+              onChange={this.onInput.bind(this)}
             />
             {thisTokenSymbol}
           </div>
@@ -227,4 +244,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Trade);
-

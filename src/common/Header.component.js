@@ -14,13 +14,9 @@ function Header() {
         <i>The first fully decentralized meme currency market!</i>
         <br />
         <br />
-        Turn any meme into its own currency.
+        Turn any meme into its own currency. Let the market define its value based on popularity.
         <br />
-        Let the market define its value based on popularity.
-        <br />
-        Buy and sell meme currency on our platform, and start earning.
-        <br />
-        The more meme-predicting skills you have, the more you’ll earn!
+        Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
       </p>
       <p>
         Built on Ethereum and IPFS.

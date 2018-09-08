@@ -30,6 +30,7 @@ const initialState = {
   lastTxHash: null,
   amount: '',
   modal: false,
+  createStatus: '',
 };
 
 class Create extends Component {
@@ -47,13 +48,22 @@ class Create extends Component {
       if (!lastTxHash) return null;
 
       let { status, error } = props.transactions[lastTxHash];
+      console.log(props.transactions[lastTxHash])
+      if (status === 'pending') {
+        return { ...state, createStatus: 'Waiting for contract to post to the blockchain - this may take a while!' };
+      }
       if (status === 'error') {
         window.alert('Your transaction failed :(' + error);
         return { lastTx: null, processing: null };
       }
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
-        return initialState;
+        // console.log(lastTxHash)
+        const { address } = props.transactions[lastTxHash].receipt.events[0];
+        setTimeout(() => {
+          window.location.hash = '#/meme/' + address;
+        }, 10000);
+        return { ...initialState, createStatus: 'Finalizing meme creation' };
       }
       return { lastTxHash };
     }
@@ -122,7 +132,7 @@ class Create extends Component {
       amount = new BN(amount.toString());
       let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(data, { value: amount });
       console.log('tx ', txId);
-      this.setState({ processing: false, lastTxId: txId });
+      this.setState({ lastTxId: txId });
     } catch (err) {
       console.log(err);
     }
@@ -142,7 +152,11 @@ class Create extends Component {
       if (this.state.processing) {
         return window.alert('still processing previous transaction');
       }
-      this.setState({ processing: true });
+      this.setState({
+        modal: false,
+        processing: true,
+        createStatus: 'Starting upload to IPFS',
+      });
 
       let { account, decimals } = this.props;
       let { amount } = this.state;
@@ -154,11 +168,24 @@ class Create extends Component {
       let file = this.fileInput.files[0];
       file = await loadFile(file);
       const buff = Buffer(file);
-      const result = await ipfs.add(buff, { progress: (prog) => console.log(prog) });
+      const result = await ipfs.add(buff, {
+        progress: (prog) => {
+          this.setState({
+            createStatus: 'Uploaded ' + prog + '% to IPFS',
+          });
+        }
+      });
       console.log(result);
+      this.setState({
+        createStatus: 'Creating contract...',
+      });
 
       this.setState({ hash: result[0].path });
       this.createMemeContract(result[0].path);
+
+      this.setState({
+        createStatus: 'Waiting for contract to be confirmed - this may take a while!',
+      });
 
       // TODO: execute initial trade when creating the contract
       // this was copied from the trade component:
@@ -183,14 +210,11 @@ class Create extends Component {
     } catch (err) {
       console.log(err);
     }
-    this.setState({ processing: false });
     return null;
   }
 
-  // <img src={'http://ipfs.io/ipfs/' + this.state.hash} />
-
-  handleInputChange(event) {
-    const { target } = event;
+  handleInputChange(e) {
+    const { target } = e;
     let { type, name, value } = target;
     if (type === 'checkbox') {
       value = target.checked;
@@ -200,7 +224,7 @@ class Create extends Component {
     if (name === 'name') {
       const s = value.toUpperCase();
       const car = s.substr(0, 1);
-      const cdr = s.substr(1).replace(/[AEIOUY]/g, '');
+      const cdr = s.substr(1).replace(/[^BCDFGHJKLMNPQRSTVWXYZ]/g, '');
       this.setState({
         [name]: value,
         symbol: (car + cdr).substr(0, 9),
@@ -210,6 +234,13 @@ class Create extends Component {
         [name]: value
       });
     }
+  }
+
+  handleAmountChange(e) {
+    let value = parseFloat(e.target.value);
+    if (value > parseFloat(e.target.max)) value = e.target.max;
+    else if (!value || value < 0) value = '';
+    this.setState({ amount: value });
   }
 
   showModal() {
@@ -279,7 +310,22 @@ class Create extends Component {
           </div>
         </div>
 
-        {this.renderModal()}
+        {this.state.processing ? this.renderLoader() : this.renderModal()}
+      </div>
+    );
+  }
+
+  renderLoader() {
+    return (
+      <div className={'modal visible'}>
+        <div className='inner'>
+          <div className='heading'>
+            Posting Meme
+          </div>
+          <div className='content'>
+            {this.state.createStatus}
+          </div>
+        </div>
       </div>
     );
   }
@@ -350,7 +396,7 @@ class Create extends Component {
                     min={0}
                     max={toFixed(walletBalance, 4)}
                     value={this.state.amount}
-                    onChange={this.handleInputChange.bind(this)}
+                    onChange={this.handleAmountChange.bind(this)}
                   />
                   {' ETH'}
                 </span>
@@ -366,7 +412,7 @@ class Create extends Component {
               </div>
 
               <div className={'bondedToken-available'}>
-                Available: {available}
+                <b>Available:</b> {available}
               </div>
 
               <div>

@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Development'
+      title: 'Meme Lordz'
     }),
     // new webpack.HotModuleReplacementPlugin()
   ],

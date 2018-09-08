@@ -6,7 +6,7 @@ const initialState = {
 };
 
 export default function memeReducer(state = initialState, action) {
-  // console.log(action);
+  // console.log(action.type);
   switch (action.type) {
     case types.ADD_MEME: {
       return {
