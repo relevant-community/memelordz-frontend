@@ -31,7 +31,7 @@ class BondingCurveChart extends React.Component {
   }
 
   getChartData() {
-    console.log(this.props.data);
+    // console.log(this.props.data);
     let { totalSupply, reserveRatio, poolBalance } = this.props.data;
     let props = { ...this.props.data };
 
@@ -66,7 +66,7 @@ class BondingCurveChart extends React.Component {
   render() {
     if (!this.documentReady) return null;
     let { data, currentPrice } = this.getChartData();
-    console.log(data, currentPrice);
+    // console.log(data, currentPrice);
     let width = Math.min(600, (window.innerWidth < 480 ? window.innerWidth : 480) - 30);
     let height = width * 2 / 3;
     return (
