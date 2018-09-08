@@ -71,26 +71,20 @@ class Create extends Component {
         type: 'string',
         name: '_name'
       }, {
-        type: 'uint8',
-        name: '_decimals'
-      }, {
         type: 'string',
         name: '_symbol'
-      }, {
-        type: 'uint8',
-        name: '_exponent'
-      }, {
-        type: 'uint32',
-        name: '_slope'
-      }, {
-        type: 'bytes32',
-        name: '_hash'
       }, {
         type: 'uint8',
         name: '_hashFunction'
       }, {
         type: 'uint8',
         name: '_size'
+      }, {
+        type: 'bytes32',
+        name: '_hash'
+      }, {
+        type: 'uint256',
+        name: '_numTokens'
       }
       ]
     }, [

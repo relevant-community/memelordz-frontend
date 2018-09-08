@@ -3,22 +3,31 @@ import { Drizzle, generateStore } from 'drizzle';
 import { store } from '../store';
 
 import ProxyFactory from './contracts/ProxyFactory.json';
-import BondingCurveContract from './contracts/BondingCurveContract.json';
+import BondingCurveContract from './contracts/ERC20Main.json';
+import Controller from './contracts/Controller.json';
 
 export {
   ProxyFactory,
   BondingCurveContract,
+  Controller,
 };
 
-export const PROXY_FACTORY = '0xf25186b5081ff5ce73482ad761db0eb0d25abfbf';
+export const PROXY_FACTORY = '0x28dfd076da75f43fdcb26c8ac7275d2e263bd366';
 export const BONDING_CURVE_CONTRACT = '0xe0a84ec927f7b10601c3cd7f32ff3648f0439512';
 
 export const options = {
   contracts: [
-    ProxyFactory
+    ProxyFactory,
+    Controller
   ],
   syncAlways: false,
   events: {
+    Controller: [{
+      // eventName: 'ProxyDeployed',
+      // eventOptions: {
+      //   fromBlock: 0
+      // }
+    }],
     ProxyFactory: [{
       eventName: 'ProxyDeployed',
       eventOptions: {
@@ -30,7 +39,7 @@ export const options = {
     blocks: 300,
     accounts: 300,
   },
-  networkId: 4,
+  networkId: 42,
   web3: {
     ignoreMetamask: true,
     useMetamask: true,

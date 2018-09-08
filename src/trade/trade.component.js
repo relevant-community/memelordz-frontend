@@ -113,7 +113,7 @@ class Trade extends Component {
       // this.setState({ loading: 'Please Review & Sign Transaction' });
       if (this.state.isBuy) {
         let numOfTokens = this.calculatePurchaseReturn();
-        numOfTokens = (numOfTokens * 1e9);
+        numOfTokens = numOfTokens * 1e18;
         numOfTokens = new BN(numOfTokens.toString());
 
         // amount += 2;
