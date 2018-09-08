@@ -87,10 +87,10 @@ class Create extends Component {
         name: '_hash'
       }, {
         type: 'uint8',
-        uint8: '_hashFunction'
+        name: '_hashFunction'
       }, {
         type: 'uint8',
-        uint8: '_size'
+        name: '_size'
       }
       ]
     }, [
@@ -140,7 +140,7 @@ class Create extends Component {
       const result = await ipfs.add(buff, { progress: (prog) => console.log(prog) });
       console.log(result);
       this.setState({ hash: result[0].path });
-      // this.createMemeContract(result[0].path);
+      this.createMemeContract(result[0].path);
 
     } catch (err) {
       console.log(err);

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
 import * as multihash from '../eth/multihash';
+
 import './meme.css';
 
 class Meme extends Component {
