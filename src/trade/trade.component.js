@@ -124,10 +124,10 @@ class Trade extends Component {
       action = 'Buy';
       available = (
         <a onClick={() => this.setState({ amount: walletBalance })}>
-          {walletBalance.toFixed(2)} ETH
+          {(walletBalance || 0).toFixed(2)} ETH
         </a>
       );
-      otherTokenValue = this.calculatePurchaseReturn().toFixed(2);
+      otherTokenValue = (this.calculatePurchaseReturn() || 0).toFixed(2);
       thisTokenSymbol = 'ETH';
       otherTokenSymbol = symbol;
     } else {
@@ -135,10 +135,10 @@ class Trade extends Component {
       actionLabel = 'Sell';
       available = (
         <a onClick={() => this.setState({ amount: tokenBalance })}>
-          {tokenBalance.toFixed(2)} {symbol}
+          {(tokenBalance || 0).toFixed(2)} {symbol}
         </a>
       );
-      otherTokenValue = this.calculateSaleReturn().toFixed(2);
+      otherTokenValue = (this.calculateSaleReturn() || 0).toFixed(2);
       thisTokenSymbol = symbol;
       otherTokenSymbol = 'ETH';
     }
