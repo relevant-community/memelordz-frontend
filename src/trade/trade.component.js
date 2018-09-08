@@ -98,9 +98,10 @@ class Trade extends Component {
       // if (this.state.amount <= 0 || loading) return;
       // this.setState({ loading: 'Please Review & Sign Transaction' });
       if (this.state.isBuy) {
-        let numOfTokens = calculatePurchaseReturn();
-        numOfTokens = (numOfTokens * 1e9);
-        numOfTokens = new BN(numOfTokens.toString());
+        let numOfTokens = calculatePurchaseReturn(this.state);
+        numOfTokens = (numOfTokens * 1e18).toString();
+        console.log('numOfTokens', numOfTokens);
+        // numOfTokens = new BN(numOfTokens.toString());
 
         // amount += 2;
         amount = Web3.utils.toWei(amount.toString());
