@@ -98,9 +98,6 @@ class Create extends Component {
       }, {
         type: 'bytes32',
         name: '_hash'
-      }, {
-        type: 'uint256',
-        name: 'numTokens'
       }
       ]
     }, [
@@ -109,7 +106,6 @@ class Create extends Component {
       ipfsHash.hashFunction,
       ipfsHash.size,
       ipfsHash.digest,
-      numOfTokens.toString(),
     ]
     );
     return data;

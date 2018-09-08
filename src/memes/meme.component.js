@@ -27,6 +27,7 @@ class Meme extends Component {
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
+    contract.methods.memehash.cacheCall();
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -37,18 +38,24 @@ class Meme extends Component {
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
       poolBalance: contract.methods.poolBalance.fromCache(),
       totalSupply: contract.methods.totalSupply.fromCache(),
+      memehash: contract.methods.memehash.fromCache()
     };
+
+    console.log(updatedState);
 
     let ipfsImg;
     let event = contract.events[0];
     if (event) {
+      console.log(event);
       ipfsImg = {
-        hash: event.returnValues.hash,
-        hash_function: event.returnValues.hashFunction,
-        size: event.returnValues.size,
+        hash: event.returnValues.memehash,
+        hash_function: 32,
+        size: 8,
       };
       updatedState.timestamp = event.returnValues.timestamp;
     }
+
+
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {

@@ -12,8 +12,8 @@ export {
   Controller,
 };
 
-export const PROXY_FACTORY = '0x28dfd076da75f43fdcb26c8ac7275d2e263bd366';
-export const BONDING_CURVE_CONTRACT = '0xbc31117c5f727c20f935096047cb035e00695566';
+export const PROXY_FACTORY = '0x98b35d85d5bc3687a5fe12381978539d44b2f228';
+export const BONDING_CURVE_CONTRACT = '0xf57016a7d2def52576a19d5e888588aa31d54c39';
 
 export const options = {
   contracts: [

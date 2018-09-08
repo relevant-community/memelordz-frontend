@@ -22,7 +22,7 @@ class App extends Component {
         name: address,
         address,
         events: [{
-          eventName: 'StoreHash',
+          eventName: 'Inited',
           eventOptions: {
             fromBlock: e.blockNumber
           }
