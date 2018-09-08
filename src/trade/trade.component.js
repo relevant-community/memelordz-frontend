@@ -75,11 +75,11 @@ class Trade extends Component {
     };
   }
 
-  onChange(e) {
+  onInput(e) {
     let value = parseFloat(e.target.value);
-    if (value > e.target.max) value = e.target.max;
+    if (value > parseFloat(e.target.max)) value = e.target.max;
     else if (!value || value < 0) value = '';
-    this.setState({ amount: e.target.value * 1 });
+    this.setState({ amount: value });
   }
 
   async handleSubmit() {
@@ -181,7 +181,8 @@ class Trade extends Component {
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
               autoComplete="off"
               value={amount}
-              onChange={this.onChange.bind(this)}
+              onInput={this.onInput.bind(this)}
+              onChange={this.onInput.bind(this)}
             />
             {thisTokenSymbol}
           </div>

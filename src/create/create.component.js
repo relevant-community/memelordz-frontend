@@ -208,10 +208,8 @@ class Create extends Component {
     return null;
   }
 
-  // <img src={'http://ipfs.io/ipfs/' + this.state.hash} />
-
-  handleInputChange(event) {
-    const { target } = event;
+  handleInputChange(e) {
+    const { target } = e;
     let { type, name, value } = target;
     if (type === 'checkbox') {
       value = target.checked;
@@ -231,6 +229,13 @@ class Create extends Component {
         [name]: value
       });
     }
+  }
+
+  handleAmountChange(e) {
+    let value = parseFloat(e.target.value);
+    if (value > parseFloat(e.target.max)) value = e.target.max;
+    else if (!value || value < 0) value = '';
+    this.setState({ amount: value });
   }
 
   showModal() {
@@ -386,7 +391,7 @@ class Create extends Component {
                     min={0}
                     max={toFixed(walletBalance, 4)}
                     value={this.state.amount}
-                    onChange={this.handleInputChange.bind(this)}
+                    onChange={this.handleAmountChange.bind(this)}
                   />
                   {' ETH'}
                 </span>
