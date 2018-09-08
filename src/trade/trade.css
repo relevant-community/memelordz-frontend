@@ -36,9 +36,17 @@
   border: 1px solid maroon;
   padding: 20px;
 }
+.modal .tradeSection {
+  display: inline-block;
+  border: 0;
+}
 
 .tradeSection > div {
   margin-bottom: 5px;
+}
+.tradeSection span {
+  display: inline-block;
+  min-width: 100px;
 }
 
 .tradeSection label {

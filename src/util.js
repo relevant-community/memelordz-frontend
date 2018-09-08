@@ -32,3 +32,17 @@ export function ChanDate(d = Date.now()) {
   + pad(date.getSeconds())
   );
 }
+
+export function calculatePurchaseReturn(state) {
+  let { exponent, totalSupply, poolBalance, slope, amount } = state;
+  let nexp = exponent + 1;
+  let t = ((poolBalance + amount) * (nexp * slope)) ** (1 / nexp);
+  return t - totalSupply;
+}
+
+export function calculateSaleReturn(state) {
+  let { exponent, totalSupply, poolBalance, slope, amount } = state;
+  let nexp = exponent + 1;
+  let pool = (totalSupply - amount) ** nexp / (nexp * slope);
+  return poolBalance - pool;
+}

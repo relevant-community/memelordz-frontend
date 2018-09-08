@@ -1,14 +1,11 @@
-import React, {
-  Component,
-} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Web3 from 'web3';
-import { toNumber, toFixed } from '../util';
+import { toNumber, toFixed, calculatePurchaseReturn, calculateSaleReturn } from '../util';
 import './trade.css';
 
 const { BN } = Web3.utils;
-const web3 = new Web3();
 
 class Trade extends Component {
   state = {
@@ -20,8 +17,6 @@ class Trade extends Component {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.toggleBuy = this.toggleBuy.bind(this);
-    this.calculatePurchaseReturn = this.calculatePurchaseReturn.bind(this);
-    this.calculateSaleReturn = this.calculateSaleReturn.bind(this);
   }
 
   componentDidMount() {
@@ -80,20 +75,6 @@ class Trade extends Component {
     };
   }
 
-  calculatePurchaseReturn() {
-    let { exponent, totalSupply, poolBalance, slope, amount } = this.state;
-    let nexp = exponent + 1;
-    let t = ((poolBalance + amount) * (nexp * slope)) ** (1 / nexp);
-    return t - totalSupply;
-  }
-
-  calculateSaleReturn() {
-    let { exponent, totalSupply, poolBalance, slope, amount } = this.state;
-    let nexp = exponent + 1;
-    let pool = (totalSupply - amount) ** nexp / (nexp * slope);
-    return poolBalance - pool;
-  }
-
   onChange(e) {
     let value = parseFloat(e.target.value);
     if (value > e.target.max) value = e.target.max;
@@ -112,7 +93,7 @@ class Trade extends Component {
       // if (this.state.amount <= 0 || loading) return;
       // this.setState({ loading: 'Please Review & Sign Transaction' });
       if (this.state.isBuy) {
-        let numOfTokens = this.calculatePurchaseReturn();
+        let numOfTokens = calculatePurchaseReturn(this.state);
         numOfTokens = Web3.utils.toWei(amount.toString());
         // numOfTokens = new BN(numOfTokens.toString());
         // amount += .1;
@@ -142,8 +123,6 @@ class Trade extends Component {
   render() {
     let { amount, walletBalance, tokenBalance, isBuy, symbol } = this.state;
 
-    let placeholder = 'Enter amount... ';
-
     let action;
     let actionLabel;
     let available;
@@ -159,7 +138,7 @@ class Trade extends Component {
           {(walletBalance || 0).toFixed(2)} ETH
         </a>
       );
-      otherTokenValue = (this.calculatePurchaseReturn() || 0).toFixed(2);
+      otherTokenValue = (calculatePurchaseReturn(this.state) || 0).toFixed(2);
       thisTokenSymbol = 'ETH';
       otherTokenSymbol = symbol;
     } else {
@@ -170,7 +149,7 @@ class Trade extends Component {
           {(tokenBalance || 0).toFixed(2)} {symbol}
         </a>
       );
-      otherTokenValue = (this.calculateSaleReturn() || 0).toFixed(2);
+      otherTokenValue = (calculateSaleReturn(this.state) || 0).toFixed(2);
       thisTokenSymbol = symbol;
       otherTokenSymbol = 'ETH';
     }
@@ -181,12 +160,14 @@ class Trade extends Component {
 
     return (
       <div className="tradeContainer">
-        <div className="row">
-          <div className="row toggleBuy" onClick={this.toggleBuy}>
-            <div className={isBuy ? 'active' : ''}>Buy</div>
-            <div className={!isBuy ? 'active' : ''}>Sell</div>
+        {this.props.showToggles && (
+          <div className="row">
+            <div className="row toggleBuy" onClick={this.toggleBuy}>
+              <div className={isBuy ? 'active' : ''}>Buy</div>
+              <div className={!isBuy ? 'active' : ''}>Sell</div>
+            </div>
           </div>
-        </div>
+        )}
 
         <div className="tradeSection">
           <div>
@@ -195,12 +176,13 @@ class Trade extends Component {
             </label>
 
             <input
-              placeholder={placeholder}
               onFocus={e => {
                 if (e.target.value === '0') this.setState({ amount: '' });
               }}
-              type="text"
+              type="number"
+              min={0}
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
+              autoComplete="off"
               value={amount}
               onChange={this.onChange.bind(this)}
             />
