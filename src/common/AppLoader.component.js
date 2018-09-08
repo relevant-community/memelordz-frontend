@@ -15,7 +15,7 @@ function AppLoaderContainer(props) {
       case 'network':
         return <AppLoaderComponent>
             <div className="error">
-              Please connect Metamask to the Rinkeby network"
+              Please connect Metamask to the Rinkeby network
             </div>
           </AppLoaderComponent>;
       case 'Cannot read property \'web3\' of undefined':

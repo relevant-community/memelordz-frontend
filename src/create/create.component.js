@@ -269,7 +269,7 @@ class Create extends Component {
               name='name'
               maxLength="20"
               type='text'
-              placeholder='meme name'
+              placeholder='Name your meme'
               autoComplete='off'
               ref={c => this.nameInput = c}
               value={this.state.name}
@@ -417,7 +417,7 @@ class Create extends Component {
               </div>
 
               <div>
-                <button onClick={this.upload.bind(this)}>Skip it</button>
+                <button onClick={this.upload.bind(this)}>Don't Buy It</button>
               </div>
             </div>
 
