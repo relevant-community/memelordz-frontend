@@ -31,7 +31,6 @@ class BondingCurveChart extends React.Component {
   }
 
   getChartData() {
-    // console.log(this.props.data);
     let { totalSupply, reserveRatio, poolBalance } = this.props.data;
     let props = { ...this.props.data };
 
@@ -46,12 +45,14 @@ class BondingCurveChart extends React.Component {
 
     let data = [];
     let step = Math.round(totalSupply / 100) || 0.1;
-    let price = poolBalance / (reserveRatio * totalSupply);
+    // let price = poolBalance / (reserveRatio * totalSupply);
+    let eth = calculateSaleReturn({ ...props, amount: 0 });
+    let price = (poolBalance - eth) / totalSupply;
     let currentPrice = { supply: totalSupply, value: price };
 
     for (let i = step; i < totalSupply * 1.5; i += step) {
       // if (i < totalSupply) {
-        let eth = 1 * calculateSaleReturn({ ...props, amount: totalSupply - i });
+        eth = 1 * calculateSaleReturn({ ...props, amount: totalSupply - i });
         price = (parseFloat(poolBalance, 10) - eth) / (reserveRatio * i);
         data.push({ supply: i, sell: price.toFixed(1), value: parseFloat(price.toFixed(1)) });
       // } else if (i >= totalSupply) {
@@ -66,7 +67,6 @@ class BondingCurveChart extends React.Component {
   render() {
     if (!this.documentReady) return null;
     let { data, currentPrice } = this.getChartData();
-    // console.log(data, currentPrice);
     let width = Math.min(600, (window.innerWidth < 480 ? window.innerWidth : 480) - 30);
     let height = width * 2 / 3;
     return (
