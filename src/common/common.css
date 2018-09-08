@@ -99,6 +99,10 @@ input[type=text]:focus {
   border: 1px solid maroon;
 }
 
+.loadingMessage {
+  text-align: center;
+}
+
 .modal {
   position: fixed;
   top: 0; left: 0;

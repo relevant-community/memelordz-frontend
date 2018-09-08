@@ -3,12 +3,11 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router';
-import { ConnectedRouter } from 'connected-react-router';
+import { withRouter } from 'react-router-dom'
 
-import { history } from './store';
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 import { AppLoader, Header } from './common';
-import { MemeIndex, Meme } from './memes';
+import { MemeIndex, MemeShow } from './memes';
 import actions from './actions';
 
 class App extends Component {
@@ -34,18 +33,16 @@ class App extends Component {
 
   render() {
     return (
-      <ConnectedRouter history={history}>
-        <div className="container">
-          <Header />
-          <AppLoader>
-            <Switch>
-              <Route exact path="/" component={MemeIndex} />
-              <Route exact path="/meme/:address" render={(props) => <Meme address={props.match.params.address} />} />
-              <Route render={() => (<div>404</div>)} />
-            </Switch>
-          </AppLoader>
-        </div>
-      </ConnectedRouter>
+      <div className="container">
+        <Header />
+        <AppLoader>
+          <Switch>
+            <Route exact path="/" component={MemeIndex} />
+            <Route exact path="/meme/:address" component={MemeShow} />
+            <Route render={() => (<div>404</div>)} />
+          </Switch>
+        </AppLoader>
+      </div>
     );
   }
 }
@@ -59,4 +56,4 @@ const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({ ...actions.memeActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));

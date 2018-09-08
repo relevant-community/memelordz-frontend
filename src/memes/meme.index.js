@@ -13,7 +13,7 @@ class MemeIndex extends Component {
       return (
         <div>
           <hr />
-          <div className='sortLinks'>
+          <div className='loadingMessage'>
             Loading memes...
           </div>
         </div>
