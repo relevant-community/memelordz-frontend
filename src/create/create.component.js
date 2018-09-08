@@ -48,13 +48,22 @@ class Create extends Component {
       if (!lastTxHash) return null;
 
       let { status, error } = props.transactions[lastTxHash];
+      console.log(props.transactions[lastTxHash])
+      if (status === 'pending') {
+        return { ...state, createStatus: 'Waiting for contract to post to the blockchain - this may take a while!' };
+      }
       if (status === 'error') {
         window.alert('Your transaction failed :(' + error);
         return { lastTx: null, processing: null };
       }
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
-        return initialState;
+        // console.log(lastTxHash)
+        const { address } = props.transactions[lastTxHash].receipt.events[0];
+        setTimeout(() => {
+          window.location.hash = '#/meme/' + address;
+        }, 10000);
+        return { ...initialState, createStatus: 'Finalizing meme creation' };
       }
       return { lastTxHash };
     }
@@ -120,7 +129,7 @@ class Create extends Component {
       console.log('data ', data);
       let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(BONDING_CURVE_CONTRACT, data);
       console.log('tx ', txId);
-      this.setState({ processing: false, lastTxId: txId });
+      this.setState({ lastTxId: txId });
     } catch (err) {
       console.log(err);
     }
@@ -172,7 +181,7 @@ class Create extends Component {
       this.createMemeContract(result[0].path);
 
       this.setState({
-        createStatus: 'Waiting to confirm contract - this may take a while',
+        createStatus: 'Waiting for contract to be confirmed - this may take a while!',
       });
 
       // TODO: execute initial trade when creating the contract
