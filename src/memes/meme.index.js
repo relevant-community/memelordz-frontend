@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
+
 import Meme from './meme.component';
 import Create from '../create/create.component';
 
 class MemeIndex extends Component {
-  state = {
-    sort: 'recent',
-  }
-
   render() {
     if (!this.props.ProxyFactory.events || this.props.ProxyFactory.events.length === 0) {
       return (
@@ -27,9 +25,7 @@ class MemeIndex extends Component {
       return <Meme key={address} address={address} />;
     });
 
-    if (this.state.sort === 'recent') {
-      memes.reverse();
-    }
+    memes.reverse();
 
     return (
       <div>
@@ -38,23 +34,14 @@ class MemeIndex extends Component {
         <hr />
         <div className='sortLinks'>
           Sort memes by:
-          {this.sortLink('recent', 'Recent')}
-          {this.sortLink('price', 'Price')}
+          <Link to="/" className='active'>[Recent]</Link>
+          <Link to="/leaderboard">[Price]</Link>
         </div>
         <hr />
         <div>
           {memes}
         </div>
       </div>
-    );
-  }
-
-  sortLink(key, label) {
-    const className = (key === this.state.sort) ? 'active' : '';
-    return (
-      <u className={className} onClick={() => this.setState({ sort: key })}>
-        {'[' + label + ']'}
-      </u>
     );
   }
 }

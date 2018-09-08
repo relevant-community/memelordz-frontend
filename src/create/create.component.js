@@ -172,15 +172,8 @@ class Create extends Component {
       this.createMemeContract(result[0].path);
 
       this.setState({
-        createStatus: 'Done!',
+        createStatus: 'Waiting to confirm contract - this may take a while',
       });
-      setTimeout(() => {
-        this.setState({
-          processing: false,
-          modal: false,
-          createStatus: '',
-        });
-      }, 1000);
 
       // TODO: execute initial trade when creating the contract
       // this was copied from the trade component:
@@ -219,7 +212,7 @@ class Create extends Component {
     if (name === 'name') {
       const s = value.toUpperCase();
       const car = s.substr(0, 1);
-      const cdr = s.substr(1).replace(/[AEIOUY]/g, '');
+      const cdr = s.substr(1).replace(/[^BCDFGHJKLMNPQRSTVWXYZ]/g, '');
       this.setState({
         [name]: value,
         symbol: (car + cdr).substr(0, 9),

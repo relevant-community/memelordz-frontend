@@ -7,7 +7,7 @@ import { withRouter } from 'react-router-dom'
 
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 import { AppLoader, Header } from './common';
-import { MemeIndex, MemeShow } from './memes';
+import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';
 import Portfolio from './portfolio/portfolio.component';
 import actions from './actions';
 
@@ -39,6 +39,7 @@ class App extends Component {
         <AppLoader>
           <Switch>
             <Route exact path="/" component={MemeIndex} />
+            <Route exact path="/leaderboard" component={MemeLeaderboard} />
             <Route exact path="/meme/:address" component={MemeShow} />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route render={() => (<div>404</div>)} />

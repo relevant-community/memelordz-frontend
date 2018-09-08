@@ -40,10 +40,11 @@
 .sortLinks {
   text-align: center;
 }
-.sortLinks u {
+.sortLinks a {
+  color: maroon;
   margin-left: 5px;
   cursor: pointer;
 }
-.sortLinks u.active {
+.sortLinks a.active {
   font-weight: bold;
 }
