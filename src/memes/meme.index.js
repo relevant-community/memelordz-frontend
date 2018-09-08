@@ -11,7 +11,7 @@ class MemeIndex extends Component {
       if (!meme) return null;
       let address = meme.returnValues.proxyAddress;
       return <Meme key={address} address={address} />;
-    })
+    });
 
     return (
       <div>

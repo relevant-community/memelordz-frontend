@@ -1,8 +1,7 @@
 .appLoader {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
+  margin: 20px;
+  text-align: center;
+  width: 100%;
 }
 
 * {
@@ -74,9 +73,16 @@ hr.abovePostForm {
 .newForm {
   width: 320px;
   margin: auto;
+  margin-bottom: 20px;
 }
 .newForm h2 {
   text-align: center;
+}
+.newForm > div {
+  display: flex;
+}
+.hidden {
+  opacity: 0;
 }
 
 label {
@@ -95,7 +101,8 @@ label {
   margin: 1px;
 }
 
-input[type=text] {
+input[type=text],
+input[type=file] {
   margin: 1px;
   flex: 1;
   width: 100%;

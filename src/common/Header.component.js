@@ -17,28 +17,33 @@ function Header(props) {
       <p>
         Built on Ethereum and IPFS
       </p>
-      <table className='status'>
-        <tbody>
-          <tr>
-            <td>Web3</td>
-            <td>{props.status}</td>
-          </tr>
-          <tr>
-            <td>Drizzle</td>
-            <td>{props.drizzleStatus ? 'initialized' : 'initializing...'}</td>
-          </tr>
-          <tr>
-            <td>Account</td>
-            <td>{props.account}</td>
-          </tr>
-          <tr>
-            <td>Network</td>
-            <td>{props.network}</td>
-          </tr>
-        </tbody>
-      </table>
     </div>
   );
+}
+
+function Status(props) {
+  return (
+    <table className='status'>
+      <tbody>
+        <tr>
+          <td>Web3</td>
+          <td>{props.status}</td>
+        </tr>
+        <tr>
+          <td>Drizzle</td>
+          <td>{props.drizzleStatus ? 'initialized' : 'initializing...'}</td>
+        </tr>
+        <tr>
+          <td>Account</td>
+          <td>{props.account}</td>
+        </tr>
+        <tr>
+          <td>Network</td>
+          <td>{props.network}</td>
+        </tr>
+      </tbody>
+    </table>
+  )
 }
 
 const mapStateToProps = (state) => ({

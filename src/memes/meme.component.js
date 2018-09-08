@@ -63,17 +63,16 @@ class Meme extends Component {
     if (!contract || !(state.hash || state.name)) {
       return (
         <div className='meme'>
-          <hr />
           <div>
             Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
           </div>
+          <hr />
         </div>
       );
     }
     console.log('render meme ', this.props.address);
     return (
       <div className={'meme'}>
-        <hr />
         <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
@@ -93,6 +92,7 @@ class Meme extends Component {
             {state.totalSupply && <div>Total supply: {state.totalSupply} </div>}
           </div>
         </div>
+        <hr />
       </div>
     );
   }

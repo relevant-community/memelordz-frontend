@@ -22,9 +22,9 @@ export function ChanDate(d = Date.now()) {
   // 09/08/18(Sat)12:06:03
   const date = new Date(d);
   return (
-    pad(date.getYear()) + '/'
+    pad(date.getDate()) + '/'
   + pad(date.getMonth()) + '/'
-  + pad(date.getDate()) + '('
+  + (date.getYear() - 100) + '('
   + weekdays[date.getDay()] + ')'
   + pad(date.getHours()) + ':'
   + pad(date.getMinutes()) + ':'

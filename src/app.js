@@ -9,6 +9,7 @@ import { history } from './store';
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 import { AppLoader, Header } from './common';
 import { MemeIndex, Meme } from './memes';
+import Create from './create/create.component';
 import actions from './actions';
 
 class App extends Component {
@@ -35,17 +36,18 @@ class App extends Component {
   render() {
     return (
       <ConnectedRouter history={history}>
-        <div className="parent">
+        <div className="container">
           <Header />
-          <div className="container">
-            <AppLoader>
-              <Switch>
-                <Route exact path="/" component={MemeIndex} />
-                <Route exact path="/meme/:address" render={(props) => <Meme address={props.match.params.address} />} />
-                <Route render={() => (<div>404</div>)} />
-              </Switch>
-            </AppLoader>
-          </div>
+          <hr />
+          <Create />
+          <hr />
+          <AppLoader>
+            <Switch>
+              <Route exact path="/" component={MemeIndex} />
+              <Route exact path="/meme/:address" render={(props) => <Meme address={props.match.params.address} />} />
+              <Route render={() => (<div>404</div>)} />
+            </Switch>
+          </AppLoader>
         </div>
       </ConnectedRouter>
     );
