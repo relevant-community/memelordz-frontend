@@ -61,8 +61,8 @@ class Trade extends Component {
     let decimals = contract.methods.decimals.fromCache();
     let totalSupply = toNumber(contract.methods.totalSupply.fromCache(), decimals);
     let poolBalance = toNumber(contract.methods.poolBalance.fromCache(), decimals);
-    let exponent = toNumber(contract.methods.exponent.fromCache(), 1);
-    let slope = toNumber(contract.methods.slope.fromCache(), 1);
+    let exponent = toNumber(contract.methods.exponent.fromCache(), 0);
+    let slope = toNumber(contract.methods.slope.fromCache(), 0);
     let symbol = contract.methods.symbol.fromCache();
 
     let account = accounts[0];
@@ -83,7 +83,7 @@ class Trade extends Component {
   calculatePurchaseReturn() {
     let { exponent, totalSupply, poolBalance, slope, amount } = this.state;
     let nexp = exponent + 1;
-    let t = ((poolBalance + amount) * (nexp * slope)) ** (1 / nexp);
+    let t = ((poolBalance + amount) * nexp * slope) ** (1 / nexp);
     return t - totalSupply;
   }
 
@@ -98,7 +98,7 @@ class Trade extends Component {
     let value = parseFloat(e.target.value);
     if (value > e.target.max) value = e.target.max;
     else if (!value || value < 0) value = '';
-    this.setState({ amount: e.target.value });
+    this.setState({ amount: e.target.value * 1 });
   }
 
   async handleSubmit() {
@@ -113,15 +113,12 @@ class Trade extends Component {
       // this.setState({ loading: 'Please Review & Sign Transaction' });
       if (this.state.isBuy) {
         let numOfTokens = this.calculatePurchaseReturn();
-        numOfTokens = Web3.utils.toWei(amount.toString());
-        // numOfTokens = new BN(numOfTokens.toString());
-        // amount += .1;
+        numOfTokens = (numOfTokens * 1e9);
+        numOfTokens = new BN(numOfTokens.toString());
+
+        // amount += 2;
         amount = Web3.utils.toWei(amount.toString());
         amount = new BN(amount.toString());
-
-        // let priceToMint = await this.props.contract.methods.priceToMint.call(amount);
-        // console.log('price to mint ', priceToMint);
-        // console.log('our price     ', amount);
 
         contract.methods.mint.cacheSend(numOfTokens, {
           value: amount, from: account
@@ -201,7 +198,7 @@ class Trade extends Component {
               onFocus={e => {
                 if (e.target.value === '0') this.setState({ amount: '' });
               }}
-              type="text"
+              type="number"
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
               value={amount}
               onChange={this.onChange.bind(this)}
