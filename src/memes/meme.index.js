@@ -7,7 +7,7 @@ class MemeIndex extends Component {
     if (!this.props.ProxyFactory.events) return null;
 
     let { events } = this.props.ProxyFactory;
-    let memes = events.reverse().map(meme => {
+    let memes = events.map(meme => {
       if (!meme) return null;
       let address = meme.returnValues.proxyAddress;
       return <Meme key={address} address={address} />;
