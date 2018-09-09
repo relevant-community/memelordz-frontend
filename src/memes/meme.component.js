@@ -5,6 +5,7 @@ import * as multihash from '../eth/multihash';
 import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
+import { toNumber, toFixed } from '../util';
 
 import './meme.css';
 
@@ -39,9 +40,8 @@ class Meme extends Component {
     let updatedState = {
       name: contract.methods.name.fromCache(),
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
-      poolBalance: contract.methods.poolBalance.fromCache(),
-      totalSupply: contract.methods.totalSupply.fromCache(),
-      memehash: contract.methods.memehash.fromCache()
+      poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
+      totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18)
     };
 
     console.log(updatedState);
@@ -98,8 +98,8 @@ class Meme extends Component {
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
-            {state.poolBalance && <div>Pool balance: {state.poolBalance} </div>}
-            {state.totalSupply && <div>Total supply: {state.totalSupply} </div>}
+            {<div>Pool balance: {state.poolBalance} </div>}
+            {<div>Total supply: {state.totalSupply} </div>}
 
             <Trade address={this.props.address} contract={contract} showToggles />
 

@@ -21,6 +21,7 @@ body {
   font-family: arial,helvetica,sans-serif;
   background: linear-gradient(#FED7B0, #FFFFEE 20%);
   /*background: linear-gradient(#D1D5EE, #EEF2FF 20%);*/
+  background-color: #FFFFEE;
   background-attachment: fixed;
   font-size: 10pt;
 }
@@ -156,4 +157,19 @@ input[type=text]:focus {
   text-align: center;
   padding: 10px;
   justify-content: center;
+}
+
+.modal.loader {
+  background: transparent;
+}
+.modal.loader .inner {
+  top: auto;
+  left: auto;
+  bottom: 10px;
+  right: 10px;
+  width: 300px;
+  transform: translateZ(0);
+}
+.modal.loader .content {
+  padding: 10px;
 }
