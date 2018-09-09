@@ -12,8 +12,7 @@ export default function memeReducer(state = initialState, action) {
       return {
         ...state,
         all: [
-          action.payload,
-          ...state.all
+          ...(new Set([action.payload, ...state.all]))
         ]
       };
     }

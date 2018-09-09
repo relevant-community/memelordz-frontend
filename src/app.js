@@ -12,6 +12,17 @@ import Portfolio from './memes/meme.portfolio';
 import actions from './actions';
 
 class App extends Component {
+
+  componentDidMount() {
+    // window.addEventListener('focus', () => {
+    //   console.log('focus!');
+    //   drizzle.contracts.ProxyFactory.syncEvents();
+    // }, false);
+    window.addEventListener('hashchange', () => {
+      drizzle.contracts.ProxyFactory.syncEvents();
+    }, false);
+  }
+
   componentDidUpdate(lastProps) {
     if (this.props.ProxyFactory.events === lastProps.ProxyFactory.events) return;
     this.props.ProxyFactory.events.forEach(e => {

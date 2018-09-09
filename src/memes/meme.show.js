@@ -25,6 +25,7 @@ class MemeShow extends Component {
 
 const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
+  memes: state.memes.all
 });
 
 const mapDispatchToProps = (dispatch) => ({
