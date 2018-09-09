@@ -21,6 +21,7 @@ module.exports = {
   devtool: 'inline-source-map',
   plugins: [
     new CleanWebpackPlugin(['dev']),
+    // new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
       title: 'Meme Lordz'
     }),
