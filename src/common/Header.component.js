@@ -21,7 +21,7 @@ function Header() {
       <p>Built on Ethereum and IPFS.</p>
       <p>
         This is an MVP, follow us on <a href="https://twitter.com/memelordzapp">Twitter</a>,{' '}
-        <a href="https://t.me/meme_lordz">Telegram</a> &{'   '}
+        <a href="https://t.me/meme_lordz">Telegram</a> &{' '}
         <a href="https://www.instagram.com/memelordzapp/">Instagram</a> for updates.
       </p>
     </header>

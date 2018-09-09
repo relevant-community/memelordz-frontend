@@ -55,6 +55,6 @@
 
   .memeContainer {
    flex-direction: column;
+   display: block;
   }
 }
-
