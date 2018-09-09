@@ -31,35 +31,30 @@ class BondingCurveChart extends React.Component {
   }
 
   getChartData() {
-    let { totalSupply, reserveRatio, poolBalance } = this.props.data;
+    let { totalSupply, poolBalance } = this.props.data;
     let props = { ...this.props.data };
 
     poolBalance = parseFloat(poolBalance) || 0;
-    reserveRatio = parseFloat(reserveRatio) || 1;
-    totalSupply = parseFloat(totalSupply) || 50;
+    totalSupply = parseFloat(totalSupply) || 0;
 
     props.exponent = 2;
-    props.slope = 1;
+    props.slope = 1000;
     props.poolBalance = poolBalance;
     props.totalSupply = totalSupply;
 
     let data = [];
-    let step = Math.round(totalSupply / 100) || 0.1;
-    // let price = poolBalance / (reserveRatio * totalSupply);
-    let eth = calculateSaleReturn({ ...props, amount: 0 });
-    let price = (poolBalance - eth) / totalSupply;
+    let step = (totalSupply || 50) / 100;
+
+    let price = 1 / props.slope * (totalSupply ** props.exponent);
     let currentPrice = { supply: totalSupply, value: price };
 
-    for (let i = step; i < totalSupply * 1.5; i += step) {
-      // if (i < totalSupply) {
-        eth = 1 * calculateSaleReturn({ ...props, amount: totalSupply - i });
-        price = (parseFloat(poolBalance, 10) - eth) / (reserveRatio * i);
-        data.push({ supply: i, sell: price.toFixed(1), value: parseFloat(price.toFixed(1)) });
-      // } else if (i >= totalSupply) {
-      //   let eth = 1 * calculatePurchaseReturn({ ...props, amount: i - totalSupply });
-      //   price = (eth + parseFloat(poolBalance, 10)) / (reserveRatio * i);
-      //   data.push({ supply: 1 * i, buy: price.toFixed(1), value: 1 * price });
-      // }
+    for (let i = step; i < (totalSupply || 50) * 1.5; i += step) {
+      price = 1 / props.slope * (i ** props.exponent);
+      if (i < totalSupply) {
+        data.push({ supply: i, sell: price.toFixed(4), value: parseFloat(price.toFixed(4)) });
+      } else if (i >= totalSupply) {
+        data.push({ supply: i, buy: price.toFixed(4), value: parseFloat(price.toFixed(4)) });
+      }
     }
     return { data, currentPrice };
   }
@@ -92,9 +87,10 @@ class BondingCurveChart extends React.Component {
             ifOverflow="extendDomain"
             x={currentPrice.supply}
             y={currentPrice.value}
-            r={8}
-            fill="blue"
-            stroke="none"
+            r={16}
+            // fill="blue"
+            stroke="blue"
+            label={currentPrice.value.toFixed(2)}
           />
 
         </ComposedChart>

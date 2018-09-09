@@ -38,6 +38,7 @@ class MemeIndex extends Component {
           Sort memes by:
           <Link to="/" className='active'>[Recent]</Link>
           <Link to="/leaderboard">[Price]</Link>
+          <Link to="/portfolio">[Portfolio]</Link>
         </div>
         <hr />
         <div>

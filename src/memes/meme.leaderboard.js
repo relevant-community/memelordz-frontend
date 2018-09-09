@@ -67,6 +67,7 @@ class MemeLeaderboard extends Component {
           Sort memes by:
           <Link to="/">[Recent]</Link>
           <Link to="/leaderboard" className='active'>[Price]</Link>
+          <Link to="/portfolio">[Portfolio]</Link>
         </div>
         <hr />
         <div>

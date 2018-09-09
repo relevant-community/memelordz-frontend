@@ -5,7 +5,7 @@ import * as multihash from '../eth/multihash';
 import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
-import { toNumber, toFixed } from '../util';
+import { toNumber, toFixed, calculateSaleReturn } from '../util';
 
 import './meme.css';
 
@@ -23,7 +23,7 @@ class Meme extends Component {
     this.queryParams();
   }
 
-  componentDidUpcate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.accounts[0] !== prevProps.accounts[0]) {
       this.quaryParams();
     }
@@ -39,6 +39,8 @@ class Meme extends Component {
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
+    contract.methods.slope.cacheCall();
+    contract.methods.exponent.cacheCall();
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -55,6 +57,8 @@ class Meme extends Component {
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
+      slope: toNumber(contract.methods.slope.fromCache(), 0),
+      exponent: toNumber(contract.methods.exponent.fromCache(), 0),
       tokens
     };
 
@@ -91,7 +95,11 @@ class Meme extends Component {
         </div>
       );
     }
-    // console.log('render meme', this.props.address);
+
+    let saleReturn;
+    if (state.tokens) {
+      saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
+    }
     return (
       <div className={'meme'}>
         <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
@@ -112,7 +120,7 @@ class Meme extends Component {
             {<div>Pool balance: {state.poolBalance} </div>}
             {<div>Total supply: {state.totalSupply} </div>}
 
-            {state.tokens ? <div><b>You Own: {state.tokens} {state.symbol}</b></div> : null}
+            {state.tokens ? <div><b>You Own: {state.tokens} {state.symbol} ({saleReturn} ETH) </b></div> : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 
             {this.props.showChart && (

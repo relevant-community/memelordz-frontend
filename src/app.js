@@ -8,7 +8,7 @@ import { withRouter } from 'react-router-dom'
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 import { AppLoader, Header } from './common';
 import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';
-import Portfolio from './portfolio/portfolio.component';
+import Portfolio from './memes/meme.portfolio';
 import actions from './actions';
 
 class App extends Component {
