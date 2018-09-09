@@ -6,10 +6,10 @@ import ProxyFactory from './contracts/ProxyFactory.json';
 import BondingCurveContract from './contracts/ERC20Main.json';
 import { Controller } from './contracts/abi.json';
 
-export { ProxyFactory, BondingCurveContract, Controller };
-
 // export const PROXY_FACTORY = '0x98b35d85d5bc3687a5fe12381978539d44b2f228';
 export const BONDING_CURVE_CONTRACT = '0x148e9116b7e0ac834e2759fc13ec9711af687d50';
+
+export { ProxyFactory, BondingCurveContract, Controller };
 
 export const options = {
   contracts: [ProxyFactory, Controller],
@@ -36,9 +36,10 @@ export const options = {
     blocks: 300,
     accounts: 300
   },
-  networkId: 42,
+
+  // networkId: 42,
   // networkId: 5777,
-  // networkId: 4,
+  networkId: 4,
   web3: {
     ignoreMetamask: true,
     useMetamask: true

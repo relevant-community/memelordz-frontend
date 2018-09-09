@@ -39,10 +39,10 @@ class Trade extends Component {
     }
   }
 
-  toggleBuy() {
+  toggleBuy(isBuy) {
     this.setState({
       amount: '',
-      isBuy: !this.state.isBuy
+      isBuy
     });
   }
 
@@ -143,8 +143,8 @@ class Trade extends Component {
         <div className="tradeContainer inactive">
           <div className="row">
             <div className="row toggleBuy" onClick={this.activate.bind(this)}>
-              <div>Buy</div>
-              <div>Sell</div>
+              <div onClick={()=>this.toggleBuy(true)}>Buy</div>
+              <div onClick={()=>this.toggleBuy(false)}>Sell</div>
             </div>
           </div>
           {this.state.loading && this.renderLoader()}
@@ -191,9 +191,9 @@ class Trade extends Component {
     return (
       <div className="tradeContainer">
         <div className="row">
-          <div className="row toggleBuy" onClick={this.toggleBuy}>
-            <div className={isBuy ? 'active' : ''}>Buy</div>
-            <div className={!isBuy ? 'active' : ''}>Sell</div>
+          <div className="row toggleBuy">
+            <div onClick={()=>this.toggleBuy(true)} className={isBuy ? 'active' : ''}>Buy</div>
+            <div onClick={()=>this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>Sell</div>
           </div>
         </div>
 

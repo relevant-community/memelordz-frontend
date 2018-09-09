@@ -14,13 +14,13 @@ function AppLoaderContainer(props) {
     switch (props.drizzleStatus.error) {
       case 'network':
         return <AppLoaderComponent>
-            <div className="error">
+            <div className="appLoaderError">
               Please connect Metamask to the Rinkeby network
             </div>
           </AppLoaderComponent>;
       case 'Cannot read property \'web3\' of undefined':
         return <AppLoaderComponent>
-            <div className='error'>
+            <div className='appLoaderError'>
               You need the <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Metamask</a> browser extention to use this app.
             </div>
           </AppLoaderComponent>;

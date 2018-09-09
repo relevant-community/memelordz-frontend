@@ -5,7 +5,7 @@ import * as multihash from '../eth/multihash';
 import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
-import { toNumber, toFixed } from '../util';
+import { toNumber, toFixed, calculateSaleReturn } from '../util';
 
 import './meme.css';
 
@@ -17,14 +17,15 @@ class Meme extends Component {
     name: '',
     symbol: '',
     hash: null,
-    img: ''
+    img: '',
+    bigImg: false
   };
 
   componentDidMount() {
     this.queryParams();
   }
 
-  componentDidUpcate(prevProps) {
+  componentDidUpdate(prevProps) {
     if (this.props.accounts[0] !== prevProps.accounts[0]) {
       this.quaryParams();
     }
@@ -42,12 +43,11 @@ class Meme extends Component {
     // controllerContract.methods.reserveRatio.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
-    contract.methods.memehash.cacheCall();
+    contract.methods.slope.cacheCall();
+    contract.methods.exponent.cacheCall();
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log('contracts', props.contracts);
-    console.log('address', props.address);
     let contract = props.contracts[props.address];
     // let controllerContract = props.contracts.Controller;
     let account = props.accounts[0];
@@ -63,10 +63,10 @@ class Meme extends Component {
       // reserveRatio: toNumber(controllerContract.methods.reserveRatio.fromCache(), 18),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
+      slope: toNumber(contract.methods.slope.fromCache(), 0),
+      exponent: toNumber(contract.methods.exponent.fromCache(), 0),
       tokens
     };
-
-    console.log(updatedState);
 
     let ipfsImg;
     let event = contract.events[0];
@@ -92,6 +92,7 @@ class Meme extends Component {
 
   render() {
     let { state } = this;
+    let { bigImg } = this.state;
     let contract = this.props.contracts[this.props.address];
     if (!contract || !(state.hash || state.name)) {
       return (
@@ -103,14 +104,21 @@ class Meme extends Component {
         </div>
       );
     }
-    // console.log('render meme', this.props.address);
+
+    let saleReturn;
+    if (state.tokens) {
+      saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
+    }
     return (
       <div className={'meme'}>
         <div>
           Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
-          <div className="memeImage">
+          <div
+            className={'memeImage ' + (bigImg ? 'bigImg' : '')}
+            onClick={() => this.setState({ bigImg: !bigImg })}
+          >
             {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
           </div>
           <div className="memeMeta">
@@ -122,15 +130,21 @@ class Meme extends Component {
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
-            {<div>Pool balance: {state.poolBalance} </div>}
-            {<div>Total supply: {state.totalSupply} </div>}
+            {
+              <p>
+                <b>Price: {(1 / state.slope) * state.totalSupply ** state.exponent} ETH</b>
+              </p>
+            }
+
+            {/*            {<div>Pool balance: {state.poolBalance} </div>}
+            {<div>Total supply: {state.totalSupply} </div>} */}
 
             {state.tokens ? (
-              <div>
+              <p>
                 <b>
-                  You Own: {state.tokens} {state.symbol}
+                  You Own: {state.tokens} {state.symbol} ({saleReturn} ETH){' '}
                 </b>
-              </div>
+              </p>
             ) : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 

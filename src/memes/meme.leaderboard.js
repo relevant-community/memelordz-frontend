@@ -4,12 +4,13 @@ import { Link } from 'react-router-dom';
 
 import Meme from './meme.component';
 import Create from '../create/create.component';
+import { Nav } from '../common';
 import { calculateSaleReturn } from '../util';
 
 class MemeLeaderboard extends Component {
   state = {
-    sorted: []
-  };
+    sorted: [],
+  }
 
   componentDidMount() {
     this.queryParams();
@@ -27,16 +28,16 @@ class MemeLeaderboard extends Component {
 
   static getDerivedStateFromProps(props, state) {
     let { events } = props.ProxyFactory;
-    let sorted = events
-      .map(meme => {
-        if (!meme) return null;
-        let address = meme.returnValues.proxyAddress;
-        let contract = props.contracts[address];
-        if (!contract || !contract.methods) return null;
-        return [contract.methods.totalSupply.fromCache() || 0, address];
-      })
-      .filter(a => !!a)
-      .sort((a, b) => b[0] - a[0]);
+    let sorted = events.map(meme => {
+      if (!meme) return null;
+      let address = meme.returnValues.proxyAddress;
+      let contract = props.contracts[address];
+      if (!contract || !contract.methods) return null;
+      return [
+        contract.methods.totalSupply.fromCache() || 0,
+        address
+      ];
+    }).filter(a => !!a).sort((a, b) => b[0] - a[0]);
     state.sorted = sorted;
     return state;
   }
@@ -46,7 +47,9 @@ class MemeLeaderboard extends Component {
       return (
         <div>
           <hr />
-          <div className="loadingMessage">Loading memes...</div>
+          <div className='loadingMessage'>
+            Loading memes...
+          </div>
         </div>
       );
     }
@@ -59,32 +62,25 @@ class MemeLeaderboard extends Component {
     return (
       <div>
         <hr />
-        <Create />
+          <Create />
         <hr />
-        <div className="sortLinks">
-          Sort memes by:
-          <Link to="/">[Recent]</Link>
-          <Link to="/leaderboard" className="active">
-            [Price]
-          </Link>
+          <Nav />
+        <hr />
+        <div>
+          {memes}
         </div>
-        <hr />
-        <div>{memes}</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
-  contracts: state.contracts
+  contracts: state.contracts,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MemeLeaderboard);
+export default connect(mapStateToProps, mapDispatchToProps)(MemeLeaderboard);

@@ -62,6 +62,7 @@ class Create extends Component {
       }
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
+
         // console.log(lastTxHash)
         // const { address, blockNumber } = props.transactions[lastTxHash].receipt.events[0];
         const { address, blockNumber } = props.transactions[lastTxHash].receipt.events[0];

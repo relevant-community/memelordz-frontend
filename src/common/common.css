@@ -42,6 +42,18 @@ body {
   text-decoration: underline;
 }
 
+.nav {
+  text-align: center;
+}
+.nav a {
+  color: maroon;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.nav a.active {
+  font-weight: bold;
+}
+
 table.status {
   margin: 0 auto;
 }
@@ -157,6 +169,16 @@ input[type=text]:focus {
   text-align: center;
   padding: 10px;
   justify-content: center;
+}
+
+.appLoaderError {
+  text-align: center;
+  width: 65%;
+  padding: 30px;
+  justify-content: center;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 40px;
 }
 
 .modal.loader {
