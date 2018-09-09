@@ -9,7 +9,7 @@ module.exports = {
     main: './src/index.js',
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, 'dev'),
     filename: 'index.js',
   },
   devServer: {
@@ -20,7 +20,7 @@ module.exports = {
   },
   devtool: 'inline-source-map',
   plugins: [
-    new CleanWebpackPlugin(['dist']),
+    new CleanWebpackPlugin(['dev']),
     new HtmlWebpackPlugin({
       title: 'Meme Lordz'
     }),
