@@ -171,6 +171,16 @@ input[type=text]:focus {
   justify-content: center;
 }
 
+.appLoaderError {
+  text-align: center;
+  width: 65%;
+  padding: 30px;
+  justify-content: center;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 40px;
+}
+
 .modal.loader {
   background: transparent;
 }

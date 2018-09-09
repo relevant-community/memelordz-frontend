@@ -10,7 +10,7 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
   },
-  devtool: 'inline-source-map',
+  // devtool: 'inline-source-map',
   plugins: [
     // new CleanWebpackPlugin(['dist']),
     // new webpack.HotModuleReplacementPlugin()
