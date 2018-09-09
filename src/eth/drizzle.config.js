@@ -10,7 +10,7 @@ export {
   BondingCurveContract,
 };
 
-export const PROXY_FACTORY = '0xa9c0e6f7e05da0fba6f65892fd08f8b1cc8c71bb';
+export const PROXY_FACTORY = '0x14bbea4b804cabe1742056915829eba8f13a4fd9';
 
 // ganache
 // export const BONDING_CURVE_CONTRACT = '0xffd755447c9a9df8e1785aa52a226d299e09113f';

@@ -11,7 +11,7 @@ function Header() {
         </h1>
       </Link>
       <p>
-        <i>The first fully decentralized meme currency market!</i>
+        <i>The first decentralized meme currency market!</i>
         <br />
         <br />
         Turn any meme into its own currency. Let the market define its value based on popularity.
