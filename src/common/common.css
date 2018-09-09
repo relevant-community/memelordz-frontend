@@ -29,24 +29,31 @@ body {
 .container {
   padding: 10px 20px;
 }
+.container > div {
+  min-height: calc(100vh - 320px);
+}
 
-.header {
+header, footer {
   text-align: center;
   margin: 20px;
 }
-.logo {
+a.logo,
+a.logo:link,
+a.logo:visited {
   color: maroon;
   text-decoration: none;
 }
-.logo:hover {
+a.logo:hover {
   text-decoration: underline;
 }
 
 .nav {
   text-align: center;
 }
+a, a:link, a:visited {
+  color: #a00;
+}
 .nav a {
-  color: maroon;
   margin-left: 5px;
   cursor: pointer;
 }

@@ -4,14 +4,14 @@ import { connect } from 'react-redux';
 
 function Header() {
   return (
-    <div className='header'>
+    <header>
       <Link className='logo' to='/'>
         <h1>
           Meme Lordz
         </h1>
       </Link>
       <p>
-        <i>The first decentralized meme currency market!</i>
+        <i>A decentralized meme market!</i>
         <br />
         <br />
         Turn any meme into a tradable cryptocurrency. Let the market define its value based on popularity.
@@ -24,7 +24,7 @@ function Header() {
       <p>
         This is an MVP, follow us on <a href="https://t.me/meme_lordz">Telegram</a> for updates.
       </p>
-    </div>
+    </header>
   );
 }
 

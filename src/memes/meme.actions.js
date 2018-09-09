@@ -6,3 +6,7 @@ export function addMeme(address) {
     payload: address
   };
 }
+
+export function noop() {
+  return;
+}

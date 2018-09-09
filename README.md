@@ -1,7 +1,10 @@
 # Meme Lordz
-The first A decentralized meme market!
 
-Turn any meme into a tradable cryptocurrency. Let the market define its value based on popularity. Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
+The first decentralized meme currency market!
+
+Turn any meme into its own currency. Let the market define its value based on popularity.
+
+Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
 
 Built on Ethereum and IPFS.
 
