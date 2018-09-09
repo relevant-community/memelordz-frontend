@@ -18,7 +18,7 @@ class Meme extends Component {
     hash: null,
     img: '',
     bigImg: false
-  }
+  };
 
   componentDidMount() {
     this.queryParams();
@@ -69,11 +69,10 @@ class Meme extends Component {
       ipfsImg = {
         hash: event.returnValues.hash,
         hash_function: event.returnValues.hashFunction,
-        size: event.returnValues.size,
+        size: event.returnValues.size
       };
       updatedState.timestamp = event.returnValues.timestamp;
     }
-
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {
@@ -89,7 +88,7 @@ class Meme extends Component {
     let contract = this.props.contracts[this.props.address];
     if (!contract || !(state.hash || state.name)) {
       return (
-        <div className='meme'>
+        <div className="meme">
           <div>
             Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
           </div>
@@ -104,34 +103,50 @@ class Meme extends Component {
     }
     return (
       <div className={'meme'}>
-        <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
+        <div>
+          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
-          <div className={'memeImage ' + (bigImg ? 'bigImg' : '')} onClick={()=>this.setState({ bigImg: !bigImg })}>
+          <div
+            className={'memeImage ' + (bigImg ? 'bigImg' : '')}
+            onClick={() => this.setState({ bigImg: !bigImg })}
+          >
             {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
           </div>
           <div className="memeMeta">
             <div className="memeHeading">
-              <input type='checkbox' disabled />
-              <span className='subject'>{state.name}</span>
-              <span className='name'>Anonymous</span>
+              <input type="checkbox" disabled />
+              <span className="subject">{state.name}</span>
+              <span className="name">Anonymous</span>
               {ChanDate(state.timestamp)}
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
-            {<p><b>Price: {1/state.slope * state.totalSupply ** state.exponent} ETH</b></p>}
+            {
+              <p>
+                <b>
+                  Price: {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)} ETH
+                </b>
+              </p>
+            }
 
-{/*            {<div>Pool balance: {state.poolBalance} </div>}
-            {<div>Total supply: {state.totalSupply} </div>}*/}
+            {<div>Pool balance: {state.poolBalance && state.poolBalance.toFixed(2)} ETH</div>}
+            {
+              <div>
+                Total supply: {state.totalSupply && state.totalSupply.toFixed(2)} {state.symbol}
+              </div>
+            }
 
-            {state.tokens ? <p><b>You Own: {state.tokens} {state.symbol} ({saleReturn} ETH) </b></p> : null}
+            {state.tokens ? (
+              <p>
+                <b>
+                  You Own: {state.tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH){' '}
+                </b>
+              </p>
+            ) : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 
-            {this.props.showChart && (
-              <BondingCurveChart
-                data={state}
-              />
-            )}
+            {this.props.showChart && <BondingCurveChart data={state} />}
           </div>
         </div>
         <hr />
@@ -158,14 +173,16 @@ class MemeWrapper extends Component {
   }
 }
 
-
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   contracts: state.contracts,
-  accounts: state.accounts,
+  accounts: state.accounts
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemeWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MemeWrapper);
