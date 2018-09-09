@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 function Header() {
   return (
-    <div className='header'>
+    <header>
       <Link className='logo' to='/'>
         <h1>
           Meme Lordz
@@ -21,7 +21,7 @@ function Header() {
       <p>
         Built on Ethereum and IPFS.
       </p>
-    </div>
+    </header>
   );
 }
 

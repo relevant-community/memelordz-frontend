@@ -5,8 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router';
 import { withRouter } from 'react-router-dom';
 
-import { drizzle, BondingCurveContract } from './eth/drizzle.config';
-import { AppLoader, Header } from './common';
+import { AppLoader, Header, Footer } from './common';
 import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';
 import Portfolio from './memes/meme.portfolio';
 import actions from './actions';
@@ -14,21 +13,10 @@ import actions from './actions';
 class App extends Component {
   componentDidUpdate(lastProps) {
     if (this.props.ProxyFactory.events === lastProps.ProxyFactory.events) return;
-    // todo move this to meme component?
     this.props.ProxyFactory.events.forEach(e => {
       let address = e.returnValues.proxyAddress;
       if (this.props.memes.indexOf(address) !== -1) return;
-      drizzle.addContract(BondingCurveContract, {
-        name: address,
-        address,
-        events: [{
-          eventName: 'StoreHash',
-          eventOptions: {
-            fromBlock: e.blockNumber
-          }
-        }]
-      });
-      this.props.actions.addMeme(address);
+      this.props.actions.addMeme(address, e.blockNumber);
     });
   }
 
@@ -45,6 +33,7 @@ class App extends Component {
             <Route render={() => (<div>404</div>)} />
           </Switch>
         </AppLoader>
+        <Footer />
       </div>
     );
   }

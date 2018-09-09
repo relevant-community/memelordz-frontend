@@ -1,6 +1,6 @@
-// const webpack = require('webpack');
-
-var path = require('path');
+const webpack = require('webpack');
+const path = require('path');
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,10 +10,12 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
   },
-  devtool: 'inline-source-map',
   plugins: [
     // new CleanWebpackPlugin(['dist']),
     // new webpack.HotModuleReplacementPlugin()
+    // new webpack.optimize.CommonsChunkPlugin('common'),
+    new UglifyJsPlugin(),
+    new webpack.optimize.AggressiveMergingPlugin()
   ],
   module: {
     rules: [
@@ -23,10 +25,11 @@ module.exports = {
       },
       {
         test: /\.js$/,
-        // include: path.resolve(__dirname, 'src'),
+        include: path.resolve(__dirname, 'src'),
         exclude: /(node_modules|bower_components|build)/,
-        use: {
-          loader: 'babel-loader',
+        loader: 'babel-loader',
+        // use: {
+          // loader: 'babel-loader',
           options: {
             presets: ['env'],
             plugins: [
@@ -38,7 +41,7 @@ module.exports = {
               require('react-hot-loader/babel'),
             ]
           }
-        }
+        // }
       }
     ]
   },

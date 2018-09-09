@@ -29,8 +29,11 @@ body {
 .container {
   padding: 10px 20px;
 }
+.container > div {
+  min-height: calc(100vh - 320px);
+}
 
-.header {
+header, footer {
   text-align: center;
   margin: 20px;
 }
@@ -45,7 +48,7 @@ body {
 .nav {
   text-align: center;
 }
-.nav a {
+a {
   color: maroon;
   margin-left: 5px;
   cursor: pointer;

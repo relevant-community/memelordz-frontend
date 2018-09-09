@@ -210,6 +210,7 @@ class Trade extends Component {
               autoFocus
               min={0}
               max={isBuy ? toFixed(walletBalance, 4) : toFixed(tokenBalance, 4)}
+              step={0.0001}
               autoComplete="off"
               value={amount}
               onInput={this.onInput.bind(this)}
