@@ -16,8 +16,9 @@ class MemeLeaderboard extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.accounts[0] !== prevProps.accounts[0]) {
-      this.quaryParams();
+    if (this.props.accounts[0] !== prevProps.accounts[0] ||
+      this.props.ProxyFactory.events.length !== prevProps.ProxyFactory.events.length) {
+      setTimeout(() => this.queryParams(), 1000);
     }
   }
 
