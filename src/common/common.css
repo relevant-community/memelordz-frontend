@@ -37,11 +37,13 @@ header, footer {
   text-align: center;
   margin: 20px;
 }
-.logo {
+a.logo,
+a.logo:link,
+a.logo:visited {
   color: maroon;
   text-decoration: none;
 }
-.logo:hover {
+a.logo:hover {
   text-decoration: underline;
 }
 

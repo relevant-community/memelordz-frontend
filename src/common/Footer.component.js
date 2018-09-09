@@ -7,7 +7,9 @@ function Footer() {
     <footer>
       <br /><br />
       <br /><br />
-      <small>Copyright © 2018 "The Meme Lordz" dank meme support group. All rights reserved.</small>
+      {/*
+        <small>Copyright © 2018 "The Meme Lordz" dank meme support group. All rights reserved.</small>
+      */}
     </footer>
   );
 }
