@@ -1,6 +1,6 @@
 # Meme Lordz
 
-The first decentralized meme currency market!
+The first decentralized meme currency market!!!
 
 Turn any meme into its own currency. Let the market define its value based on popularity.
 
