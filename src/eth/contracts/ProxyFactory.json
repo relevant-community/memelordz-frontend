@@ -1686,6 +1686,12 @@
       "links": {},
       "address": "0x19d6bd51cf889abd63e0a11863ad2ae7df9d1089"
     },
+    "42": {
+      "events": {},
+      "links": {},
+      "address": "0xe1dc8c48075bda749c5c601f6cd66262cac2e5aa",
+      "transactionHash": "0x845cfe090069fd5f979a0ccea8cc6bf852c4f52157874b92b1dd353daf4d485d"
+    },
     "5777": {
       "events": {},
       "links": {},

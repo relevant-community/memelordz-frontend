@@ -11,6 +11,8 @@ class MemeIndex extends Component {
       return (
         <div>
           <hr />
+          <Create />
+          <hr />
           <div className="loadingMessage">Loading memes...</div>
         </div>
       );

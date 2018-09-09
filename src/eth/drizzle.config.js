@@ -37,6 +37,8 @@ export const options = {
     accounts: 300
   },
   networkId: 42,
+  // networkId: 5777,
+  // networkId: 4,
   web3: {
     ignoreMetamask: true,
     useMetamask: true
