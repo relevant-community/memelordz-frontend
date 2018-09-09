@@ -47,7 +47,8 @@ class MemeIndex extends Component {
 }
 
 const mapStateToProps = state => ({
-  ProxyFactory: state.contracts.ProxyFactory || {}
+  ProxyFactory: state.contracts.ProxyFactory || {},
+  Controller: state.contracts.Controller || {}
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -6,7 +6,7 @@ class MemeShow extends Component {
   render() {
     if (!this.props.ProxyFactory.events || this.props.ProxyFactory.events.length === 0) {
       return (
-        <div className='loadingMessage'>
+        <div className="loadingMessage">
           <hr />
           Loading meme...
         </div>
@@ -22,12 +22,16 @@ class MemeShow extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
+  Controller: state.contracts.Controller || {}
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemeShow);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MemeShow);

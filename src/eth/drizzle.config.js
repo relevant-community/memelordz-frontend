@@ -4,7 +4,7 @@ import { store } from '../store';
 
 import ProxyFactory from './contracts/ProxyFactory.json';
 import BondingCurveContract from './contracts/ERC20Main.json';
-import Controller from './contracts/Controller.json';
+import { Controller } from './contracts/abi.json';
 
 export { ProxyFactory, BondingCurveContract, Controller };
 

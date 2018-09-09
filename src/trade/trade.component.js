@@ -32,8 +32,8 @@ class Trade extends Component {
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
     contract.methods.decimals.cacheCall();
-    contract.methods.exponent.cacheCall();
-    contract.methods.slope.cacheCall();
+    // contract.methods.exponent.cacheCall();
+    // contract.methods.slope.cacheCall();
     if (accounts[0]) {
       contract.methods.balanceOf.cacheCall(accounts[0]);
     }
@@ -65,8 +65,8 @@ class Trade extends Component {
     let decimals = contract.methods.decimals.fromCache();
     let totalSupply = toNumber(contract.methods.totalSupply.fromCache(), decimals);
     let poolBalance = toNumber(contract.methods.poolBalance.fromCache(), decimals);
-    let exponent = toNumber(contract.methods.exponent.fromCache(), 0);
-    let slope = toNumber(contract.methods.slope.fromCache(), 0);
+    // let exponent = toNumber(contract.methods.exponent.fromCache(), 0);
+    // let slope = toNumber(contract.methods.slope.fromCache(), 0);
     let symbol = contract.methods.symbol.fromCache();
 
     let account = accounts[0];
@@ -83,8 +83,8 @@ class Trade extends Component {
       totalSupply,
       poolBalance,
       walletBalance,
-      exponent,
-      slope,
+      // exponent,
+      // slope,
       tokenBalance,
       symbol: (symbol || 'MEME').toUpperCase()
     };

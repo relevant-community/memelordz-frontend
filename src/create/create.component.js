@@ -67,17 +67,17 @@ class Create extends Component {
         const { address, blockNumber } = props.transactions[lastTxHash].receipt.events[0];
         console.log(props.transactions[lastTxHash].receipt.events);
 
-        drizzle.addContract(BondingCurveContract, {
+        drizzle.addContract(ERC20Main, {
           name: address,
-          address,
-          events: [
-            {
-              eventName: 'StoreHash',
-              eventOptions: {
-                fromBlock: blockNumber
-              }
-            }
-          ]
+          address
+          // events: [
+          //   {
+          //     eventName: 'StoreHash',
+          //     eventOptions: {
+          //       fromBlock: blockNumber
+          //     }
+          //   }
+          // ]
         });
         props.actions.addMeme(address);
 
@@ -149,7 +149,8 @@ class Create extends Component {
       console.log('state', this.state);
       console.log('data ', data);
 
-      let amount = this.state.amount;
+      // let amount = this.state.amount;
+      let amount = 0;
       console.log('amount ', amount.toString());
       amount = Web3.utils.toWei(amount.toString());
       amount = new BN(amount.toString());

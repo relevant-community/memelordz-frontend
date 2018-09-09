@@ -11,6 +11,7 @@ import './meme.css';
 
 class Meme extends Component {
   state = {
+    reserveRatio: null,
     poolBalance: null,
     totalSupply: null,
     name: '',
@@ -31,12 +32,14 @@ class Meme extends Component {
 
   queryParams() {
     let contract = this.props.contracts[this.props.address];
+    // let controllerContract = this.props.contracts.Controller;
     let account = this.props.accounts[0];
     if (account) {
       contract.methods.balanceOf.cacheCall(account);
     }
     contract.methods.name.cacheCall();
     contract.methods.symbol.cacheCall();
+    // controllerContract.methods.reserveRatio.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
     contract.methods.memehash.cacheCall();
@@ -46,6 +49,7 @@ class Meme extends Component {
     console.log('contracts', props.contracts);
     console.log('address', props.address);
     let contract = props.contracts[props.address];
+    // let controllerContract = props.contracts.Controller;
     let account = props.accounts[0];
 
     let tokens = 0;
@@ -56,6 +60,7 @@ class Meme extends Component {
     let updatedState = {
       name: contract.methods.name.fromCache(),
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
+      // reserveRatio: toNumber(controllerContract.methods.reserveRatio.fromCache(), 18),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
       tokens
@@ -66,17 +71,19 @@ class Meme extends Component {
     let ipfsImg;
     let event = contract.events[0];
     if (event) {
-      console.log(event);
+      console.log('event', event);
       ipfsImg = {
         hash: event.returnValues.memehash,
-        hash_function: 32,
-        size: 8
+        hash_function: 18,
+        size: 32
       };
+      console.log(ipfsImg);
       updatedState.timestamp = event.returnValues.timestamp;
     }
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {
+      console.log(ipfsImg);
       let ipfsHash = multihash.getMultihashFromContractResponse(ipfsImg);
       updatedState.hash = ipfsHash;
     }

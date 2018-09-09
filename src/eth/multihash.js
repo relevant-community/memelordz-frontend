@@ -19,7 +19,7 @@ export function getBytes32FromMultiash(multihash) {
   return {
     digest: `0x${decoded.slice(2).toString('hex')}`,
     hashFunction: decoded[0],
-    size: decoded[1],
+    size: decoded[1]
   };
 }
 
@@ -37,7 +37,7 @@ export function getMultihashFromBytes32(multihash) {
   const hashBytes = Buffer.from(digest.slice(2), 'hex');
 
   // prepend hashFunction and digest size
-  const multihashBytes = new (hashBytes.constructor)(2 + hashBytes.length);
+  const multihashBytes = new hashBytes.constructor(2 + hashBytes.length);
   multihashBytes[0] = hashFunction;
   multihashBytes[1] = size;
   multihashBytes.set(hashBytes, 2);
@@ -53,10 +53,11 @@ export function getMultihashFromBytes32(multihash) {
  */
 export function parseContractResponse(response) {
   const { hash, hash_function, size } = response;
+  console.log(hash, hash_function, size);
   return {
     digest: hash,
     hashFunction: parseInt(hash_function, 10),
-    size: parseInt(size, 10),
+    size: parseInt(size, 10)
   };
 }
 
@@ -67,5 +68,6 @@ export function parseContractResponse(response) {
  * @returns {string} base58 encoded multihash string
  */
 export function getMultihashFromContractResponse(response) {
+  console.log(response);
   return getMultihashFromBytes32(parseContractResponse(response));
 }

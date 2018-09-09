@@ -4,21 +4,13 @@ import { calculateSaleReturn, calculatePurchaseReturn } from '../util';
 
 const Recharts = require('recharts');
 
-const {
-  Area,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  ReferenceDot,
-  ComposedChart
-} = Recharts;
+const { Area, XAxis, YAxis, CartesianGrid, Tooltip, ReferenceDot, ComposedChart } = Recharts;
 
 class BondingCurveChart extends React.Component {
   static contextTypes = {
     contractActions: PropTypes.object,
-    contractParams: PropTypes.object,
-  }
+    contractParams: PropTypes.object
+  };
 
   constructor(props) {
     super(props);
@@ -33,13 +25,14 @@ class BondingCurveChart extends React.Component {
   getChartData() {
     let { totalSupply, reserveRatio, poolBalance } = this.props.data;
     let props = { ...this.props.data };
-
+    console.log('totalSupply, reserveRatio, poolBalance', totalSupply, reserveRatio, poolBalance);
     poolBalance = parseFloat(poolBalance) || 0;
     reserveRatio = parseFloat(reserveRatio) || 1;
     totalSupply = parseFloat(totalSupply) || 50;
 
     props.exponent = 2;
     props.slope = 1;
+    props.reserveRatio = reserveRatio;
     props.poolBalance = poolBalance;
     props.totalSupply = totalSupply;
 
@@ -52,9 +45,9 @@ class BondingCurveChart extends React.Component {
 
     for (let i = step; i < totalSupply * 1.5; i += step) {
       // if (i < totalSupply) {
-        eth = 1 * calculateSaleReturn({ ...props, amount: totalSupply - i });
-        price = (parseFloat(poolBalance, 10) - eth) / (reserveRatio * i);
-        data.push({ supply: i, sell: price.toFixed(1), value: parseFloat(price.toFixed(1)) });
+      eth = 1 * calculateSaleReturn({ ...props, amount: totalSupply - i });
+      price = (parseFloat(poolBalance, 10) - eth) / (reserveRatio * i);
+      data.push({ supply: i, sell: price.toFixed(1), value: parseFloat(price.toFixed(1)) });
       // } else if (i >= totalSupply) {
       //   let eth = 1 * calculatePurchaseReturn({ ...props, amount: i - totalSupply });
       //   price = (eth + parseFloat(poolBalance, 10)) / (reserveRatio * i);
@@ -68,9 +61,9 @@ class BondingCurveChart extends React.Component {
     if (!this.documentReady) return null;
     let { data, currentPrice } = this.getChartData();
     let width = Math.min(600, (window.innerWidth < 480 ? window.innerWidth : 480) - 30);
-    let height = width * 2 / 3;
+    let height = (width * 2) / 3;
     return (
-      <div >
+      <div>
         <ComposedChart
           style={{ margin: 'auto' }}
           width={width}
@@ -78,14 +71,29 @@ class BondingCurveChart extends React.Component {
           data={data}
           margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
         >
-          <CartesianGrid strokeDasharray="3 3"/>
+          <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="supply" type={'number'} />
           <YAxis dataKey="value" type={'number'} />
-          <Tooltip/>
+          <Tooltip />
 
-          <Area isAnimationActive={false} dots={false} stackOffset={'none'} dataKey="value" name={'price'} key={'price'} stroke='blue' fill='none'/>
+          <Area
+            isAnimationActive={false}
+            dots={false}
+            stackOffset={'none'}
+            dataKey="value"
+            name={'price'}
+            key={'price'}
+            stroke="blue"
+            fill="none"
+          />
 
-          <Area isAnimationActive={false} stackOffset={'none'} dataKey="sell" stroke="blue" fill='blue' />
+          <Area
+            isAnimationActive={false}
+            stackOffset={'none'}
+            dataKey="sell"
+            stroke="blue"
+            fill="blue"
+          />
 
           <ReferenceDot
             isFront={true}
@@ -96,7 +104,6 @@ class BondingCurveChart extends React.Component {
             fill="blue"
             stroke="none"
           />
-
         </ComposedChart>
       </div>
     );
