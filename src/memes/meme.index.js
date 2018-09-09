@@ -11,9 +11,7 @@ class MemeIndex extends Component {
       return (
         <div>
           <hr />
-          <div className='loadingMessage'>
-            Loading memes...
-          </div>
+          <div className="loadingMessage">Loading memes...</div>
         </div>
       );
     }
@@ -30,28 +28,31 @@ class MemeIndex extends Component {
     return (
       <div>
         <hr />
-          <Create />
+        <Create />
         <hr />
-        <div className='sortLinks'>
+        <div className="sortLinks">
           Sort memes by:
-          <Link to="/" className='active'>[Recent]</Link>
+          <Link to="/" className="active">
+            [Recent]
+          </Link>
           <Link to="/leaderboard">[Price]</Link>
         </div>
         <hr />
-        <div>
-          {memes}
-        </div>
+        <div>{memes}</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = (state) => ({
-  ProxyFactory: state.contracts.ProxyFactory || {},
+const mapStateToProps = state => ({
+  ProxyFactory: state.contracts.ProxyFactory || {}
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemeIndex);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MemeIndex);

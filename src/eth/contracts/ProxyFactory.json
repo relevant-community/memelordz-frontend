@@ -63,30 +63,28 @@
       "type": "function"
     }
   ],
-  "bytecode": "0x608060405234801561001057600080fd5b5060405160208061041383398101806040528101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610390806100836000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638f295d5914610051578063d4b83992146100ed575b600080fd5b6100ab600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610144565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100f957600080fd5b506101026102b2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c75cdaa16040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b1580156101cc57600080fd5b505af11580156101e0573d6000803e3d6000fd5b505050506040513d60208110156101f657600080fd5b8101908080519060200190929190505050905061021381846102d7565b91507f3d2489efb661e8b1c3679865db649ca1de61d76a71184a1234de2e55786a6aad8282604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a150919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600060405183600b82015276603160008181600b9039f360008080808036809280377360098203527f5af43d828181803e808314602f57f35bfd000000000000000000000000000000602b820152603c816000f09150813b151561033a57600080fd5b82518015151561035c57600080826020870134875af1151561035b57600080fd5b5b5050929150505600a165627a7a72305820008fa40264adcb0e650a51ed779ce047da212611c7e3bc1945c400fa5148c7e80029",
-  "deployedBytecode": "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638f295d5914610051578063d4b83992146100ed575b600080fd5b6100ab600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610144565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100f957600080fd5b506101026102b2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c75cdaa16040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b1580156101cc57600080fd5b505af11580156101e0573d6000803e3d6000fd5b505050506040513d60208110156101f657600080fd5b8101908080519060200190929190505050905061021381846102d7565b91507f3d2489efb661e8b1c3679865db649ca1de61d76a71184a1234de2e55786a6aad8282604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a150919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600060405183600b82015276603160008181600b9039f360008080808036809280377360098203527f5af43d828181803e808314602f57f35bfd000000000000000000000000000000602b820152603c816000f09150813b151561033a57600080fd5b82518015151561035c57600080826020870134875af1151561035b57600080fd5b5b5050929150505600a165627a7a72305820008fa40264adcb0e650a51ed779ce047da212611c7e3bc1945c400fa5148c7e80029",
-  "sourceMap": "1941:1825:6:-;;;1997:67;8:9:-1;5:2;;;30:1;27;20:12;5:2;1997:67:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2050:7;2041:6;;:16;;;;;;;;;;;;;;;;;;1997:67;1941:1825;;;;;;",
-  "deployedSourceMap": "1941:1825:6:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1969:21;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1969:21:6;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;2223:21;2260:15;2296:6;;;;;;;;;;;2278:38;;;:40;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2278:40:6;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2278:40:6;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;2278:40:6;;;;;;;;;;;;;;;;2260:58;;2344:31;2360:7;2369:5;2344:15;:31::i;:::-;2328:47;;2391:37;2405:13;2420:7;2391:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;;;;:::o;1969:21::-;;;;;;;;;;;;;:::o;2441:1323::-;2530:21;2616:4;2610:11;2726:7;2719:4;2705:12;2701:23;2694:40;2894:66;2887:4;2873:12;2869:23;2862:99;3104:66;3097:4;3083:12;3079:23;3072:99;3272:2;3258:12;3255:1;3248:27;3231:44;;3335:13;3323:26;3316:34;3313:2;;;3379:1;3376;3369:12;3313:2;3532:5;3526:12;3568:10;3561:18;3554:26;3551:2;;;3678:1;3675;3663:10;3656:4;3649:5;3645:16;3634:9;3619:13;3614:3;3609:71;3602:79;3599:2;;;3714:1;3711;3704:12;3599:2;3551;2576:1182;;;;;;:::o",
-  "source": "/***\n* Shoutouts:\n*\n* Bytecode origin https://www.reddit.com/r/ethereum/comments/6ic49q/any_assembly_programmers_willing_to_write_a/dj5ceuw/\n* Modified version of Vitalik's https://www.reddit.com/r/ethereum/comments/6c1jui/delegatecall_forwarders_how_to_save_5098_on/\n* Credits to Jorge Izquierdo (@izqui) for coming up with this design here: https://gist.github.com/izqui/7f904443e6d19c1ab52ec7f5ad46b3a8\n* Credits to Stefan George (@Georgi87) for inspiration for many of the improvements from Gnosis Safe: https://github.com/gnosis/gnosis-safe-contracts\n*\n* This version has many improvements over the original @izqui's library like using REVERT instead of THROWing on failed calls.\n* It also implements the awesome design pattern for initializing code as seen in Gnosis Safe Factory: https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/ProxyFactory.sol\n* but unlike this last one it doesn't require that you waste storage on both the proxy and the proxied contracts (v. https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/Proxy.sol#L8 & https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/GnosisSafe.sol#L14)\n*\n*\n* v0.0.2\n* The proxy is now only 60 bytes long in total. Constructor included.\n* No functionalities were added. The change was just to make the proxy leaner.\n*\n* v0.0.3\n* Thanks @dacarley for noticing the incorrect check for the subsequent call to the proxy. 🙌\n* Note: I'm creating a new version of this that doesn't need that one call.\n*       Will add tests and put this in its own repository soon™.\n*\n* v0.0.4\n* All the merit in this fix + update of the factory is @dacarley 's. 🙌\n* Thank you! 😄\n*\n* Potential updates can be found at https://gist.github.com/GNSPS/ba7b88565c947cfd781d44cf469c2ddb\n*\n***/\n\npragma solidity ^0.4.19;\n\nimport './ControllerPointer.sol';\n\n/* solhint-disable no-inline-assembly, indent, state-visibility, avoid-low-level-calls */\n\ncontract ProxyFactory {\n    address public target;\n\n    constructor(address _target) public {\n      target = _target;\n    }\n\n    event ProxyDeployed(address proxyAddress, address targetAddress);\n\n    function createProxy(bytes _data)\n        public\n        payable\n        returns (address proxyContract)\n    {\n        address _target = ControllerPointer(target).getERC20Main();\n        proxyContract = createProxyImpl(_target, _data);\n\n        emit ProxyDeployed(proxyContract, _target);\n    }\n\n    function createProxyImpl(address _target, bytes _data)\n        internal\n        returns (address proxyContract)\n    {\n        assembly {\n            let contractCode := mload(0x40) // Find empty storage location using \"free memory pointer\"\n\n            mstore(add(contractCode, 0x0b), _target) // Add target address, with a 11 bytes [i.e. 23 - (32 - 20)] offset to later accomodate first part of the bytecode\n            mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773) // First part of the bytecode, shifted left by 9 bytes, overwrites left padding of target address\n            mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000) // Final part of bytecode, offset by 43 bytes\n\n            proxyContract := create(0, contractCode, 60) // total length 60 bytes\n            if iszero(extcodesize(proxyContract)) {\n                revert(0, 0)\n            }\n\n            // check if the _data.length > 0 and if it is forward it to the newly created contract\n            let dataLength := mload(_data)\n            if iszero(iszero(dataLength)) {\n                if iszero(call(gas, proxyContract, callvalue, add(_data, 0x20), dataLength, 0, 0)) {\n                    revert(0, 0)\n                }\n            }\n        }\n    }\n}",
+  "bytecode":
+    "0x608060405234801561001057600080fd5b5060405160208061041383398101806040528101908080519060200190929190505050806000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff16021790555050610390806100836000396000f30060806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638f295d5914610051578063d4b83992146100ed575b600080fd5b6100ab600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610144565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100f957600080fd5b506101026102b2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c75cdaa16040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b1580156101cc57600080fd5b505af11580156101e0573d6000803e3d6000fd5b505050506040513d60208110156101f657600080fd5b8101908080519060200190929190505050905061021381846102d7565b91507f3d2489efb661e8b1c3679865db649ca1de61d76a71184a1234de2e55786a6aad8282604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a150919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600060405183600b82015276603160008181600b9039f360008080808036809280377360098203527f5af43d828181803e808314602f57f35bfd000000000000000000000000000000602b820152603c816000f09150813b151561033a57600080fd5b82518015151561035c57600080826020870134875af1151561035b57600080fd5b5b5050929150505600a165627a7a72305820008fa40264adcb0e650a51ed779ce047da212611c7e3bc1945c400fa5148c7e80029",
+  "deployedBytecode":
+    "0x60806040526004361061004c576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638f295d5914610051578063d4b83992146100ed575b600080fd5b6100ab600480360381019080803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509192919290505050610144565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b3480156100f957600080fd5b506101026102b2565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b6000806000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1663c75cdaa16040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401602060405180830381600087803b1580156101cc57600080fd5b505af11580156101e0573d6000803e3d6000fd5b505050506040513d60208110156101f657600080fd5b8101908080519060200190929190505050905061021381846102d7565b91507f3d2489efb661e8b1c3679865db649ca1de61d76a71184a1234de2e55786a6aad8282604051808373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020018273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019250505060405180910390a150919050565b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b600060405183600b82015276603160008181600b9039f360008080808036809280377360098203527f5af43d828181803e808314602f57f35bfd000000000000000000000000000000602b820152603c816000f09150813b151561033a57600080fd5b82518015151561035c57600080826020870134875af1151561035b57600080fd5b5b5050929150505600a165627a7a72305820008fa40264adcb0e650a51ed779ce047da212611c7e3bc1945c400fa5148c7e80029",
+  "sourceMap":
+    "1941:1825:6:-;;;1997:67;8:9:-1;5:2;;;30:1;27;20:12;5:2;1997:67:6;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2050:7;2041:6;;:16;;;;;;;;;;;;;;;;;;1997:67;1941:1825;;;;;;",
+  "deployedSourceMap":
+    "1941:1825:6:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1969:21;;8:9:-1;5:2;;;30:1;27;20:12;5:2;1969:21:6;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;2223:21;2260:15;2296:6;;;;;;;;;;;2278:38;;;:40;;;;;;;;;;;;;;;;;;;;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;2278:40:6;;;;8:9:-1;5:2;;;45:16;42:1;39;24:38;77:16;74:1;67:27;5:2;2278:40:6;;;;;;;13:2:-1;8:3;5:11;2:2;;;29:1;26;19:12;2:2;2278:40:6;;;;;;;;;;;;;;;;2260:58;;2344:31;2360:7;2369:5;2344:15;:31::i;:::-;2328:47;;2391:37;2405:13;2420:7;2391:37;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;2141:294;;;;:::o;1969:21::-;;;;;;;;;;;;;:::o;2441:1323::-;2530:21;2616:4;2610:11;2726:7;2719:4;2705:12;2701:23;2694:40;2894:66;2887:4;2873:12;2869:23;2862:99;3104:66;3097:4;3083:12;3079:23;3072:99;3272:2;3258:12;3255:1;3248:27;3231:44;;3335:13;3323:26;3316:34;3313:2;;;3379:1;3376;3369:12;3313:2;3532:5;3526:12;3568:10;3561:18;3554:26;3551:2;;;3678:1;3675;3663:10;3656:4;3649:5;3645:16;3634:9;3619:13;3614:3;3609:71;3602:79;3599:2;;;3714:1;3711;3704:12;3599:2;3551;2576:1182;;;;;;:::o",
+  "source":
+    "/***\n* Shoutouts:\n*\n* Bytecode origin https://www.reddit.com/r/ethereum/comments/6ic49q/any_assembly_programmers_willing_to_write_a/dj5ceuw/\n* Modified version of Vitalik's https://www.reddit.com/r/ethereum/comments/6c1jui/delegatecall_forwarders_how_to_save_5098_on/\n* Credits to Jorge Izquierdo (@izqui) for coming up with this design here: https://gist.github.com/izqui/7f904443e6d19c1ab52ec7f5ad46b3a8\n* Credits to Stefan George (@Georgi87) for inspiration for many of the improvements from Gnosis Safe: https://github.com/gnosis/gnosis-safe-contracts\n*\n* This version has many improvements over the original @izqui's library like using REVERT instead of THROWing on failed calls.\n* It also implements the awesome design pattern for initializing code as seen in Gnosis Safe Factory: https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/ProxyFactory.sol\n* but unlike this last one it doesn't require that you waste storage on both the proxy and the proxied contracts (v. https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/Proxy.sol#L8 & https://github.com/gnosis/gnosis-safe-contracts/blob/master/contracts/GnosisSafe.sol#L14)\n*\n*\n* v0.0.2\n* The proxy is now only 60 bytes long in total. Constructor included.\n* No functionalities were added. The change was just to make the proxy leaner.\n*\n* v0.0.3\n* Thanks @dacarley for noticing the incorrect check for the subsequent call to the proxy. 🙌\n* Note: I'm creating a new version of this that doesn't need that one call.\n*       Will add tests and put this in its own repository soon™.\n*\n* v0.0.4\n* All the merit in this fix + update of the factory is @dacarley 's. 🙌\n* Thank you! 😄\n*\n* Potential updates can be found at https://gist.github.com/GNSPS/ba7b88565c947cfd781d44cf469c2ddb\n*\n***/\n\npragma solidity ^0.4.19;\n\nimport './ControllerPointer.sol';\n\n/* solhint-disable no-inline-assembly, indent, state-visibility, avoid-low-level-calls */\n\ncontract ProxyFactory {\n    address public target;\n\n    constructor(address _target) public {\n      target = _target;\n    }\n\n    event ProxyDeployed(address proxyAddress, address targetAddress);\n\n    function createProxy(bytes _data)\n        public\n        payable\n        returns (address proxyContract)\n    {\n        address _target = ControllerPointer(target).getERC20Main();\n        proxyContract = createProxyImpl(_target, _data);\n\n        emit ProxyDeployed(proxyContract, _target);\n    }\n\n    function createProxyImpl(address _target, bytes _data)\n        internal\n        returns (address proxyContract)\n    {\n        assembly {\n            let contractCode := mload(0x40) // Find empty storage location using \"free memory pointer\"\n\n            mstore(add(contractCode, 0x0b), _target) // Add target address, with a 11 bytes [i.e. 23 - (32 - 20)] offset to later accomodate first part of the bytecode\n            mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773) // First part of the bytecode, shifted left by 9 bytes, overwrites left padding of target address\n            mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000) // Final part of bytecode, offset by 43 bytes\n\n            proxyContract := create(0, contractCode, 60) // total length 60 bytes\n            if iszero(extcodesize(proxyContract)) {\n                revert(0, 0)\n            }\n\n            // check if the _data.length > 0 and if it is forward it to the newly created contract\n            let dataLength := mload(_data)\n            if iszero(iszero(dataLength)) {\n                if iszero(call(gas, proxyContract, callvalue, add(_data, 0x20), dataLength, 0, 0)) {\n                    revert(0, 0)\n                }\n            }\n        }\n    }\n}",
   "sourcePath": "/Users/billy/sol/meme-lordz/contracts/ProxyFactory.sol",
   "ast": {
     "absolutePath": "/Users/billy/sol/meme-lordz/contracts/ProxyFactory.sol",
     "exportedSymbols": {
-      "ProxyFactory": [
-        905
-      ]
+      "ProxyFactory": [905]
     },
     "id": 906,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 846,
-        "literals": [
-          "solidity",
-          "^",
-          "0.4",
-          ".19"
-        ],
+        "literals": ["solidity", "^", "0.4", ".19"],
         "nodeType": "PragmaDirective",
         "src": "1789:24:6"
       },
@@ -108,9 +106,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 905,
-        "linearizedBaseContracts": [
-          905
-        ],
+        "linearizedBaseContracts": [905],
         "name": "ProxyFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -324,9 +320,7 @@
               "src": "2250:185:6",
               "statements": [
                 {
-                  "assignments": [
-                    873
-                  ],
+                  "assignments": [873],
                   "declarations": [
                     {
                       "constant": false,
@@ -512,7 +506,8 @@
                         "referencedDeclaration": 904,
                         "src": "2344:15:6",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_bytes_memory_ptr_$returns$_t_address_$",
+                          "typeIdentifier":
+                            "t_function_internal_nonpayable$_t_address_$_t_bytes_memory_ptr_$returns$_t_address_$",
                           "typeString": "function (address,bytes memory) returns (address)"
                         }
                       },
@@ -589,7 +584,8 @@
                       "referencedDeclaration": 865,
                       "src": "2391:13:6",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
+                        "typeIdentifier":
+                          "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
                         "typeString": "function (address,address)"
                       }
                     },
@@ -759,7 +755,8 @@
                   ],
                   "id": 902,
                   "nodeType": "InlineAssembly",
-                  "operations": "{\n    let contractCode := mload(0x40)\n    mstore(add(contractCode, 0x0b), _target)\n    mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773)\n    mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000)\n    proxyContract := create(0, contractCode, 60)\n    if iszero(extcodesize(proxyContract))\n    {\n        revert(0, 0)\n    }\n    let dataLength := mload(_data)\n    if iszero(iszero(dataLength))\n    {\n        if iszero(call(gas(), proxyContract, callvalue(), add(_data, 0x20), dataLength, 0, 0))\n        {\n            revert(0, 0)\n        }\n    }\n}",
+                  "operations":
+                    "{\n    let contractCode := mload(0x40)\n    mstore(add(contractCode, 0x0b), _target)\n    mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773)\n    mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000)\n    proxyContract := create(0, contractCode, 60)\n    if iszero(extcodesize(proxyContract))\n    {\n        revert(0, 0)\n    }\n    let dataLength := mload(_data)\n    if iszero(iszero(dataLength))\n    {\n        if iszero(call(gas(), proxyContract, callvalue(), add(_data, 0x20), dataLength, 0, 0))\n        {\n            revert(0, 0)\n        }\n    }\n}",
                   "src": "2567:1197:6"
                 }
               ]
@@ -881,21 +878,14 @@
   "legacyAST": {
     "absolutePath": "/Users/billy/sol/meme-lordz/contracts/ProxyFactory.sol",
     "exportedSymbols": {
-      "ProxyFactory": [
-        905
-      ]
+      "ProxyFactory": [905]
     },
     "id": 906,
     "nodeType": "SourceUnit",
     "nodes": [
       {
         "id": 846,
-        "literals": [
-          "solidity",
-          "^",
-          "0.4",
-          ".19"
-        ],
+        "literals": ["solidity", "^", "0.4", ".19"],
         "nodeType": "PragmaDirective",
         "src": "1789:24:6"
       },
@@ -917,9 +907,7 @@
         "documentation": null,
         "fullyImplemented": true,
         "id": 905,
-        "linearizedBaseContracts": [
-          905
-        ],
+        "linearizedBaseContracts": [905],
         "name": "ProxyFactory",
         "nodeType": "ContractDefinition",
         "nodes": [
@@ -1133,9 +1121,7 @@
               "src": "2250:185:6",
               "statements": [
                 {
-                  "assignments": [
-                    873
-                  ],
+                  "assignments": [873],
                   "declarations": [
                     {
                       "constant": false,
@@ -1321,7 +1307,8 @@
                         "referencedDeclaration": 904,
                         "src": "2344:15:6",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_function_internal_nonpayable$_t_address_$_t_bytes_memory_ptr_$returns$_t_address_$",
+                          "typeIdentifier":
+                            "t_function_internal_nonpayable$_t_address_$_t_bytes_memory_ptr_$returns$_t_address_$",
                           "typeString": "function (address,bytes memory) returns (address)"
                         }
                       },
@@ -1398,7 +1385,8 @@
                       "referencedDeclaration": 865,
                       "src": "2391:13:6",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
+                        "typeIdentifier":
+                          "t_function_event_nonpayable$_t_address_$_t_address_$returns$__$",
                         "typeString": "function (address,address)"
                       }
                     },
@@ -1568,7 +1556,8 @@
                   ],
                   "id": 902,
                   "nodeType": "InlineAssembly",
-                  "operations": "{\n    let contractCode := mload(0x40)\n    mstore(add(contractCode, 0x0b), _target)\n    mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773)\n    mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000)\n    proxyContract := create(0, contractCode, 60)\n    if iszero(extcodesize(proxyContract))\n    {\n        revert(0, 0)\n    }\n    let dataLength := mload(_data)\n    if iszero(iszero(dataLength))\n    {\n        if iszero(call(gas(), proxyContract, callvalue(), add(_data, 0x20), dataLength, 0, 0))\n        {\n            revert(0, 0)\n        }\n    }\n}",
+                  "operations":
+                    "{\n    let contractCode := mload(0x40)\n    mstore(add(contractCode, 0x0b), _target)\n    mstore(sub(contractCode, 0x09), 0x000000000000000000603160008181600b9039f3600080808080368092803773)\n    mstore(add(contractCode, 0x2b), 0x5af43d828181803e808314602f57f35bfd000000000000000000000000000000)\n    proxyContract := create(0, contractCode, 60)\n    if iszero(extcodesize(proxyContract))\n    {\n        revert(0, 0)\n    }\n    let dataLength := mload(_data)\n    if iszero(iszero(dataLength))\n    {\n        if iszero(call(gas(), proxyContract, callvalue(), add(_data, 0x20), dataLength, 0, 0))\n        {\n            revert(0, 0)\n        }\n    }\n}",
                   "src": "2567:1197:6"
                 }
               ]
@@ -1695,7 +1684,7 @@
     "42": {
       "events": {},
       "links": {},
-      "address": "0x98b35d85d5bc3687a5fe12381978539d44b2f228"
+      "address": "0x19d6bd51cf889abd63e0a11863ad2ae7df9d1089"
     },
     "5777": {
       "events": {},

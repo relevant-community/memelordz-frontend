@@ -13,9 +13,9 @@ const { Buffer } = ipfs;
 const { BN } = Web3.utils;
 
 function loadFile(file) {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     const reader = new FileReader();
-    reader.onload = (e) => resolve(e.target.result);
+    reader.onload = e => resolve(e.target.result);
     reader.readAsArrayBuffer(file);
   });
 }
@@ -30,11 +30,10 @@ const initialState = {
   lastTxHash: null,
   amount: '',
   modal: false,
-  createStatus: '',
+  createStatus: ''
 };
 
 class Create extends Component {
-
   state = { ...initialState };
 
   constructor(props) {
@@ -48,9 +47,12 @@ class Create extends Component {
       if (!lastTxHash) return null;
 
       let { status, error } = props.transactions[lastTxHash];
-      console.log(props.transactions[lastTxHash])
+      console.log(props.transactions[lastTxHash]);
       if (status === 'pending') {
-        return { ...state, createStatus: 'Waiting for contract to post to the blockchain - this may take a while!' };
+        return {
+          ...state,
+          createStatus: 'Waiting for contract to post to the blockchain - this may take a while!'
+        };
       }
       if (status === 'error') {
         window.alert('Your transaction failed :(' + error);
@@ -58,8 +60,11 @@ class Create extends Component {
       }
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
-        // console.log(lastTxHash)
-        const { address } = props.transactions[lastTxHash].receipt.events[0];
+        console.log(props.transactions);
+        console.log(props.transactions[lastTxHash].receipt.events.ProxyDeployed);
+        console.log(lastTxHash);
+        const { address } = props.transactions[lastTxHash].receipt.events.ProxyDeployed;
+
         setTimeout(() => {
           window.location.hash = '#/meme/' + address;
         }, 10000);
@@ -70,8 +75,7 @@ class Create extends Component {
     return null;
   }
 
-  componentDidMount() {
-  }
+  componentDidMount() {}
 
   getContractData() {
     let ipfsHash = multihash.getBytes32FromMultiash(this.state.hash);
@@ -84,39 +88,40 @@ class Create extends Component {
       totalSupply: 0,
       poolBalance: 0,
       slope: 2,
-      amount: this.state.amount || 0,
+      amount: this.state.amount || 0
     });
 
     numOfTokens *= 1e18;
     // numOfTokens = new BN(numOfTokens.toString());
 
-    let data = web3.eth.abi.encodeFunctionCall({
-      name: 'initContract',
-      type: 'function',
-      inputs: [{
-        type: 'string',
-        name: '_name'
-      }, {
-        type: 'string',
-        name: '_symbol'
-      }, {
-        type: 'uint8',
-        name: '_hashFunction'
-      }, {
-        type: 'uint8',
-        name: '_size'
-      }, {
-        type: 'bytes32',
-        name: '_hash'
-      }
-      ]
-    }, [
-      this.state.name,
-      this.state.symbol,
-      ipfsHash.hashFunction,
-      ipfsHash.size,
-      ipfsHash.digest,
-    ]
+    let data = web3.eth.abi.encodeFunctionCall(
+      {
+        name: 'initMeme',
+        type: 'function',
+        inputs: [
+          {
+            type: 'string',
+            name: '_name'
+          },
+          {
+            type: 'string',
+            name: '_symbol'
+          },
+          {
+            type: 'uint8',
+            name: '_hashFunction'
+          },
+          {
+            type: 'uint8',
+            name: '_size'
+          },
+          {
+            type: 'bytes32',
+            name: '_hash'
+          }
+        ]
+      },
+      [this.state.name, this.state.symbol, ipfsHash.hashFunction, ipfsHash.size, ipfsHash.digest]
     );
     return data;
   }
@@ -128,9 +133,13 @@ class Create extends Component {
       console.log('data ', data);
 
       let amount = this.state.amount;
-      amount = Web3.utils.toWei(amount);
+      console.log('amount ', amount.toString());
+      amount = Web3.utils.toWei(amount.toString());
       amount = new BN(amount.toString());
-      let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(data, { value: amount });
+      console.log('amount ', amount.toString());
+      let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(data, {
+        value: amount.toString()
+      });
       console.log('tx ', txId);
       this.setState({ lastTxId: txId });
     } catch (err) {
@@ -140,7 +149,7 @@ class Create extends Component {
 
   displayPreview() {
     const reader = new FileReader();
-    reader.onload = (e) => {
+    reader.onload = e => {
       this.setState({ preview: e.target.result });
     };
     reader.readAsDataURL(this.fileInput.files[0]);
@@ -155,7 +164,7 @@ class Create extends Component {
       this.setState({
         modal: false,
         processing: true,
-        createStatus: 'Starting upload to IPFS',
+        createStatus: 'Starting upload to IPFS'
       });
 
       let { account, decimals } = this.props;
@@ -169,22 +178,22 @@ class Create extends Component {
       file = await loadFile(file);
       const buff = Buffer(file);
       const result = await ipfs.add(buff, {
-        progress: (prog) => {
+        progress: prog => {
           this.setState({
-            createStatus: 'Uploaded ' + prog + '% to IPFS',
+            createStatus: 'Uploaded ' + prog + '% to IPFS'
           });
         }
       });
       console.log(result);
       this.setState({
-        createStatus: 'Creating contract...',
+        createStatus: 'Creating contract...'
       });
 
       this.setState({ hash: result[0].path });
       this.createMemeContract(result[0].path);
 
       this.setState({
-        createStatus: 'Waiting for contract to be confirmed - this may take a while!',
+        createStatus: 'Waiting for contract to be confirmed - this may take a while!'
       });
 
       // TODO: execute initial trade when creating the contract
@@ -227,7 +236,7 @@ class Create extends Component {
       const cdr = s.substr(1).replace(/[^BCDFGHJKLMNPQRSTVWXYZ]/g, '');
       this.setState({
         [name]: value,
-        symbol: (car + cdr).substr(0, 9),
+        symbol: (car + cdr).substr(0, 9)
       });
     } else {
       this.setState({
@@ -269,12 +278,12 @@ class Create extends Component {
           <div>
             <label>Name</label>
             <input
-              name='name'
+              name="name"
               maxLength="20"
-              type='text'
-              placeholder='meme name'
-              autoComplete='off'
-              ref={c => this.nameInput = c}
+              type="text"
+              placeholder="meme name"
+              autoComplete="off"
+              ref={c => (this.nameInput = c)}
               value={this.state.name}
               onChange={this.handleInputChange}
             />
@@ -282,12 +291,12 @@ class Create extends Component {
           <div>
             <label>Token Symbol</label>
             <input
-              name='symbol'
+              name="symbol"
               maxLength="9"
-              type='text'
-              placeholder='SYMB'
-              autoComplete='off'
-              ref={c => this.symbolInput = c}
+              type="text"
+              placeholder="SYMB"
+              autoComplete="off"
+              ref={c => (this.symbolInput = c)}
               value={this.state.symbol}
               onChange={this.handleInputChange}
             />
@@ -295,19 +304,17 @@ class Create extends Component {
           <div>
             <label>Image</label>
             <input
-              ref={c => this.fileInput = c}
+              ref={c => (this.fileInput = c)}
               onChange={this.displayPreview.bind(this)}
               name="meme"
               type="file"
             />
           </div>
           <div>
-            <label className='hidden'></label>
+            <label className="hidden" />
             <button onClick={this.showModal.bind(this)}>Create Meme Contract</button>
           </div>
-          <div className='error'>
-            {this.state.error}
-          </div>
+          <div className="error">{this.state.error}</div>
         </div>
 
         {this.state.processing ? this.renderLoader() : this.renderModal()}
@@ -318,13 +325,9 @@ class Create extends Component {
   renderLoader() {
     return (
       <div className={'modal visible'}>
-        <div className='inner'>
-          <div className='heading'>
-            Posting Meme
-          </div>
-          <div className='content'>
-            {this.state.createStatus}
-          </div>
+        <div className="inner">
+          <div className="heading">Posting Meme</div>
+          <div className="content">{this.state.createStatus}</div>
         </div>
       </div>
     );
@@ -336,7 +339,9 @@ class Create extends Component {
 
     let processing;
     if (this.state.lastTxHash) {
-      processing = <div className="processing">processing transaction: {this.state.lastTxHash}</div>;
+      processing = (
+        <div className="processing">processing transaction: {this.state.lastTxHash}</div>
+      );
     }
 
     let walletBalance;
@@ -344,13 +349,15 @@ class Create extends Component {
     let available;
 
     walletBalance = toNumber(this.props.accountBalances[this.props.account], 18);
-    otherTokenValue = (calculatePurchaseReturn({
-      exponent: 2,
-      totalSupply: 0,
-      poolBalance: 0,
-      slope: 1000,
-      amount: this.state.amount || 0,
-    }) || 0).toFixed(2);
+    otherTokenValue = (
+      calculatePurchaseReturn({
+        exponent: 2,
+        totalSupply: 0,
+        poolBalance: 0,
+        slope: 1000,
+        amount: this.state.amount || 0
+      }) || 0
+    ).toFixed(2);
     available = (
       <a onClick={() => this.setState({ amount: walletBalance })}>
         {(walletBalance || 0).toFixed(2)} ETH
@@ -358,34 +365,35 @@ class Create extends Component {
     );
 
     return (
-      <div className={this.state.modal ? 'modal visible' : 'modal'} onClick={this.hideModal.bind(this)}>
-        <div className='inner' onClick={e => e.stopPropagation()}>
-          <div className='heading'>
-             Almost there!
-             <div className='close' onClick={this.hideModal.bind(this)}>X</div>
+      <div
+        className={this.state.modal ? 'modal visible' : 'modal'}
+        onClick={this.hideModal.bind(this)}
+      >
+        <div className="inner" onClick={e => e.stopPropagation()}>
+          <div className="heading">
+            Almost there!
+            <div className="close" onClick={this.hideModal.bind(this)}>
+              X
+            </div>
           </div>
-          <div className='content'>
+          <div className="content">
             <div>
-              Be the first to invest in your meme:<br/>
+              Be the first to invest in your meme:<br />
               <b>{this.state.name}</b>
             </div>
 
-            <div className='uploadPreview'>
+            <div className="uploadPreview">
               <img src={this.state.preview} />
             </div>
 
-            <div>
-              How much do you want to invest?
-            </div>
+            <div>How much do you want to invest?</div>
 
             <div className="tradeSection">
               <div>
-                <label>
-                  {'Pay With: '}
-                </label>
+                <label>{'Pay With: '}</label>
                 <span>
                   <input
-                    placeholder=''
+                    placeholder=""
                     onFocus={e => {
                       if (e.target.value === '0') this.setState({ amount: '' });
                     }}
@@ -403,9 +411,7 @@ class Create extends Component {
               </div>
 
               <div>
-                <label>
-                  Receive:
-                </label>
+                <label>Receive:</label>
                 <span>
                   {otherTokenValue} {this.state.symbol}
                 </span>
@@ -432,7 +438,7 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   account: state.accounts[0],
   accountBalances: state.accountBalances || {},
   ProxyFactory: state.contracts.ProxyFactory,
@@ -443,8 +449,11 @@ const mapStateToProps = (state) => ({
   transactionStack: state.transactionStack
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Create);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Create);

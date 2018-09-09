@@ -15,8 +15,8 @@ class Meme extends Component {
     name: '',
     symbol: '',
     hash: null,
-    img: '',
-  }
+    img: ''
+  };
 
   componentDidMount() {
     this.queryParams();
@@ -32,6 +32,8 @@ class Meme extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
+    console.log('contracts', props.contracts);
+    console.log('address', props.address);
     let contract = props.contracts[props.address];
 
     let updatedState = {
@@ -51,12 +53,10 @@ class Meme extends Component {
       ipfsImg = {
         hash: event.returnValues.memehash,
         hash_function: 32,
-        size: 8,
+        size: 8
       };
       updatedState.timestamp = event.returnValues.timestamp;
     }
-
-
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {
@@ -71,7 +71,7 @@ class Meme extends Component {
     let contract = this.props.contracts[this.props.address];
     if (!contract || !(state.hash || state.name)) {
       return (
-        <div className='meme'>
+        <div className="meme">
           <div>
             Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
           </div>
@@ -82,7 +82,8 @@ class Meme extends Component {
     // console.log('render meme', this.props.address);
     return (
       <div className={'meme'}>
-        <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
+        <div>
+          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
           <div className="memeImage">
@@ -90,9 +91,9 @@ class Meme extends Component {
           </div>
           <div className="memeMeta">
             <div className="memeHeading">
-              <input type='checkbox' disabled />
-              <span className='subject'>{state.name}</span>
-              <span className='name'>Anonymous</span>
+              <input type="checkbox" disabled />
+              <span className="subject">{state.name}</span>
+              <span className="name">Anonymous</span>
               {ChanDate(state.timestamp)}
             </div>
 
@@ -102,11 +103,7 @@ class Meme extends Component {
 
             <Trade address={this.props.address} contract={contract} showToggles />
 
-            {this.props.showChart && (
-              <BondingCurveChart
-                data={state}
-              />
-            )}
+            {this.props.showChart && <BondingCurveChart data={state} />}
           </div>
         </div>
         <hr />
@@ -133,13 +130,15 @@ class MemeWrapper extends Component {
   }
 }
 
-
-const mapStateToProps = (state) => ({
-  contracts: state.contracts,
+const mapStateToProps = state => ({
+  contracts: state.contracts
 });
 
-const mapDispatchToProps = (dispatch) => ({
+const mapDispatchToProps = dispatch => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(MemeWrapper);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(MemeWrapper);

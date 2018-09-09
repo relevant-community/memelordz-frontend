@@ -4,23 +4,20 @@ import { connect } from 'react-redux';
 
 function Header() {
   return (
-    <div className='header'>
-      <Link className='logo' to='/'>
-        <h1>
-          Meme Lordz
-        </h1>
+    <div className="header">
+      <Link className="logo" to="/">
+        <h1>Meme Lordz</h1>
       </Link>
       <p>
-        <i>The first fully decentralized meme currency market!</i>
+        <i>The first meme market!</i>
         <br />
         <br />
         Turn any meme into its own currency. Let the market define its value based on popularity.
         <br />
-        Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
+        Buy and sell meme currency on our platform and start earning. Test your skills making and
+        predicting for fun and profit.
       </p>
-      <p>
-        Built on Ethereum and IPFS.
-      </p>
+      <p>Built on Ethereum and IPFS.</p>
     </div>
   );
 }
@@ -50,14 +47,16 @@ function Header() {
 //   )
 // }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   account: state.accounts[0],
   network: state.web3.networkId,
   status: state.web3.status,
-  drizzleStatus: state.drizzleStatus.initialized,
+  drizzleStatus: state.drizzleStatus.initialized
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);
