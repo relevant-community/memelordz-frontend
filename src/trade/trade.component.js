@@ -115,7 +115,7 @@ class Trade extends Component {
         amount = Web3.utils.toWei(amount.toString());
         amount = new BN(amount.toString());
 
-        contract.methods.mint.cacheSend(numOfTokens, {
+        controllerContract.methods.mint.cacheSend(contract.address, numOfTokens, {
           value: amount,
           from: account
         });
@@ -143,8 +143,8 @@ class Trade extends Component {
         <div className="tradeContainer inactive">
           <div className="row">
             <div className="row toggleBuy" onClick={this.activate.bind(this)}>
-              <div onClick={()=>this.toggleBuy(true)}>Buy</div>
-              <div onClick={()=>this.toggleBuy(false)}>Sell</div>
+              <div onClick={() => this.toggleBuy(true)}>Buy</div>
+              <div onClick={() => this.toggleBuy(false)}>Sell</div>
             </div>
           </div>
           {this.state.loading && this.renderLoader()}
@@ -192,8 +192,12 @@ class Trade extends Component {
       <div className="tradeContainer">
         <div className="row">
           <div className="row toggleBuy">
-            <div onClick={()=>this.toggleBuy(true)} className={isBuy ? 'active' : ''}>Buy</div>
-            <div onClick={()=>this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>Sell</div>
+            <div onClick={() => this.toggleBuy(true)} className={isBuy ? 'active' : ''}>
+              Buy
+            </div>
+            <div onClick={() => this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>
+              Sell
+            </div>
           </div>
         </div>
 
@@ -255,7 +259,8 @@ function mapStateToProps(state) {
   return {
     drizzleStatus: state.drizzleStatus,
     accounts: state.accounts,
-    accountBalances: state.accountBalances
+    accountBalances: state.accountBalances,
+    controllerContract: state.contracts.Controller
     // drizzle: {
     // transactions: state.transactions,
     // web3: state.web3,

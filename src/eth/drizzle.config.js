@@ -4,10 +4,10 @@ import { store } from '../store';
 
 import ProxyFactory from './contracts/ProxyFactory.json';
 import BondingCurveContract from './contracts/ERC20Main.json';
-import { Controller } from './contracts/abi.json';
+import Controller from './contracts/Controller.json';
 
 // export const PROXY_FACTORY = '0x98b35d85d5bc3687a5fe12381978539d44b2f228';
-export const BONDING_CURVE_CONTRACT = '0x148e9116b7e0ac834e2759fc13ec9711af687d50';
+export const BONDING_CURVE_CONTRACT = BondingCurveContract.networks[4].address;
 
 export { ProxyFactory, BondingCurveContract, Controller };
 

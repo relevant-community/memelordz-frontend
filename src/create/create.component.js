@@ -135,7 +135,7 @@ class Create extends Component {
           },
           {
             type: 'bytes32',
-            name: '_hash'
+            name: '_memehash'
           }
         ]
       },
