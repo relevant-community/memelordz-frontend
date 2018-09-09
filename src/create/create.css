@@ -37,6 +37,7 @@
 
 @media only screen and (max-width: 1020px) {
   .newForm {
+    width: 100%;
     max-width:320px;
     width: 100%;
   }
