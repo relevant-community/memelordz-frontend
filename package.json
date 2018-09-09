@@ -30,7 +30,8 @@
     "start": "webpack --watch",
     "build": "webpack",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js --hot --inline",
-    "buildDev": "webpack --config ./webpack.config.dev.js --watch --colors"
+    "buildDev": "webpack --config ./webpack.config.dev.js --watch --colors",
+    "deploy": "webpack --config ./webpack.config.dev.js"
   },
   "author": {
     "name": "Slava Balasanov",
