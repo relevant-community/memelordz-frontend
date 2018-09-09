@@ -8,12 +8,11 @@ import { Nav } from '../common';
 
 class MemeIndex extends Component {
   render() {
-    if (!this.props.ProxyFactory.events || this.props.ProxyFactory.events.length === 0) {
+    if (!this.props.ProxyFactory.events) {
       return (
         <div>
           <hr />
             <Create />
-          <hr />
           <div className='loadingMessage'>
             Loading memes...
           </div>

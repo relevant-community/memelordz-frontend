@@ -16,7 +16,17 @@ class App extends Component {
     this.props.ProxyFactory.events.forEach(e => {
       let address = e.returnValues.proxyAddress;
       if (this.props.memes.indexOf(address) !== -1) return;
-      this.props.actions.addMeme(address, e.blockNumber);
+      drizzle.addContract(BondingCurveContract, {
+        name: address,
+        address,
+        events: [{
+          eventName: 'StoreHash',
+          eventOptions: {
+            fromBlock: e.blockNumber,
+          }
+        }]
+      });
+      this.props.actions.addMeme(address);
     });
   }
 

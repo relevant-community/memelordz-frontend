@@ -48,8 +48,10 @@ header, footer {
 .nav {
   text-align: center;
 }
-a {
-  color: maroon;
+a, a:link, a:visited {
+  color: #a00;
+}
+.nav a {
   margin-left: 5px;
   cursor: pointer;
 }
@@ -172,6 +174,16 @@ input[type=text]:focus {
   text-align: center;
   padding: 10px;
   justify-content: center;
+}
+
+.appLoaderError {
+  text-align: center;
+  width: 65%;
+  padding: 30px;
+  justify-content: center;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 40px;
 }
 
 .modal.loader {
