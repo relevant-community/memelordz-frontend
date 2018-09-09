@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router';
 import { withRouter } from 'react-router-dom';
+import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 
 import { AppLoader, Header, Footer } from './common';
 import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';

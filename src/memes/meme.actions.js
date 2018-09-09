@@ -1,5 +1,3 @@
-import { drizzle, BondingCurveContract } from '../eth/drizzle.config';
-
 import * as types from '../types';
 
 export function addMeme(address) {
