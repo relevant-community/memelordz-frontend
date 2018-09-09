@@ -10,6 +10,8 @@ export {
   BondingCurveContract,
 };
 
+const networkId = 4;
+
 export const PROXY_FACTORY = '0x14bbea4b804cabe1742056915829eba8f13a4fd9';
 
 // ganache
@@ -19,8 +21,7 @@ export const PROXY_FACTORY = '0x14bbea4b804cabe1742056915829eba8f13a4fd9';
 // export const BONDING_CURVE_CONTRACT = '0x378ff88de73d674012bea882f6864fedd787110d';
 
 // rinkeyby
-export const BONDING_CURVE_CONTRACT = '0x4a3c62cfcd98c92eb4f63609415fc47bac526e87';
-
+export const BONDING_CURVE_CONTRACT = BondingCurveContract.networks[networkId].address;
 
 export const options = {
   contracts: [
@@ -41,7 +42,7 @@ export const options = {
   },
   // networkId: 42,
   // networkId: 5777,
-  networkId: 4,
+  networkId,
   web3: {
     ignoreMetamask: true,
     useMetamask: true,

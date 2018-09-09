@@ -18,7 +18,7 @@ class MemeLeaderboard extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.accounts[0] !== prevProps.accounts[0] ||
-      this.props.ProxyFactory.events.length !== prevProps.ProxyFactory.events.length) {
+      this.props.memes.length !== prevProps.memes.length) {
       setTimeout(() => this.queryParams(), 1000);
     }
   }
@@ -26,9 +26,8 @@ class MemeLeaderboard extends Component {
   queryParams() {
     let account = this.props.accounts[0];
     if (!account) return;
-    this.props.ProxyFactory.events.forEach(meme => {
-      if (!meme) return null;
-      let address = meme.returnValues.proxyAddress;
+    this.props.memes.forEach(address => {
+      if (!address) return null;
       let contract = this.props.contracts[address];
       if (!contract || !contract.methods) return;
       contract.methods.balanceOf.cacheCall(account);
@@ -36,14 +35,11 @@ class MemeLeaderboard extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    let { events } = props.ProxyFactory;
-
     let account = props.accounts[0];
     if (!account) return;
 
-    let sorted = events.map(meme => {
-      if (!meme) return null;
-      let address = meme.returnValues.proxyAddress;
+    let sorted = props.memes.map(address => {
+      if (!address) return null;
       let contract = props.contracts[address];
       if (!contract || !contract.methods) return null;
       let balance = toNumber(contract.methods.balanceOf.fromCache(account), 18);
@@ -55,7 +51,7 @@ class MemeLeaderboard extends Component {
   }
 
   render() {
-    if (!this.props.ProxyFactory.events) {
+    if (!this.props.memes.length) {
       return (
         <div>
           <hr />
@@ -88,6 +84,7 @@ const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
   contracts: state.contracts,
   accounts: state.accounts,
+  memes: state.memes.all,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -8,7 +8,7 @@ import { Nav } from '../common';
 
 class MemeIndex extends Component {
   render() {
-    if (!this.props.ProxyFactory.events) {
+    if (!this.props.memes.length) {
       return (
         <div>
           <hr />
@@ -20,14 +20,10 @@ class MemeIndex extends Component {
       );
     }
 
-    let { events } = this.props.ProxyFactory;
-    let memes = events.map(meme => {
+    let memes = this.props.memes.map(meme => {
       if (!meme) return null;
-      let address = meme.returnValues.proxyAddress;
-      return <Meme key={address} address={address} />;
+      return <Meme key={meme} address={meme} />;
     });
-
-    memes.reverse();
 
     return (
       <div>
@@ -46,6 +42,7 @@ class MemeIndex extends Component {
 
 const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
+  memes: state.memes.all,
 });
 
 const mapDispatchToProps = (dispatch) => ({
