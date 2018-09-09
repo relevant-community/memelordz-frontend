@@ -17,6 +17,7 @@ class Meme extends Component {
     symbol: '',
     hash: null,
     img: '',
+    bigImg: false
   }
 
   componentDidMount() {
@@ -84,6 +85,7 @@ class Meme extends Component {
 
   render() {
     let { state } = this;
+    let { bigImg } = this.state;
     let contract = this.props.contracts[this.props.address];
     if (!contract || !(state.hash || state.name)) {
       return (
@@ -105,7 +107,7 @@ class Meme extends Component {
         <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
-          <div className="memeImage">
+          <div className={'memeImage ' + (bigImg ? 'bigImg' : '')} onClick={()=>this.setState({ bigImg: !bigImg })}>
             {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
           </div>
           <div className="memeMeta">
@@ -117,10 +119,12 @@ class Meme extends Component {
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
-            {<div>Pool balance: {state.poolBalance} </div>}
-            {<div>Total supply: {state.totalSupply} </div>}
+            {<p><b>Price: {1/state.slope * state.totalSupply ** state.exponent} ETH</b></p>}
 
-            {state.tokens ? <div><b>You Own: {state.tokens} {state.symbol} ({saleReturn} ETH) </b></div> : null}
+{/*            {<div>Pool balance: {state.poolBalance} </div>}
+            {<div>Total supply: {state.totalSupply} </div>}*/}
+
+            {state.tokens ? <p><b>You Own: {state.tokens} {state.symbol} ({saleReturn} ETH) </b></p> : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 
             {this.props.showChart && (
