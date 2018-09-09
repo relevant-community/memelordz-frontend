@@ -23,8 +23,18 @@ class Meme extends Component {
     this.queryParams();
   }
 
+  componentDidUpcate(prevProps) {
+    if (this.props.accounts[0] !== prevProps.accounts[0]) {
+      this.quaryParams();
+    }
+  }
+
   queryParams() {
     let contract = this.props.contracts[this.props.address];
+    let account = this.props.accounts[0];
+    if (account) {
+      contract.methods.balanceOf.cacheCall(account);
+    }
     contract.methods.name.cacheCall();
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
@@ -33,12 +43,19 @@ class Meme extends Component {
 
   static getDerivedStateFromProps(props, state) {
     let contract = props.contracts[props.address];
+    let account = props.accounts[0];
+
+    let tokens = 0;
+    if (account) {
+      tokens = toNumber(contract.methods.balanceOf.fromCache(account), 18);
+    }
 
     let updatedState = {
       name: contract.methods.name.fromCache(),
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
+      tokens
     };
 
     let ipfsImg;
@@ -51,6 +68,7 @@ class Meme extends Component {
       };
       updatedState.timestamp = event.returnValues.timestamp;
     }
+
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {
@@ -94,6 +112,7 @@ class Meme extends Component {
             {<div>Pool balance: {state.poolBalance} </div>}
             {<div>Total supply: {state.totalSupply} </div>}
 
+            {state.tokens ? <div><b>You Own: {state.tokens} {state.symbol}</b></div> : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 
             {this.props.showChart && (
@@ -130,6 +149,7 @@ class MemeWrapper extends Component {
 
 const mapStateToProps = (state) => ({
   contracts: state.contracts,
+  accounts: state.accounts,
 });
 
 const mapDispatchToProps = (dispatch) => ({

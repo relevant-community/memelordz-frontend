@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Web3 from 'web3';
 import * as multihash from '../eth/multihash';
-import { drizzle, BONDING_CURVE_CONTRACT } from '../eth/drizzle.config';
+import { drizzle, BONDING_CURVE_CONTRACT, BondingCurveContract } from '../eth/drizzle.config';
 import { calculatePurchaseReturn, toNumber, toFixed } from '../util';
+import actions from '../actions';
+
 import './create.css';
 
 const ipfs = ipfsAPI('ipfs.infura.io', '5001', { protocol: 'https' });
@@ -48,7 +50,7 @@ class Create extends Component {
       if (!lastTxHash) return null;
 
       let { status, error } = props.transactions[lastTxHash];
-      console.log(props.transactions[lastTxHash])
+      console.log(props.transactions[lastTxHash]);
       if (status === 'pending') {
         return { ...state, createStatus: 'Waiting for contract to post to the blockchain - this may take a while!' };
       }
@@ -59,10 +61,25 @@ class Create extends Component {
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
         // console.log(lastTxHash)
-        const { address } = props.transactions[lastTxHash].receipt.events[0];
+        const { address, blockNumber } = props.transactions[lastTxHash].receipt.events[0];
+        console.log(props.transactions[lastTxHash].receipt.events);
+
+        drizzle.addContract(BondingCurveContract, {
+          name: address,
+          address,
+          events: [{
+            eventName: 'StoreHash',
+            eventOptions: {
+              fromBlock: blockNumber
+            }
+          }]
+        });
+        props.actions.addMeme(address);
+
         setTimeout(() => {
           window.location.hash = '#/meme/' + address;
-        }, 5000);
+        }, 1000);
+
         return { ...initialState, createStatus: 'Finalizing meme creation' };
       }
       return { lastTxHash };
@@ -445,7 +462,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  // actions: bindActionCreators({ ...authActions }, dispatch)
+  actions: bindActionCreators({ ...actions.memeActions }, dispatch)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Create);
