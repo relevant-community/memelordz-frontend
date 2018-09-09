@@ -5,7 +5,7 @@ import * as multihash from '../eth/multihash';
 import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
-import { toNumber, toFixed } from '../util';
+import { toNumber, toFixed, calculateSaleReturn } from '../util';
 
 import './meme.css';
 
@@ -16,47 +16,64 @@ class Meme extends Component {
     name: '',
     symbol: '',
     hash: null,
-    img: ''
-  };
+    img: '',
+    bigImg: false
+  }
 
   componentDidMount() {
     this.queryParams();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.accounts[0] !== prevProps.accounts[0]) {
+      this.quaryParams();
+    }
+  }
+
   queryParams() {
     let contract = this.props.contracts[this.props.address];
+    let account = this.props.accounts[0];
+    if (account) {
+      contract.methods.balanceOf.cacheCall(account);
+    }
     contract.methods.name.cacheCall();
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
-    contract.methods.memehash.cacheCall();
+    contract.methods.slope.cacheCall();
+    contract.methods.exponent.cacheCall();
   }
 
   static getDerivedStateFromProps(props, state) {
-    console.log('contracts', props.contracts);
-    console.log('address', props.address);
     let contract = props.contracts[props.address];
+    let account = props.accounts[0];
+
+    let tokens = 0;
+    if (account) {
+      tokens = toNumber(contract.methods.balanceOf.fromCache(account), 18);
+    }
 
     let updatedState = {
       name: contract.methods.name.fromCache(),
       symbol: (contract.methods.symbol.fromCache() || 'MEME').toUpperCase(),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
-      totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18)
+      totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
+      slope: toNumber(contract.methods.slope.fromCache(), 0),
+      exponent: toNumber(contract.methods.exponent.fromCache(), 0),
+      tokens
     };
-
-    console.log(updatedState);
 
     let ipfsImg;
     let event = contract.events[0];
     if (event) {
-      console.log(event);
       ipfsImg = {
-        hash: event.returnValues.memehash,
-        hash_function: 32,
-        size: 8
+        hash: event.returnValues.hash,
+        hash_function: event.returnValues.hashFunction,
+        size: event.returnValues.size,
       };
       updatedState.timestamp = event.returnValues.timestamp;
     }
+
 
     // assume hash does not update
     if (!state.hash && ipfsImg) {
@@ -68,10 +85,11 @@ class Meme extends Component {
 
   render() {
     let { state } = this;
+    let { bigImg } = this.state;
     let contract = this.props.contracts[this.props.address];
     if (!contract || !(state.hash || state.name)) {
       return (
-        <div className="meme">
+        <div className='meme'>
           <div>
             Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
           </div>
@@ -79,31 +97,41 @@ class Meme extends Component {
         </div>
       );
     }
-    // console.log('render meme', this.props.address);
+
+    let saleReturn;
+    if (state.tokens) {
+      saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
+    }
     return (
       <div className={'meme'}>
-        <div>
-          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
+        <div>Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
-          <div className="memeImage">
+          <div className={'memeImage ' + (bigImg ? 'bigImg' : '')} onClick={()=>this.setState({ bigImg: !bigImg })}>
             {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
           </div>
           <div className="memeMeta">
             <div className="memeHeading">
-              <input type="checkbox" disabled />
-              <span className="subject">{state.name}</span>
-              <span className="name">Anonymous</span>
+              <input type='checkbox' disabled />
+              <span className='subject'>{state.name}</span>
+              <span className='name'>Anonymous</span>
               {ChanDate(state.timestamp)}
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
-            {<div>Pool balance: {state.poolBalance} </div>}
-            {<div>Total supply: {state.totalSupply} </div>}
+            {<p><b>Price: {1/state.slope * state.totalSupply ** state.exponent} ETH</b></p>}
 
+{/*            {<div>Pool balance: {state.poolBalance} </div>}
+            {<div>Total supply: {state.totalSupply} </div>}*/}
+
+            {state.tokens ? <p><b>You Own: {state.tokens} {state.symbol} ({saleReturn} ETH) </b></p> : null}
             <Trade address={this.props.address} contract={contract} showToggles />
 
-            {this.props.showChart && <BondingCurveChart data={state} />}
+            {this.props.showChart && (
+              <BondingCurveChart
+                data={state}
+              />
+            )}
           </div>
         </div>
         <hr />
@@ -130,15 +158,14 @@ class MemeWrapper extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  contracts: state.contracts
+
+const mapStateToProps = (state) => ({
+  contracts: state.contracts,
+  accounts: state.accounts,
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MemeWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(MemeWrapper);

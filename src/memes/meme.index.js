@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Meme from './meme.component';
 import Create from '../create/create.component';
+import { Nav } from '../common';
 
 class MemeIndex extends Component {
   render() {
@@ -11,7 +12,11 @@ class MemeIndex extends Component {
       return (
         <div>
           <hr />
-          <div className="loadingMessage">Loading memes...</div>
+            <Create />
+          <hr />
+          <div className='loadingMessage'>
+            Loading memes...
+          </div>
         </div>
       );
     }
@@ -28,31 +33,24 @@ class MemeIndex extends Component {
     return (
       <div>
         <hr />
-        <Create />
+          <Create />
         <hr />
-        <div className="sortLinks">
-          Sort memes by:
-          <Link to="/" className="active">
-            [Recent]
-          </Link>
-          <Link to="/leaderboard">[Price]</Link>
+          <Nav />
+        <hr />
+        <div>
+          {memes}
         </div>
-        <hr />
-        <div>{memes}</div>
       </div>
     );
   }
 }
 
-const mapStateToProps = state => ({
-  ProxyFactory: state.contracts.ProxyFactory || {}
+const mapStateToProps = (state) => ({
+  ProxyFactory: state.contracts.ProxyFactory || {},
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MemeIndex);
+export default connect(mapStateToProps, mapDispatchToProps)(MemeIndex);

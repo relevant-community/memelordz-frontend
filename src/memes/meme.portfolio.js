@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Meme from './meme.component';
 import Create from '../create/create.component';
 import { Nav } from '../common';
-import { calculateSaleReturn } from '../util';
+import { toNumber } from '../util';
 
 class MemeLeaderboard extends Component {
   state = {
@@ -16,28 +16,40 @@ class MemeLeaderboard extends Component {
     this.queryParams();
   }
 
+  componentDidUpdate(prevProps) {
+    if (this.props.accounts[0] !== prevProps.accounts[0] ||
+      this.props.ProxyFactory.events.length !== prevProps.ProxyFactory.events.length) {
+      setTimeout(() => this.queryParams(), 1000);
+    }
+  }
+
   queryParams() {
+    let account = this.props.accounts[0];
+    if (!account) return;
     this.props.ProxyFactory.events.forEach(meme => {
       if (!meme) return null;
       let address = meme.returnValues.proxyAddress;
       let contract = this.props.contracts[address];
       if (!contract || !contract.methods) return;
-      contract.methods.totalSupply.cacheCall();
+      contract.methods.balanceOf.cacheCall(account);
     });
   }
 
   static getDerivedStateFromProps(props, state) {
     let { events } = props.ProxyFactory;
+
+    let account = props.accounts[0];
+    if (!account) return;
+
     let sorted = events.map(meme => {
       if (!meme) return null;
       let address = meme.returnValues.proxyAddress;
       let contract = props.contracts[address];
       if (!contract || !contract.methods) return null;
-      return [
-        contract.methods.totalSupply.fromCache() || 0,
-        address
-      ];
-    }).filter(a => !!a).sort((a, b) => b[0] - a[0]);
+      let balance = toNumber(contract.methods.balanceOf.fromCache(account), 18);
+      if (!balance) return null;
+      return address;
+    }).filter(address => address);
     state.sorted = sorted;
     return state;
   }
@@ -53,9 +65,7 @@ class MemeLeaderboard extends Component {
         </div>
       );
     }
-
-    let memes = this.state.sorted.map(pair => {
-      let address = pair[1];
+    let memes = this.state.sorted.map(address => {
       return <Meme key={address} address={address} />;
     });
 
@@ -77,6 +87,7 @@ class MemeLeaderboard extends Component {
 const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
   contracts: state.contracts,
+  accounts: state.accounts,
 });
 
 const mapDispatchToProps = (dispatch) => ({
