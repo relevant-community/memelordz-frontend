@@ -25,7 +25,7 @@ class Trade extends Component {
   }
 
   queryParams() {
-    let { contract } = this.props;
+    let { contract, accounts } = this.props;
     contract.methods.name.cacheCall();
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
@@ -33,6 +33,9 @@ class Trade extends Component {
     contract.methods.decimals.cacheCall();
     contract.methods.exponent.cacheCall();
     contract.methods.slope.cacheCall();
+    if (accounts[0]) {
+      contract.methods.balanceOf.cacheCall(accounts[0]);
+    }
   }
 
   toggleBuy() {
@@ -67,6 +70,10 @@ class Trade extends Component {
 
     let account = accounts[0];
     let walletBalance = toNumber(accountBalances[account], 18);
+    let tokenBalance = 0;
+    if (account) {
+      tokenBalance = toNumber(contract.methods.balanceOf.fromCache(account) || 0, decimals);
+    }
 
     return {
       account,
@@ -76,6 +83,7 @@ class Trade extends Component {
       walletBalance,
       exponent,
       slope,
+      tokenBalance,
       symbol: (symbol || 'MEME').toUpperCase(),
     };
   }
@@ -95,15 +103,11 @@ class Trade extends Component {
       if (!account) {
         window.alert('Missing account — please log into Metamask');
       }
-      // if (this.state.amount <= 0 || loading) return;
-      // this.setState({ loading: 'Please Review & Sign Transaction' });
+
       if (this.state.isBuy) {
         let numOfTokens = calculatePurchaseReturn(this.state);
         numOfTokens = (numOfTokens * 1e18).toString();
-        console.log('numOfTokens', numOfTokens);
-        // numOfTokens = new BN(numOfTokens.toString());
-
-        // amount += 2;
+        amount *= 1.1;
         amount = Web3.utils.toWei(amount.toString());
         amount = new BN(amount.toString());
 
@@ -111,8 +115,9 @@ class Trade extends Component {
           value: amount, from: account
         });
       } else {
-        amount = new BN(this.state.amount.toString()).times(10 ** decimals);
-        contract.methods.burn.cacheSend(amount, {
+        amount = Web3.utils.toWei(amount.toString());
+        console.log(amount.toString());
+        contract.methods.burn.cacheSend(amount.toString(), {
           from: account
         });
       }
