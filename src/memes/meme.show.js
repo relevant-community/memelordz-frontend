@@ -4,7 +4,7 @@ import Meme from './meme.component';
 
 class MemeShow extends Component {
   render() {
-    if (!this.props.ProxyFactory.events || this.props.ProxyFactory.events.length === 0) {
+    if (!this.props.memes.length) {
       return (
         <div className='loadingMessage'>
           <hr />
@@ -12,6 +12,7 @@ class MemeShow extends Component {
         </div>
       );
     }
+
     const { address } = this.props.match.params;
     return (
       <div>

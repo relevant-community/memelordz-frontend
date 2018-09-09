@@ -10,16 +10,37 @@ import { calculateSaleReturn } from '../util';
 class MemeLeaderboard extends Component {
   state = {
     sorted: [],
+    page: 0,
+    perPage: 5
   }
-
+  constructor(props) {
+    super(props);
+    this.next = this.next.bind(this)
+    this.prev = this.prev.bind(this)
+  }
+  prev () {
+    if (this.state.page > 0) {
+      this.setState({page: this.state.page-1})
+      window.scrollTo(0, 0)
+    }
+    return false
+  }
+  next () {
+    let totalLength = Math.ceil(this.props.memes.length / this.state.perPage)
+    if (this.state.page < totalLength) {
+      this.setState({page: this.state.page+1})
+      window.scrollTo(0, 0)
+    }
+    return false
+  }
   componentDidMount() {
+    window.scrollTo(0, 0)
     this.queryParams();
   }
 
   queryParams() {
-    this.props.ProxyFactory.events.forEach(meme => {
-      if (!meme) return null;
-      let address = meme.returnValues.proxyAddress;
+    this.props.memes.forEach(address => {
+      if (!address) return null;
       let contract = this.props.contracts[address];
       if (!contract || !contract.methods) return;
       contract.methods.totalSupply.cacheCall();
@@ -27,10 +48,8 @@ class MemeLeaderboard extends Component {
   }
 
   static getDerivedStateFromProps(props, state) {
-    let { events } = props.ProxyFactory;
-    let sorted = events.map(meme => {
-      if (!meme) return null;
-      let address = meme.returnValues.proxyAddress;
+    let sorted = props.memes.map(address => {
+      if (!address) return null;
       let contract = props.contracts[address];
       if (!contract || !contract.methods) return null;
       return [
@@ -43,7 +62,7 @@ class MemeLeaderboard extends Component {
   }
 
   render() {
-    if (!this.props.ProxyFactory.events) {
+    if (!this.props.memes.length) {
       return (
         <div>
           <hr />
@@ -54,7 +73,9 @@ class MemeLeaderboard extends Component {
       );
     }
 
-    let memes = this.state.sorted.map(pair => {
+    let firstMeme = this.state.page * this.state.perPage
+    let lastMeme = (this.state.page + 1) * this.state.perPage
+    let memes = this.state.sorted.slice(firstMeme, lastMeme).map(pair => {
       let address = pair[1];
       return <Meme key={address} address={address} />;
     });
@@ -69,6 +90,8 @@ class MemeLeaderboard extends Component {
         <div>
           {memes}
         </div>
+        <a className="pagination" href="#/leaderboard" onClick={this.prev}>Prev</a>
+        <a className="pagination" href="#/leaderboard" onClick={this.next}>Next</a>
       </div>
     );
   }
@@ -77,6 +100,7 @@ class MemeLeaderboard extends Component {
 const mapStateToProps = (state) => ({
   ProxyFactory: state.contracts.ProxyFactory || {},
   contracts: state.contracts,
+  memes: state.memes.all,
 });
 
 const mapDispatchToProps = (dispatch) => ({
