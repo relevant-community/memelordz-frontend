@@ -2,15 +2,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 // const webpack = require('webpack');
 
-var path = require('path');
+let path = require('path');
 
 module.exports = {
   entry: {
-    main: './src/index.js',
+    main: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: 'index.js'
   },
   devServer: {
     port: 9000,
@@ -22,8 +22,12 @@ module.exports = {
   plugins: [
     // new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Meme Lordz'
-    }),
+      title: 'Meme Lordz',
+      meta: {
+        name: 'viewport',
+        content: 'width=device-width,initial-scale=1.0'
+      }
+    })
     // new webpack.HotModuleReplacementPlugin()
   ],
   module: {
@@ -46,11 +50,11 @@ module.exports = {
               require('babel-plugin-transform-object-rest-spread'),
               require('babel-plugin-transform-class-properties'),
               require('babel-plugin-transform-react-jsx'),
-              require('react-hot-loader/babel'),
+              require('react-hot-loader/babel')
             ]
           }
         }
       }
     ]
-  },
+  }
 };

@@ -5,24 +5,24 @@ import { connect } from 'react-redux';
 function Header() {
   return (
     <header>
-      <Link className='logo' to='/'>
-        <h1>
-          Meme Lordz
-        </h1>
+      <Link className="logo" to="/">
+        <h1>Meme Lordz</h1>
       </Link>
       <p>
         <i>The first decentralized meme market!</i>
         <br />
         <br />
-        Turn any meme into a tradable cryptocurrency. Let the market define its value based on popularity.
+        Turn any meme into a tradable cryptocurrency. Let the market define its value based on
+        popularity.
         <br />
-        Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
+        Buy and sell meme currency on our platform, and start earning. The more meme-predicting
+        skills you have, the more you’ll earn!
       </p>
+      <p>Built on Ethereum and IPFS.</p>
       <p>
-        Built on Ethereum and IPFS.
-      </p>
-      <p>
-        This is an MVP, follow us on <a href="https://t.me/meme_lordz">Telegram</a> for updates.
+        This is an MVP, follow us on <a href="https://twitter.com/memelordzapp">Twitter</a>,{' '}
+        <a href="https://t.me/meme_lordz">Telegram</a> &{'   '}
+        <a href="https://www.instagram.com/memelordzapp/">Instagram</a> for updates.
       </p>
     </header>
   );
@@ -53,14 +53,16 @@ function Header() {
 //   )
 // }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   account: state.accounts[0],
   network: state.web3.networkId,
   status: state.web3.status,
-  drizzleStatus: state.drizzleStatus.initialized,
+  drizzleStatus: state.drizzleStatus.initialized
 });
 
-const mapDispatchToProps = (dispatch) => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Header);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

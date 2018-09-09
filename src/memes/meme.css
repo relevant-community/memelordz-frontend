@@ -50,3 +50,11 @@
   width: 50%;
   text-align: center;
 }
+
+@media only screen and (max-width: 1020px) {
+
+  .memeContainer {
+   flex-direction: column;
+  }
+}
+

@@ -202,3 +202,13 @@ input[type=text]:focus {
 .modal.loader .content {
   padding: 10px;
 }
+
+
+
+
+@media only screen and (max-width: 1020px) {
+  .container {
+    padding: 10px 10px;
+  }
+
+}
