@@ -10,6 +10,7 @@ const { BN } = Web3.utils;
 class Trade extends Component {
   state = {
     active: false,
+    loading: false,
     isBuy: true,
     amount: '',
   };
@@ -58,7 +59,7 @@ class Trade extends Component {
   //   });
   // }
 
-  static getDerivedStateFromProps(props) {
+  static getDerivedStateFromProps(props, state) {
     let { contract, accounts, accountBalances } = props;
 
     let decimals = contract.methods.decimals.fromCache();
@@ -76,6 +77,7 @@ class Trade extends Component {
     }
 
     return {
+      loading: state.loading,
       account,
       decimals,
       totalSupply,
@@ -96,6 +98,7 @@ class Trade extends Component {
   }
 
   async handleSubmit() {
+    if (this.state.loading) return
     try {
       let { account, decimals, amount } = this.state;
       let { contract } = this.props;
@@ -103,6 +106,7 @@ class Trade extends Component {
       if (!account) {
         window.alert('Missing account — please log into Metamask');
       }
+      this.setState({ loading: true });
 
       if (this.state.isBuy) {
         let numOfTokens = calculatePurchaseReturn(this.state);
@@ -125,6 +129,10 @@ class Trade extends Component {
       console.log(err);
     }
 
+    this.setState({ active: false });
+    setTimeout(() => {
+      this.setState({ loading: false });
+    }, 10000);
     // console.log(">> execute the trade")
   }
 
@@ -138,6 +146,7 @@ class Trade extends Component {
               <div>Sell</div>
             </div>
           </div>
+          {this.state.loading && this.renderLoader()}
         </div>
       );
     }
@@ -224,6 +233,19 @@ class Trade extends Component {
           <div className={'bondedToken-available'}>
             <label>Available:</label>
             {available}
+          </div>
+        </div>
+        {this.state.loading && this.renderLoader()}
+      </div>
+    );
+  }
+
+  renderLoader() {
+    return (
+      <div className={'modal loader visible'}>
+        <div className='inner'>
+          <div className='content'>
+            Confirming transaction...
           </div>
         </div>
       </div>
