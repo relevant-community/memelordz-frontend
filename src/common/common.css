@@ -211,4 +211,7 @@ input[type=text]:focus {
     padding: 10px 10px;
   }
 
+  .appLoaderError {
+    width: 100%;
+  }
 }
