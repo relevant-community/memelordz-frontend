@@ -11,10 +11,10 @@ function Header() {
         </h1>
       </Link>
       <p>
-        <i>The first decentralized meme currency market!</i>
+        <i>A decentralized meme market!</i>
         <br />
         <br />
-        Turn any meme into its own currency. Let the market define its value based on popularity.
+        Turn any meme into a tradable cryptocurrency. Let the market define its value based on popularity.
         <br />
         Buy and sell meme currency on our platform, and start earning. The more meme-predicting skills you have, the more you’ll earn!
       </p>
