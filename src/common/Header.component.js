@@ -11,7 +11,7 @@ function Header() {
         </h1>
       </Link>
       <p>
-        <i>A decentralized meme market!</i>
+        <i>The first decentralized meme market!</i>
         <br />
         <br />
         Turn any meme into a tradable cryptocurrency. Let the market define its value based on popularity.
