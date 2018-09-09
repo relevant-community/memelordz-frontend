@@ -33,7 +33,7 @@ class Meme extends Component {
 
   queryParams() {
     let contract = this.props.contracts[this.props.address];
-    // let controllerContract = this.props.contracts.Controller;
+    let controllerContract = this.props.contracts.Controller;
     let account = this.props.accounts[0];
     if (account) {
       contract.methods.balanceOf.cacheCall(account);
@@ -43,13 +43,13 @@ class Meme extends Component {
     // controllerContract.methods.reserveRatio.cacheCall();
     contract.methods.poolBalance.cacheCall();
     contract.methods.totalSupply.cacheCall();
-    contract.methods.slope.cacheCall();
-    contract.methods.exponent.cacheCall();
+    controllerContract.methods.slope.cacheCall();
+    controllerContract.methods.exponent.cacheCall();
   }
 
   static getDerivedStateFromProps(props, state) {
     let contract = props.contracts[props.address];
-    // let controllerContract = props.contracts.Controller;
+    let controllerContract = props.contracts.Controller;
     let account = props.accounts[0];
 
     let tokens = 0;
@@ -63,13 +63,15 @@ class Meme extends Component {
       // reserveRatio: toNumber(controllerContract.methods.reserveRatio.fromCache(), 18),
       poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
-      slope: toNumber(contract.methods.slope.fromCache(), 0),
-      exponent: toNumber(contract.methods.exponent.fromCache(), 0),
+      slope: toNumber(controllerContract.methods.slope.fromCache(), 0),
+      exponent: toNumber(controllerContract.methods.exponent.fromCache(), 0),
       tokens
     };
 
     let ipfsImg;
+    console.log('contract', contract);
     let event = contract.events[0];
+    console.log('event', event);
     if (event) {
       console.log('event', event);
       ipfsImg = {
@@ -94,6 +96,7 @@ class Meme extends Component {
     let { state } = this;
     let { bigImg } = this.state;
     let contract = this.props.contracts[this.props.address];
+    console.log(contract, state.hash, state.name);
     if (!contract || !(state.hash || state.name)) {
       return (
         <div className="meme">
@@ -177,6 +180,7 @@ class MemeWrapper extends Component {
 
 const mapStateToProps = state => ({
   contracts: state.contracts,
+  controllerContract: state.contracts.Controller,
   accounts: state.accounts
 });
 
