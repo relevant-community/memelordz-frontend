@@ -42,6 +42,18 @@ body {
   text-decoration: underline;
 }
 
+.nav {
+  text-align: center;
+}
+.nav a {
+  color: maroon;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.nav a.active {
+  font-weight: bold;
+}
+
 table.status {
   margin: 0 auto;
 }

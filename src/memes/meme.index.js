@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import Meme from './meme.component';
 import Create from '../create/create.component';
+import { Nav } from '../common';
 
 class MemeIndex extends Component {
   render() {
@@ -34,12 +35,7 @@ class MemeIndex extends Component {
         <hr />
           <Create />
         <hr />
-        <div className='sortLinks'>
-          Sort memes by:
-          <Link to="/" className='active'>[Recent]</Link>
-          <Link to="/leaderboard">[Price]</Link>
-          <Link to="/portfolio">[Portfolio]</Link>
-        </div>
+          <Nav />
         <hr />
         <div>
           {memes}

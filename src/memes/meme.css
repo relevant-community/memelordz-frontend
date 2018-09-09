@@ -36,15 +36,3 @@
 .name:after {
   content: ' ';
 }
-
-.sortLinks {
-  text-align: center;
-}
-.sortLinks a {
-  color: maroon;
-  margin-left: 5px;
-  cursor: pointer;
-}
-.sortLinks a.active {
-  font-weight: bold;
-}

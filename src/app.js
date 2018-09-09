@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router';
-import { withRouter } from 'react-router-dom'
+import { withRouter } from 'react-router-dom';
 
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 import { AppLoader, Header } from './common';
