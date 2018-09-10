@@ -83,11 +83,11 @@ class MemeLeaderboard extends Component {
         </div>
       );
     }
-    let firstMeme = this.state.page * this.state.perPage
-    let lastMeme = (this.state.page + 1) * this.state.perPage
-    let memes = this.state.sorted.slice(firstMeme, lastMeme).map(address => {
-      return <Meme key={address} address={address} />;
-    });
+    let firstMeme = this.state.page * this.state.perPage;
+    let lastMeme = (this.state.page + 1) * this.state.perPage;
+    let memes = this.state.sorted.slice(firstMeme, lastMeme).map(address => (
+      <Meme key={address} address={address} />
+    ));
 
     return (
       <div>
