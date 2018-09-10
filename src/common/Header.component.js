@@ -64,7 +64,7 @@ const mapStateToProps = state => ({
   account: state.accounts[0],
   network: state.web3.networkId,
   status: state.web3.status,
-  drizzleStatus: state.drizzleStatus.initialized
+  drizzleStatus: state.drizzleStatus
 });
 
 const mapDispatchToProps = dispatch => ({});
