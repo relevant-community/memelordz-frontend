@@ -18,7 +18,7 @@ function AppLoaderContainer(props) {
               Please connect Metamask to the Rinkeby network
             </div>
           </AppLoaderComponent>;
-      case 'Cannot read property \'web3\' of undefined':
+      case 'web3':
         return <AppLoaderComponent>
             <div className='appLoaderError'>
               You need the <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Metamask</a> browser extention to use this app.

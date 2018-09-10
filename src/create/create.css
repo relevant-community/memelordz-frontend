@@ -26,11 +26,19 @@
 }
 .uploadPreview {
   margin: 20px auto;
-  width: 600px;
-  max-width: 90%;
+  max-width: 600px;
+  padding:0 10px;
   text-align: center;
 }
 .uploadPreview img {
   max-width: 30vh;
   max-height: 30vh;
+}
+
+@media only screen and (max-width: 1020px) {
+  .newForm {
+    width: 100%;
+    max-width:320px;
+    width: 100%;
+  }
 }

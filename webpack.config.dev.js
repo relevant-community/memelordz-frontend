@@ -1,31 +1,36 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 
-var path = require('path');
+let path = require('path');
 
 module.exports = {
   entry: {
-    main: './src/index.js',
+    main: './src/index.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dev'),
-    filename: 'index.js',
+    path: path.resolve(__dirname, '/dist'),
+    filename: 'index.js'
   },
   devServer: {
     port: 9000,
     headers: {
       'Access-Control-Allow-Origin': '*'
-    }
+    },
+    publicPath: '/dist/',
+    hot: true,
   },
   devtool: 'inline-source-map',
   plugins: [
-    new CleanWebpackPlugin(['dev']),
     // new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'Meme Lordz'
-    }),
-    // new webpack.HotModuleReplacementPlugin()
+    // new HtmlWebpackPlugin({
+    //   title: 'Meme Lordz',
+    //   meta: {
+    //     name: 'viewport',
+    //     content: 'width=device-width,initial-scale=1.0'
+    //   }
+    // })
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [
@@ -47,11 +52,11 @@ module.exports = {
               require('babel-plugin-transform-object-rest-spread'),
               require('babel-plugin-transform-class-properties'),
               require('babel-plugin-transform-react-jsx'),
-              require('react-hot-loader/babel'),
+              require('react-hot-loader/babel')
             ]
           }
         }
       }
     ]
-  },
+  }
 };

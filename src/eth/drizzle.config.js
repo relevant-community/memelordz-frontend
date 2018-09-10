@@ -46,15 +46,15 @@ export const options = {
   web3: {
     ignoreMetamask: true,
     useMetamask: true,
-    // fallback: {
-    //   // type: 'https',
-    //   // url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
-    //   // type: 'ws',
-    //   // url: 'wss://gethnode.com/ws',
-    //   type: 'ws',
-    //   url: 'wss://rinkeby.infura.io/ws',
-    //   networkId: 4,
-    // }
+    fallback: {
+      type: 'https',
+      url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
+      // type: 'ws',
+      // url: 'wss://gethnode.com/ws',
+      // type: 'ws',
+      // url: 'wss://rinkeby.infura.io/ws',
+      networkId: 4,
+    }
   }
 };
 
