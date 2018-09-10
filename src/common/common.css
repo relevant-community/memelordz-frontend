@@ -203,6 +203,14 @@ input[type=text]:focus {
   padding: 10px;
 }
 
+.warning {
+  background: red;
+  color: white;
+  font-size: 20px;
+}
+.warnign a, .warning a:visited, .warning a:link {
+  color: white;
+}
 
 
 

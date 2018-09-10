@@ -46,7 +46,7 @@ export const options = {
   web3: {
     ignoreMetamask: true,
     useMetamask: true,
-    fallback: {
+    fallback: global.web3 ? null : {
       type: 'https',
       url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
       // type: 'ws',

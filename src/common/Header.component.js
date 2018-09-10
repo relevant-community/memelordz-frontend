@@ -2,7 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-function Header() {
+function Header(props) {
+  let warning;
+  if (props.drizzleStatus.warning === 'metamask') {
+    warning = <div className='warning'>
+      Attention! You need the <a href="https://metamask.io/">Metamask</a> desktop browser extention to trade memes.
+    </div>;
+  }
   return (
     <header>
       <Link className="logo" to="/">
@@ -24,6 +30,7 @@ function Header() {
         <a href="https://t.me/meme_lordz">Telegram</a> &{' '}
         <a href="https://www.instagram.com/memelordzapp/">Instagram</a> for updates.
       </p>
+      {warning}
     </header>
   );
 }
