@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import Meme from './meme.component';
 import Create from '../create/create.component';
 import { Nav } from '../common';
-import { calculateSaleReturn } from '../util';
 
 class MemeLeaderboard extends Component {
   state = {
@@ -38,13 +36,13 @@ class MemeLeaderboard extends Component {
   }
 
   componentDidMount() {
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
     this.queryParams();
   }
 
   queryParams() {
     this.props.memes.forEach(address => {
-      if (!address) return null;
+      if (!address) return;
       let contract = this.props.contracts[address];
       if (contract && contract.methods) {
         contract.methods.totalSupply.cacheCall();
@@ -78,8 +76,8 @@ class MemeLeaderboard extends Component {
       );
     }
 
-    let firstMeme = this.state.page * this.state.perPage
-    let lastMeme = (this.state.page + 1) * this.state.perPage
+    let firstMeme = this.state.page * this.state.perPage;
+    let lastMeme = (this.state.page + 1) * this.state.perPage;
     let memes = this.state.sorted.slice(firstMeme, lastMeme).map(pair => {
       let address = pair[1];
       return <Meme key={address} address={address} />;

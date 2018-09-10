@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import ipfsAPI from 'ipfs-api';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import dataUriToBuffer from 'data-uri-to-buffer';
 import Web3 from 'web3';
 import * as multihash from '../eth/multihash';
 import { drizzle, BONDING_CURVE_CONTRACT, BondingCurveContract } from '../eth/drizzle.config';
-import { calculatePurchaseReturn, toNumber, toFixed } from '../util';
+import { calculatePurchaseReturn, toNumber, toFixed, loadImage } from '../util';
 import actions from '../actions';
 
 import './create.css';
@@ -13,14 +14,6 @@ import './create.css';
 const ipfs = ipfsAPI('ipfs.infura.io', '5001', { protocol: 'https' });
 const { Buffer } = ipfs;
 const { BN } = Web3.utils;
-
-function loadFile(file) {
-  return new Promise(resolve => {
-    const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
-    reader.readAsArrayBuffer(file);
-  });
-}
 
 const initialState = {
   name: '',
@@ -169,12 +162,13 @@ class Create extends Component {
   }
 
   displayPreview() {
-    const reader = new FileReader();
-    reader.onload = e => {
-      this.setState({ preview: e.target.result });
-    };
-    reader.readAsDataURL(this.fileInput.files[0]);
-    this.showModal();
+    this.validate();
+    const file = this.fileInput.files[0];
+    loadImage(file).then(dataURL => {
+      this.setState({ preview: dataURL });
+    }).catch(() => {
+      console.log('invalid image');
+    });
   }
 
   async upload() {
@@ -188,16 +182,14 @@ class Create extends Component {
         createStatus: 'Starting upload to IPFS'
       });
 
-      let { account, decimals } = this.props;
-      let { amount } = this.state;
+      let { account } = this.props;
+      // let { amount } = this.state;
 
       if (!account) {
         return window.alert('Missing account — please log into Metamask');
       }
 
-      let file = this.fileInput.files[0];
-      file = await loadFile(file);
-      const buff = Buffer(file);
+      const buff = dataUriToBuffer(this.state.preview);
       const result = await ipfs.add(buff, {
         progress: prog => {
           this.setState({
@@ -273,7 +265,7 @@ class Create extends Component {
     this.setState({ amount: value });
   }
 
-  showModal() {
+  validate() {
     if (!this.state.name) {
       this.setState({ error: 'Please title your meme' });
       this.nameInput.focus();
@@ -327,6 +319,7 @@ class Create extends Component {
             <input
               ref={c => (this.fileInput = c)}
               onChange={this.displayPreview.bind(this)}
+              accept="image/*"
               name="meme"
               type="file"
             />
