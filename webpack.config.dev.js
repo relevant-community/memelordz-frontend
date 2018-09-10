@@ -1,6 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 
 let path = require('path');
 
@@ -9,26 +9,28 @@ module.exports = {
     main: './src/index.js'
   },
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '/dist'),
     filename: 'index.js'
   },
   devServer: {
     port: 9000,
     headers: {
       'Access-Control-Allow-Origin': '*'
-    }
+    },
+    publicPath: '/dist/',
+    hot: true,
   },
   devtool: 'inline-source-map',
   plugins: [
     // new CleanWebpackPlugin(['dist']),
-    new HtmlWebpackPlugin({
-      title: 'Meme Lordz',
-      meta: {
-        name: 'viewport',
-        content: 'width=device-width,initial-scale=1.0'
-      }
-    })
-    // new webpack.HotModuleReplacementPlugin()
+    // new HtmlWebpackPlugin({
+    //   title: 'Meme Lordz',
+    //   meta: {
+    //     name: 'viewport',
+    //     content: 'width=device-width,initial-scale=1.0'
+    //   }
+    // })
+    new webpack.HotModuleReplacementPlugin()
   ],
   module: {
     rules: [
