@@ -13,26 +13,30 @@ class MemeLeaderboard extends Component {
     page: 0,
     perPage: 5
   }
+
   constructor(props) {
     super(props);
-    this.next = this.next.bind(this)
-    this.prev = this.prev.bind(this)
+    this.next = this.next.bind(this);
+    this.prev = this.prev.bind(this);
   }
-  prev () {
+
+  prev() {
     if (this.state.page > 0) {
-      this.setState({page: this.state.page-1})
-      window.scrollTo(0, 0)
+      this.setState({ page: this.state.page - 1 });
+      window.scrollTo(0, 0);
     }
-    return false
+    return false;
   }
-  next () {
-    let totalLength = Math.ceil(this.props.memes.length / this.state.perPage)
+
+  next() {
+    let totalLength = Math.ceil(this.props.memes.length / this.state.perPage);
     if (this.state.page < totalLength) {
-      this.setState({page: this.state.page+1})
-      window.scrollTo(0, 0)
+      this.setState({ page: this.state.page + 1 });
+      window.scrollTo(0, 0);
     }
-    return false
+    return false;
   }
+
   componentDidMount() {
     window.scrollTo(0, 0)
     this.queryParams();
@@ -42,8 +46,9 @@ class MemeLeaderboard extends Component {
     this.props.memes.forEach(address => {
       if (!address) return null;
       let contract = this.props.contracts[address];
-      if (!contract || !contract.methods) return;
-      contract.methods.totalSupply.cacheCall();
+      if (contract && contract.methods) {
+        contract.methods.totalSupply.cacheCall();
+      }
     });
   }
 
