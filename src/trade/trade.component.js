@@ -100,7 +100,7 @@ class Trade extends Component {
   async handleSubmit() {
     if (this.state.loading) return;
     try {
-      let { account, decimals, amount } = this.state;
+      let { account, decimals, amount, walletBalance } = this.state;
       let { contract } = this.props;
 
       if (!account) {
@@ -114,14 +114,21 @@ class Trade extends Component {
         amount *= 1.0000001;
         amount = Web3.utils.toWei(amount.toString());
         amount = new BN(amount.toString());
-
+        // let balanceInWei = Web3.utils.toWei(walletBalance.toString());
+        // if (amount.gt(balanceInWei)) {
+        //   console.log('amount is greater than balance');
+        //   this.setState({ amount: walletBalance });
+        //   amount = Web3.utils.toWei(walletBalance.toString());
+        //   numOfTokens = calculatePurchaseReturn(this.state);
+        //   numOfTokens = (numOfTokens * 1e18).toString();
+        //   console.log(amount.toString());
+        // }
         contract.methods.mint.cacheSend(numOfTokens, {
           value: amount,
           from: account
         });
       } else {
         amount = Web3.utils.toWei(amount.toString());
-        console.log(amount.toString());
         contract.methods.burn.cacheSend(amount.toString(), {
           from: account
         });
