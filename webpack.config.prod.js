@@ -11,6 +11,9 @@ module.exports = {
     filename: 'index.js',
   },
   plugins: [
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'production')
+    }),
     new UglifyJsPlugin(),
     new webpack.optimize.AggressiveMergingPlugin()
   ],
