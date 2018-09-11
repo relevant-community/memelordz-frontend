@@ -12,7 +12,7 @@ class Trade extends Component {
     active: false,
     loading: false,
     isBuy: true,
-    amount: '',
+    amount: ''
   };
 
   constructor(props) {
@@ -86,7 +86,7 @@ class Trade extends Component {
       exponent,
       slope,
       tokenBalance,
-      symbol: (symbol || 'MEME').toUpperCase(),
+      symbol: (symbol || 'MEME').toUpperCase()
     };
   }
 
@@ -98,7 +98,7 @@ class Trade extends Component {
   }
 
   async handleSubmit() {
-    if (this.state.loading) return
+    if (this.state.loading) return;
     try {
       let { account, decimals, amount } = this.state;
       let { contract } = this.props;
@@ -111,12 +111,13 @@ class Trade extends Component {
       if (this.state.isBuy) {
         let numOfTokens = calculatePurchaseReturn(this.state);
         numOfTokens = (numOfTokens * 1e18).toString();
-        amount *= 1.1;
+        amount *= 1.0000001;
         amount = Web3.utils.toWei(amount.toString());
         amount = new BN(amount.toString());
 
         contract.methods.mint.cacheSend(numOfTokens, {
-          value: amount, from: account
+          value: amount,
+          from: account
         });
       } else {
         amount = Web3.utils.toWei(amount.toString());
@@ -142,8 +143,8 @@ class Trade extends Component {
         <div className="tradeContainer inactive">
           <div className="row">
             <div className="row toggleBuy" onClick={this.activate.bind(this)}>
-              <div onClick={()=>this.toggleBuy(true)}>Buy</div>
-              <div onClick={()=>this.toggleBuy(false)}>Sell</div>
+              <div onClick={() => this.toggleBuy(true)}>Buy</div>
+              <div onClick={() => this.toggleBuy(false)}>Sell</div>
             </div>
           </div>
           {this.state.loading && this.renderLoader()}
@@ -191,15 +192,20 @@ class Trade extends Component {
       <div className="tradeContainer">
         <div className="row">
           <div className="row toggleBuy">
-            <div onClick={()=>this.toggleBuy(true)} className={isBuy ? 'active' : ''}>Buy</div>
-            <div onClick={()=>this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>Sell</div>
+            <div onClick={() => this.toggleBuy(true)} className={isBuy ? 'active' : ''}>
+              Buy
+            </div>
+            <div onClick={() => this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>
+              Sell
+            </div>
           </div>
         </div>
 
         <div className="tradeSection">
           <div>
             <label>
-              {actionLabel}{': '}
+              {actionLabel}
+              {': '}
             </label>
 
             <input
@@ -220,14 +226,12 @@ class Trade extends Component {
           </div>
 
           <div>
-            <label>
-              Receive:
-            </label>
+            <label>Receive:</label>
             {otherTokenValue} {otherTokenSymbol}
           </div>
 
           <div>
-            <label></label>
+            <label />
             <button onClick={this.handleSubmit.bind(this)}>{action}</button>
           </div>
 
@@ -244,10 +248,8 @@ class Trade extends Component {
   renderLoader() {
     return (
       <div className={'modal loader visible'}>
-        <div className='inner'>
-          <div className='content'>
-            Confirming transaction...
-          </div>
+        <div className="inner">
+          <div className="content">Confirming transaction...</div>
         </div>
       </div>
     );
@@ -258,17 +260,18 @@ function mapStateToProps(state) {
   return {
     drizzleStatus: state.drizzleStatus,
     accounts: state.accounts,
-    accountBalances: state.accountBalances,
+    accountBalances: state.accountBalances
     // drizzle: {
-      // transactions: state.transactions,
-      // web3: state.web3,
-      // transactionStack: state.transactionStack,
+    // transactions: state.transactions,
+    // web3: state.web3,
+    // transactionStack: state.transactionStack,
     // }
   };
 }
 
+const mapDispatchToProps = dispatch => ({});
 
-const mapDispatchToProps = (dispatch) => ({
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Trade);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Trade);
