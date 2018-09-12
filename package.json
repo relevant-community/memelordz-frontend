@@ -35,7 +35,7 @@
     "build": "webpack --config ./webpack.config.prod.js",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js --hot --inline",
     "buildDev": "webpack --config ./webpack.config.dev.js --watch --colors",
-    "deploy": "webpack --config ./webpack.config.dev.js"
+    "deploy": "webpack --config ./webpack.config.prod.js && git commit -am 'deploy' && git push"
   },
   "author": {
     "name": "Slava Balasanov",
