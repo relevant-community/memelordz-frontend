@@ -8,7 +8,7 @@ import { Nav, Pagination } from '../common';
 import { toNumber, calculateSaleReturn } from '../util';
 
 const defaultPage = {
-  board: 'meme',
+  board: 'memes',
   top: false,
   page: 0,
 };
@@ -17,17 +17,18 @@ class MemeIndex extends Component {
   state = {
     page: 0,
     perPage: 5,
-    board: 'meme',
-    top: false,
+    board: 'memes',
+    sort: false,
+    memes: [],
   }
 
   static getDerivedStateFromProps(props, state) {
-    let { board, top, page } = props.match ? props.match.params : defaultPage;
-    if (top && !page && parseInt(top)) {
-      page = top;
-      top = false;
+    let { board, sort, page } = props.match ? props.match.params : defaultPage;
+    if (sort && !page && parseInt(sort)) {
+      page = sort;
+      sort = false;
     } else if (page && !parseInt(page)) {
-      top = page;
+      sort = page;
       page = 0;
     }
 
@@ -39,17 +40,17 @@ class MemeIndex extends Component {
     return {
       ...state,
       board,
-      top,
+      sort,
       page,
+      memes: props.memes.length ? props.memes : state.memes,
     };
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate() {
     const now = Date.now();
     if (now - (this.lastUpdate || 0) < 200) {
       clearTimeout(this.timeout);
       this.timeout = setTimeout(() => {
-        console.log('force update');
         this.forceUpdate();
       }, 500);
       return false;
@@ -66,18 +67,22 @@ class MemeIndex extends Component {
     this.queryParams(prevProps, prevState);
   }
 
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+
   queryParams(prevProps = {}, prevState = {}) {
     const { memes, contracts } = this.props;
-    if (this.props.memes === prevProps.memes
-      && this.state.top === prevState.top
+    if (this.state.memes === prevState.memes
+      && this.state.sort === prevState.sort
       && this.state.board === prevState.board) {
       return;
     }
-    if (this.state.top === 'top') {
+    if (this.state.sort === 'sort') {
       memes.forEach(address => {
         let contract = contracts[address];
-        if (contract && contract.methods && contract.methods.totalSupply.fromCache() === undefined) {
-          // console.log(contract.methods.totalSupply.fromCache());
+        if (!contract || !contract.methods) return;
+        if (contract.methods.totalSupply.fromCache() === undefined) {
           contract.methods.totalSupply.cacheCall();
         }
       });
@@ -87,8 +92,27 @@ class MemeIndex extends Component {
       if (!account) return;
       memes.forEach(address => {
         let contract = contracts[address];
-        if (contract && contract.methods && contract.methods.balanceOf.fromCache(account) === undefined) {
+        if (!contract || !contract.methods) return;
+        if (contract.methods.balanceOf.fromCache(account) === undefined) {
           contract.methods.balanceOf.cacheCall(account);
+        }
+      });
+    }
+    if (this.state.sort === 'hodl') {
+      memes.forEach(address => {
+        const contract = contracts[address];
+        if (!contract || !contract.methods) return;
+        if (contract.methods.poolBalance.fromCache() === undefined) {
+          contract.methods.poolBalance.cacheCall();
+        }
+        if (contract.methods.totalSupply.fromCache() === undefined) {
+          contract.methods.totalSupply.cacheCall();
+        }
+        if (contract.methods.slope.fromCache() === undefined) {
+          contract.methods.slope.cacheCall();
+        }
+        if (contract.methods.exponent.fromCache() === undefined) {
+          contract.methods.exponent.cacheCall();
         }
       });
     }
@@ -99,13 +123,15 @@ class MemeIndex extends Component {
   }
 
   render() {
-    let { board, top, page, perPage } = this.state;
+    let { board, sort, page, perPage } = this.state;
     let { memes, accounts, contracts } = this.props;
     let account = accounts[0];
     const loading = !memes.length;
 
     if (board === 'portfolio') {
-      if (!account) return ( <div>No account found!<br/>Please re-open MetaMask and make sure you're signed in.</div>);
+      if (!account) return (
+        <div>No account found!<br/>Please re-open MetaMask and make sure you're signed in.</div>
+      );
       memes = memes.filter(address => {
         const contract = contracts[address];
         if (!contract || !contract.methods) return null;
@@ -115,7 +141,7 @@ class MemeIndex extends Component {
       });
     }
 
-    if (top === 'top') {
+    if (sort === 'top') {
       memes = memes.map(address => {
         const contract = contracts[address];
         if (!contract || !contract.methods) return null;
@@ -126,9 +152,9 @@ class MemeIndex extends Component {
       }).filter(pair => pair)
         .sort((a, b) => b[0] - a[0])
         .map(pair => pair[1]);
-    } else if (top === 'hodl') {
+    } else if (sort === 'hodl') {
       memes = memes.map(address => {
-        const  contract = contracts[address];
+        const contract = contracts[address];
         if (!contract || !contract.methods) return null;
         const tokens = toNumber(contract.methods.balanceOf.fromCache(account), 18);
         const saleReturn = calculateSaleReturn({
@@ -146,7 +172,6 @@ class MemeIndex extends Component {
         .sort((a, b) => b[0] - a[0])
         .map(pair => pair[1]);
     }
-
 
     const firstMeme = page * perPage;
     const lastMeme = (page + 1) * perPage;
@@ -170,7 +195,7 @@ class MemeIndex extends Component {
             : memes
           }
         <Pagination
-          board={top ? board + '/' + top : board}
+          board={sort ? board + '/' + sort : board}
           page={page + 1}
           total={total}
           perPage={perPage}

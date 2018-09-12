@@ -17,7 +17,7 @@ function Nav({ board = 'memes' }) {
   }
   return (
     <div className='nav'>
-      <ActiveLink to="/portfolio/">View Your Portfolio</ActiveLink>
+      <ActiveLink to="/portfolio/hodl/">View Your Portfolio</ActiveLink>
       {'Sort by: '}
       <ActiveLink to={'/' + board + '/'}>Recent</ActiveLink>
       <ActiveLink to={'/' + board + '/top/'}>Price</ActiveLink>
@@ -27,6 +27,7 @@ function Nav({ board = 'memes' }) {
 
 Nav.propTypes = {
   board: PropTypes.string,
+  sort: PropTypes.string,
 };
 
 export default Nav;

@@ -47,7 +47,7 @@ Pagination.propTypes = {
 };
 
 Pagination.defaultProps = {
-  board: 'meme',
+  board: 'memes',
   items: [],
   page: 0,
   perPage: 5,
