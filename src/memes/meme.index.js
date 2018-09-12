@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import Meme from './meme.component';
 import Create from '../create/create.component';
 import { Nav, Pagination } from '../common';
-import { toNumber } from '../util';
+import { toNumber, calculateSaleReturn } from '../util';
 
 const defaultPage = {
   board: 'meme',
@@ -19,15 +19,6 @@ class MemeIndex extends Component {
     perPage: 5,
     board: 'meme',
     top: false,
-    memes: [],
-    all: [],
-  }
-
-  static propTypes = {
-    accounts: PropTypes.array,
-    contracts: PropTypes.object,
-    memes: PropTypes.array,
-    all: PropTypes.array,
   }
 
   static getDerivedStateFromProps(props, state) {
@@ -54,12 +45,6 @@ class MemeIndex extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    // const oldMemes = this.state.memes;
-    // const newMemes = nextState.memes;
-    // const shouldUpdate = (
-    //   newMemes.length !== oldMemes.length
-    //   || newMemes.some((m, i) => m !== oldMemes[i])
-    // );
     const now = Date.now();
     if (now - (this.lastUpdate || 0) < 200) {
       clearTimeout(this.timeout);
@@ -88,8 +73,7 @@ class MemeIndex extends Component {
       && this.state.board === prevState.board) {
       return;
     }
-    if (this.state.top) {
-      console.log('refreshing top');
+    if (this.state.top === 'top') {
       memes.forEach(address => {
         let contract = contracts[address];
         if (contract && contract.methods && contract.methods.totalSupply.fromCache() === undefined) {
@@ -101,7 +85,6 @@ class MemeIndex extends Component {
     if (this.state.board === 'portfolio') {
       let account = this.props.accounts[0];
       if (!account) return;
-      console.log('refreshing portfolio');
       memes.forEach(address => {
         let contract = contracts[address];
         if (contract && contract.methods && contract.methods.balanceOf.fromCache(account) === undefined) {
@@ -118,26 +101,23 @@ class MemeIndex extends Component {
   render() {
     let { board, top, page, perPage } = this.state;
     let { memes, accounts, contracts } = this.props;
-    const total = memes.length;
-    const loading = !total;
+    let account = accounts[0];
+    const loading = !memes.length;
 
     if (board === 'portfolio') {
-      console.log('get portfolio');
-      let account = accounts[0];
-      if (!account) return null;
+      if (!account) return ( <div>No account found!<br/>Please re-open MetaMask and make sure you're signed in.</div>);
       memes = memes.filter(address => {
-        let contract = contracts[address];
+        const contract = contracts[address];
         if (!contract || !contract.methods) return null;
-        let balance = toNumber(contract.methods.balanceOf.fromCache(account), 18);
+        const balance = toNumber(contract.methods.balanceOf.fromCache(account), 18);
         if (!balance) return null;
         return address;
       });
     }
 
-    if (top) {
-      console.log('order by price');
+    if (top === 'top') {
       memes = memes.map(address => {
-        let contract = contracts[address];
+        const contract = contracts[address];
         if (!contract || !contract.methods) return null;
         return [
           contract.methods.totalSupply.fromCache() || 0,
@@ -146,11 +126,34 @@ class MemeIndex extends Component {
       }).filter(pair => pair)
         .sort((a, b) => b[0] - a[0])
         .map(pair => pair[1]);
+    } else if (top === 'hodl') {
+      memes = memes.map(address => {
+        const  contract = contracts[address];
+        if (!contract || !contract.methods) return null;
+        const tokens = toNumber(contract.methods.balanceOf.fromCache(account), 18);
+        const saleReturn = calculateSaleReturn({
+          poolBalance: toNumber(contract.methods.poolBalance.fromCache(), 18),
+          totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
+          slope: toNumber(contract.methods.slope.fromCache(), 0),
+          exponent: toNumber(contract.methods.exponent.fromCache(), 0),
+          amount: tokens,
+        });
+        return [
+          saleReturn || 0,
+          address
+        ];
+      }).filter(pair => pair)
+        .sort((a, b) => b[0] - a[0])
+        .map(pair => pair[1]);
     }
+
 
     const firstMeme = page * perPage;
     const lastMeme = (page + 1) * perPage;
-    memes = memes.slice(firstMeme, lastMeme).map(address => <Meme key={address} address={address} />);
+    const total = memes.length;
+    memes = memes.slice(firstMeme, lastMeme).map(address => (
+      <Meme key={address} address={address} />
+    ));
 
     return (
       <div>

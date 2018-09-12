@@ -1,28 +1,32 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+import ActiveLink from './ActiveLink.component';
 
 function Nav({ board = 'memes' }) {
-  let lastLink;
-  if (board === 'memes') {
-    lastLink = <ActiveLink to="/portfolio/">[View Your Portfolio]</ActiveLink>
-  } else {
-    lastLink = <ActiveLink to="/">[Browse All Memes]</ActiveLink>
+  if (board === 'portfolio') {
+    return (
+      <div className='nav'>
+        <ActiveLink to="/">Browse Memes</ActiveLink>
+        {'Sort by: '}
+        <ActiveLink to={'/' + board + '/'}>Recent</ActiveLink>
+        <ActiveLink to={'/' + board + '/top/'}>Price</ActiveLink>
+        <ActiveLink to={'/' + board + '/hodl/'}>Your Holdings</ActiveLink>
+      </div>
+    );
   }
   return (
     <div className='nav'>
-      Sort memes by:
-      <ActiveLink to={'/' + board + '/'}>[Recent]</ActiveLink>
-      <ActiveLink to={'/' + board + '/top/'}>[Price]</ActiveLink>
-      {lastLink}
+      <ActiveLink to="/portfolio/">View Your Portfolio</ActiveLink>
+      {'Sort by: '}
+      <ActiveLink to={'/' + board + '/'}>Recent</ActiveLink>
+      <ActiveLink to={'/' + board + '/top/'}>Price</ActiveLink>
     </div>
   );
 }
 
-const ActiveLink = withRouter(({ to, location, children }) => (
-  <Link to={to} className={location.pathname === to ? 'active' : ''}>
-    {children}
-  </Link>
-));
+Nav.propTypes = {
+  board: PropTypes.string,
+};
 
 export default Nav;

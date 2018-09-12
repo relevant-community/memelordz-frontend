@@ -48,6 +48,7 @@ a.logo:hover {
 }
 a, a:link, a:visited {
   color: #a00;
+  cursor: pointer;
 }
 a.active {
   font-weight: bold;
@@ -55,10 +56,6 @@ a.active {
 
 .nav {
   text-align: center;
-}
-.nav a {
-  margin-left: 5px;
-  cursor: pointer;
 }
 
 table.status {

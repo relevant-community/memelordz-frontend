@@ -32,7 +32,7 @@ export function ChanDate(d = Date.now()) {
   const date = new Date(d);
   return (
     pad(date.getDate()) + '/'
-  + pad(date.getMonth()) + '/'
+  + pad(date.getMonth() + 1) + '/'
   + (date.getYear() - 100) + '('
   + weekdays[date.getDay()] + ')'
   + pad(date.getHours()) + ':'

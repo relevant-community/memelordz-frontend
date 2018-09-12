@@ -31,6 +31,7 @@ class App extends Component {
       'hashchange',
       () => {
         window.scroll(0, 0);
+        // TODO: says this is not a function?
         drizzle.contracts.ProxyFactory.syncEvents();
       },
       false
