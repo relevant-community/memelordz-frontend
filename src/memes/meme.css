@@ -51,8 +51,36 @@
   text-align: center;
 }
 
-@media only screen and (max-width: 1020px) {
+.catalog {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+  text-align: center;
+}
+.catalog .meme {
+  vertical-align: top;
+  display: inline-block;
+  word-wrap: break-word;
+  overflow: hidden;
+  width: 150px;
+  height: 230px;
+  padding: 5px 0 3px 0;
+  text-align: center;
+  margin: 20px;
+}
+.catalog .meme img {
+  margin: auto;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0,0,0,.25);
+  min-height: 50px;
+  min-width: 50px;
+  max-height: 150px;
+  max-width: 150px;
+}
 
+@media only screen and (max-width: 700px) {
   .memeContainer {
    flex-direction: column;
    display: block;

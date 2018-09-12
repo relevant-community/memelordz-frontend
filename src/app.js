@@ -8,8 +8,7 @@ import { PortisProvider } from 'portis';
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 
 import { AppLoader, Header, Footer } from './common';
-import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';
-import Portfolio from './memes/meme.portfolio';
+import { MemeIndex, MemeShow } from './memes';
 import actions from './actions';
 
 // if (typeof web3 === 'undefined') {
@@ -31,6 +30,8 @@ class App extends Component {
     window.addEventListener(
       'hashchange',
       () => {
+        window.scroll(0, 0);
+        // TODO: says this is not a function?
         drizzle.contracts.ProxyFactory.syncEvents();
       },
       false
@@ -65,9 +66,10 @@ class App extends Component {
         <AppLoader>
           <Switch>
             <Route exact path="/" component={MemeIndex} />
-            <Route exact path="/leaderboard" component={MemeLeaderboard} />
+            <Route exact path="/:board/" component={MemeIndex} />
+            <Route exact path="/:board/:page/" component={MemeIndex} />
+            <Route exact path="/:board/:sort/:page/" component={MemeIndex} />
             <Route exact path="/meme/:address" component={MemeShow} />
-            <Route exact path="/portfolio" component={Portfolio} />
             <Route render={() => <div>404</div>} />
           </Switch>
         </AppLoader>
