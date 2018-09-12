@@ -198,7 +198,7 @@ class MemeIndex extends Component {
         <hr />
         <Create />
         <hr />
-        <Nav board={board} />
+        <Nav board={board} catalog={catalog} />
         <hr />
         <div className={catalog ? 'catalog' : 'memes'}>
           {board === 'portfolio' && <h2>Your Portfolio</h2>}
@@ -215,6 +215,7 @@ class MemeIndex extends Component {
           total={total}
           perPage={perPage}
           loading={loading}
+          catalog={catalog}
         />
       </div>
     );
