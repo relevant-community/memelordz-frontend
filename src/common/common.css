@@ -204,9 +204,6 @@ input[type=text]:focus {
   padding: 10px;
 }
 
-.pagelist * {
-  display: inline-block;
-}
 .pagelist {
   display: inline-block;
   font-size: 13px!important;
@@ -219,6 +216,10 @@ input[type=text]:focus {
   list-style: none;
   overflow: hidden;
   color: #b86;
+  cursor: pointer;
+}
+.pagelist * {
+  display: inline-block;
 }
 .pagelist .pages {
   padding: 4px;
@@ -233,6 +234,9 @@ input[type=text]:focus {
   border-left: 1px solid #d9bfb7;
   padding-left: 12px;
   margin-left: 7px;
+}
+.pagelist .btn {
+  margin-right: 3px;
 }
 
 @media only screen and (max-width: 1020px) {

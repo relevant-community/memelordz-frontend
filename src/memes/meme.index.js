@@ -7,14 +7,46 @@ import Meme from './meme.component';
 import Create from '../create/create.component';
 import { Nav, Pagination } from '../common';
 
+const defaultPage = {
+  category: 'meme',
+  page: 0,
+};
+
 class MemeIndex extends Component {
   state = {
     page: 0,
     perPage: 5,
+    memes: [],
   }
 
   static propTypes = {
     memes: PropTypes.array,
+  }
+
+  componentDidMount() {
+    console.log('did mount');
+  }
+
+  static getDerivedStateFromProps(props, state) {
+    // console.log(this.props)
+    let { category, page } = props.match ? props.match.params : defaultPage;
+    page = parseInt(page, 10) || 0;
+    if (page) {
+      page -= 1;
+    }
+    const firstMeme = page * state.perPage;
+    const lastMeme = (page + 1) * state.perPage;
+    let memes = props.memes.slice(firstMeme, lastMeme);
+    return {
+      ...state,
+      category,
+      page,
+      memes,
+    };
+  }
+
+  shouldComponentUpdate() {
+    return true;
   }
 
   scrollToTop() {
@@ -22,17 +54,10 @@ class MemeIndex extends Component {
   }
 
   render() {
-    let memes;
-
-    if (this.props.memes.length) {
-      let firstMeme = this.state.page * this.state.perPage;
-      let lastMeme = (this.state.page + 1) * this.state.perPage;
-      memes = this.props.memes.slice(firstMeme, lastMeme).map(meme => {
-        if (!meme) return null;
-        return <Meme key={meme} address={meme} />;
-      });
-    }
-
+    let memes = this.state.memes.map(meme => {
+      if (!meme) return null;
+      return <Meme key={meme} address={meme} />;
+    });
 
     return (
       <div>
@@ -47,7 +72,7 @@ class MemeIndex extends Component {
              </div>
           }
         <Pagination
-          board="m"
+          board="memes"
           page={this.state.page + 1}
           items={this.props.memes}
           perPage={this.state.perPage}

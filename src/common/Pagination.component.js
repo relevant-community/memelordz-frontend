@@ -18,14 +18,15 @@ function Pagination({ board, page, items, perPage }) {
   return (
     <div className='pagelist'>
       {page > 1
-        && <Link to={pageUrl(board, page - 1)}><button>Previous</button></Link>}
-      <ActiveLink to={'/' + board + '/'}>All</ActiveLink>
+        && <Link className='btn' to={pageUrl(board, page - 1)}><button>Previous</button></Link>}
+      {page === 1
+        && <Link to={'/' + board + '/'}>All</Link>}
       <div className='pages'>
         {pages}
       </div>
       {page < count
         && count > 0
-        && <Link to={pageUrl(board, page + 1)}><button>Next</button></Link>}
+        && <Link className='btn' to={pageUrl(board, page + 1)}><button>Next</button></Link>}
       <ActiveLink className='cataloglink' to={'/' + board + '/catalog/'} braces={false}>Catalog</ActiveLink>
     </div>
   );
