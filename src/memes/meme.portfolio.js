@@ -58,7 +58,7 @@ class MemeLeaderboard extends Component {
 
   static getDerivedStateFromProps(props, state) {
     let account = props.accounts[0];
-    if (!account) return;
+    if (!account) return state;
 
     let sorted = props.memes.map(address => {
       if (!address) return null;

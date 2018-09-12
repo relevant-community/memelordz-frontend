@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ipfsAPI from 'ipfs-api';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import dataUriToBuffer from 'data-uri-to-buffer';
 import Web3 from 'web3';
 import * as multihash from '../eth/multihash';
 import { drizzle, BONDING_CURVE_CONTRACT, BondingCurveContract } from '../eth/drizzle.config';
@@ -189,7 +188,7 @@ class Create extends Component {
         return window.alert('Missing account — please log into Metamask');
       }
 
-      const buff = dataUriToBuffer(this.state.preview);
+      const buff = this.state.preview;
       const result = await ipfs.add(buff, {
         progress: prog => {
           this.setState({
