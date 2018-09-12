@@ -221,6 +221,7 @@ export function downsample(img) {
     console.log('image size', buf.length);
   } while (buf.length > MAX_FILE_SIZE && quality > 0.1);
   console.log('final image size', buf.length);
+  return dataURL;
 }
 
 export function loadImage(file) {
