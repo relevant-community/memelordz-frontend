@@ -13,24 +13,35 @@ const defaultPage = {
   page: 0,
 };
 
+const catalogPerPage = 50;
+const indexPerPage = 5;
+
 class MemeIndex extends Component {
   state = {
     page: 0,
     perPage: 5,
     board: 'memes',
     sort: false,
+    catalog: false,
     memes: [],
   }
 
   static getDerivedStateFromProps(props, state) {
     let { board, sort, page } = props.match ? props.match.params : defaultPage;
-    if (sort && !page && parseInt(sort)) {
+    let { perPage } = state;
+    let catalog = false;
+    if (page === 'catalog') {
+      catalog = true;
+      page = 0;
+    } else if (sort && !page && parseInt(sort)) {
       page = sort;
       sort = false;
     } else if (page && !parseInt(page)) {
       sort = page;
       page = 0;
     }
+
+    perPage = catalog ? catalogPerPage : indexPerPage;
 
     page = parseInt(page, 10) || 0;
     if (page) {
@@ -42,6 +53,8 @@ class MemeIndex extends Component {
       board,
       sort,
       page,
+      catalog,
+      perPage,
       memes: props.memes.length ? props.memes : state.memes,
     };
   }
@@ -123,7 +136,7 @@ class MemeIndex extends Component {
   }
 
   render() {
-    let { board, sort, page, perPage } = this.state;
+    let { board, sort, page, perPage, catalog } = this.state;
     let { memes, accounts, contracts } = this.props;
     let account = accounts[0];
     const loading = !memes.length;
@@ -177,7 +190,7 @@ class MemeIndex extends Component {
     const lastMeme = (page + 1) * perPage;
     const total = memes.length;
     memes = memes.slice(firstMeme, lastMeme).map(address => (
-      <Meme key={address} address={address} />
+      <Meme key={address} address={address} catalog={catalog} />
     ));
 
     return (
@@ -187,6 +200,7 @@ class MemeIndex extends Component {
         <hr />
         <Nav board={board} />
         <hr />
+        <div className={catalog ? 'catalog' : 'memes'}>
           {board === 'portfolio' && <h2>Your Portfolio</h2>}
           {loading
             ? <div className='loadingMessage'>
@@ -194,6 +208,7 @@ class MemeIndex extends Component {
               </div>
             : memes
           }
+        </div>
         <Pagination
           board={sort ? board + '/' + sort : board}
           page={page + 1}

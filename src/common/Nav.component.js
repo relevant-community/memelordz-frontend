@@ -9,9 +9,9 @@ function Nav({ board = 'memes' }) {
       <div className='nav'>
         <ActiveLink to="/">Browse Memes</ActiveLink>
         {'Sort by: '}
+        <ActiveLink to={'/' + board + '/hodl/'}>Your Holdings</ActiveLink>
         <ActiveLink to={'/' + board + '/'}>Recent</ActiveLink>
         <ActiveLink to={'/' + board + '/top/'}>Price</ActiveLink>
-        <ActiveLink to={'/' + board + '/hodl/'}>Your Holdings</ActiveLink>
       </div>
     );
   }

@@ -17,7 +17,8 @@ class Meme extends Component {
     symbol: '',
     hash: null,
     img: '',
-    bigImg: false
+    bigImg: false,
+    tokens: 0,
   };
 
   componentDidMount() {
@@ -86,21 +87,20 @@ class Meme extends Component {
     let { state } = this;
     let { bigImg } = this.state;
     let contract = this.props.contracts[this.props.address];
+
+    if (this.props.catalog) {
+      return this.renderCatalog();
+    }
+
     if (!contract || !(state.hash || state.name)) {
-      return (
-        <div className="meme">
-          <div>
-            Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
-          </div>
-          <hr />
-        </div>
-      );
+      return this.renderPlaceholder();
     }
 
     let saleReturn;
     if (state.tokens) {
       saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
     }
+
     return (
       <div className={'meme'}>
         <div>
@@ -153,6 +153,45 @@ class Meme extends Component {
       </div>
     );
   }
+
+  renderPlaceholder() {
+    return (
+      <div className="meme">
+        <div>
+          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
+        </div>
+        <hr />
+      </div>
+    );
+  }
+
+  renderCatalog() {
+    const { state } = this;
+    let saleReturn;
+    if (state.tokens) {
+      saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
+    }
+
+    return (
+      <div className='meme'>
+        <Link to={'/meme/' + this.props.address}>
+          {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
+        </Link>
+        <br />
+        <small>
+          Price: {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)} ETH
+          {' / '}
+          {state.tokens ? (
+            <span>
+              You Own: {state.tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH)
+            </span>
+          ) : null}
+        </small>
+        <br />
+        <b>{state.name}</b>
+      </div>
+    );
+  }
 }
 
 // wrapper which helps with unnecessary re-rendering
@@ -160,6 +199,9 @@ class MemeWrapper extends Component {
   shouldComponentUpdate(nextProps) {
     let contract = this.props.contracts[this.props.address];
     let newContract = nextProps.contracts[nextProps.address];
+    if (this.props.catalog !== nextProps.catalog) {
+      return true;
+    }
     if (contract === newContract) {
       return false;
     }
