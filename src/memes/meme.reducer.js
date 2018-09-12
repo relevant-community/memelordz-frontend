@@ -8,14 +8,13 @@ const initialState = {
 export default function memeReducer(state = initialState, action) {
   // console.log(action.type);
   switch (action.type) {
-    case types.ADD_MEME: {
+    case types.ADD_MEME:
       return {
         ...state,
         all: [
-          ...(new Set([action.payload, ...state.all]))
+          ...(new Set([action.address, ...state.all]))
         ]
       };
-    }
 
     default:
       return state;

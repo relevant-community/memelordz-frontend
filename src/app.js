@@ -8,8 +8,7 @@ import { PortisProvider } from 'portis';
 import { drizzle, BondingCurveContract } from './eth/drizzle.config';
 
 import { AppLoader, Header, Footer } from './common';
-import { MemeIndex, MemeLeaderboard, MemeShow } from './memes';
-import Portfolio from './memes/meme.portfolio';
+import { MemeIndex, MemeShow } from './memes';
 import actions from './actions';
 
 // if (typeof web3 === 'undefined') {
@@ -66,12 +65,10 @@ class App extends Component {
         <AppLoader>
           <Switch>
             <Route exact path="/" component={MemeIndex} />
-            <Route exact path="/index" component={MemeIndex} />
-            <Route exact path="/:category/" component={MemeIndex} />
-            <Route exact path="/:category/:page/" component={MemeIndex} />
-            <Route exact path="/leaderboard" component={MemeIndex} />
+            <Route exact path="/:board/" component={MemeIndex} />
+            <Route exact path="/:board/:page/" component={MemeIndex} />
+            <Route exact path="/:board/:top/:page/" component={MemeIndex} />
             <Route exact path="/meme/:address" component={MemeShow} />
-            <Route exact path="/portfolio" component={Portfolio} />
             <Route render={() => <div>404</div>} />
           </Switch>
         </AppLoader>

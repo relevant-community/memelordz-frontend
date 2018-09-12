@@ -6,13 +6,19 @@ import ActiveLink from './ActiveLink.component';
 
 const pageUrl = (board, index) => '/' + board + '/' + (index < 2 ? '' : index + '/');
 
-function Pagination({ board, page, items, perPage }) {
+function Pagination({ board, page, total, perPage, loading }) {
+  if (loading) {
+    return null;
+  }
   const pages = [];
-  const count = Math.ceil(items.length / perPage);
-  const countToTen = Math.min(count, 10);
-  let index = 1;
+  const count = Math.ceil(total / perPage);
+  const closestTen = 10 * Math.floor((page - 1) / 10);
+  const countToTen = Math.min(count, closestTen + 10);
+  let index = closestTen + 1;
   do {
-    pages.push(<ActiveLink isActive={index === page} key={index} to={pageUrl(board, index)}>{index}</ActiveLink>);
+    pages.push(
+      <ActiveLink isActive={index === page} key={index} to={pageUrl(board, index)}>{index}</ActiveLink>
+    );
   } while (index++ < countToTen);
 
   return (
@@ -34,16 +40,18 @@ function Pagination({ board, page, items, perPage }) {
 
 Pagination.propTypes = {
   board: PropTypes.string,
-  items: PropTypes.array,
+  total: PropTypes.number,
   page: PropTypes.number,
   perPage: PropTypes.number,
+  loading: PropTypes.bool,
 };
 
 Pagination.defaultProps = {
-  board: 'all',
+  board: 'meme',
   items: [],
   page: 0,
   perPage: 5,
+  loading: true,
 };
 
 export default Pagination;

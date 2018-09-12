@@ -2,13 +2,19 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
 
-function Nav(props) {
+function Nav({ board = 'memes' }) {
+  let lastLink;
+  if (board === 'memes') {
+    lastLink = <ActiveLink to="/portfolio/">[View Your Portfolio]</ActiveLink>
+  } else {
+    lastLink = <ActiveLink to="/">[Browse All Memes]</ActiveLink>
+  }
   return (
     <div className='nav'>
       Sort memes by:
-      <ActiveLink to="/">[Recent]</ActiveLink>
-      <ActiveLink to="/leaderboard">[Price]</ActiveLink>
-      <ActiveLink to="/portfolio">[View Your Portfolio]</ActiveLink>
+      <ActiveLink to={'/' + board + '/'}>[Recent]</ActiveLink>
+      <ActiveLink to={'/' + board + '/top/'}>[Price]</ActiveLink>
+      {lastLink}
     </div>
   );
 }
