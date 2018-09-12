@@ -65,7 +65,10 @@ class App extends Component {
         <AppLoader>
           <Switch>
             <Route exact path="/" component={MemeIndex} />
-            <Route exact path="/leaderboard" component={MemeLeaderboard} />
+            <Route exact path="/index" component={MemeIndex} />
+            <Route exact path="/:category" component={MemeIndex} />
+            <Route exact path="/:category/page/:page" component={MemeIndex} />
+            <Route exact path="/leaderboard" component={MemeIndex} />
             <Route exact path="/meme/:address" component={MemeShow} />
             <Route exact path="/portfolio" component={Portfolio} />
             <Route render={() => <div>404</div>} />
