@@ -34,8 +34,8 @@ function Pagination({ board, page, total, perPage, loading, catalog }) {
         && count > 0
         && <Link className='btn' to={pageUrl(board, page + 1)}><button>Next</button></Link>}
       {catalog
-        ? <ActiveLink className='cataloglink' to={'/' + board + '/catalog/'} braces={false}>Catalog</ActiveLink>
-        : <ActiveLink className='cataloglink' to={'/' + board + '/'} braces={false}>Index</ActiveLink>
+        ? <ActiveLink className='cataloglink' to={'/' + board + '/'} braces={false}>Index</ActiveLink>
+        : <ActiveLink className='cataloglink' to={'/' + board + '/catalog/'} braces={false}>Catalog</ActiveLink>
       }
     </div>
   );
