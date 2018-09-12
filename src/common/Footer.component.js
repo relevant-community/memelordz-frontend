@@ -5,7 +5,6 @@ import { Link, withRouter } from 'react-router-dom';
 function Footer() {
   return (
     <footer>
-      <hr />
       <br /><br />
       <br /><br />
       <small>
