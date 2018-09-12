@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -12,29 +13,26 @@ class MemeIndex extends Component {
     perPage: 5,
   }
 
+  static propTypes = {
+    memes: PropTypes.array,
+  }
+
   scrollToTop() {
     window.scrollTo(0, 0);
   }
 
   render() {
-    // if (!this.props.memes.length) {
-    //   return (
-    //     <div>
-    //       <hr />
-    //         <Create />
-    //       <div className='loadingMessage'>
-    //         Loading memes...
-    //       </div>
-    //     </div>
-    //   );
-    // }
+    let memes;
 
-    let firstMeme = this.state.page * this.state.perPage;
-    let lastMeme = (this.state.page + 1) * this.state.perPage;
-    let memes = this.props.memes.slice(firstMeme, lastMeme).map(meme => {
-      if (!meme) return null;
-      return <Meme key={meme} address={meme} />;
-    });
+    if (this.props.memes.length) {
+      let firstMeme = this.state.page * this.state.perPage;
+      let lastMeme = (this.state.page + 1) * this.state.perPage;
+      memes = this.props.memes.slice(firstMeme, lastMeme).map(meme => {
+        if (!meme) return null;
+        return <Meme key={meme} address={meme} />;
+      });
+    }
+
 
     return (
       <div>
@@ -43,6 +41,11 @@ class MemeIndex extends Component {
         <hr />
           <Nav />
         <hr />
+          {memes
+          || <div className='loadingMessage'>
+               Loading memes...
+             </div>
+          }
         <Pagination
           board="m"
           page={this.state.page + 1}
@@ -55,7 +58,6 @@ class MemeIndex extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ProxyFactory: state.contracts.ProxyFactory || {},
   memes: state.memes.all,
 });
 
