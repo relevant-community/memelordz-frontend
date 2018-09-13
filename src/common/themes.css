@@ -336,73 +336,77 @@ body.tomorrow {
 /* photon is a gray / orange theme */
 
 body.photon {
-  background: linear-gradient(#D1D5EE, #EEF2FF 20%);
-  background-color: #EEF2FF;
+  background: none;
+  background-color: #eee;
   color: black;
 }
 .photon a,
 .photon a:link,
 .photon a:visited {
-  color: #34345c;
+  color: #f60!important;
+}
+.photon a:hover {
+  color: #f30!important;
+}
+.photon h1 {
+  color: #004a99;
 }
 .photon hr {
-  border-top: 1px solid #b7c5d9;
+  border-top: 1px solid #ddd;
 }
 .photon input[type=text]:focus {
-  border: 1px solid #b7c5d9;
+  border: 1px solid #000;
 }
 .photon .modal .inner {
-  border: 1px solid #b7c5d9;
+  border: 1px solid #000;
 }
 .photon .modal .heading {
-  background: #d6daf0;
+  background: #ddd;
 }
 .photon .pagelist {
-  background: #d6daf0;
-  border-right: 1px solid #b7c5d9;
-  border-bottom: 1px solid #b7c5d9;
-  color: #89a;
-}
-.photon .pagelist a {
-  color: #34345c;
+  background: #ddd;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  color: #000;
 }
 .photon .pagelist .cataloglink {
-  border-left: 1px solid #b7c5d9;
+  border-left: 1px solid #ccc;
 }
 .photon .newForm label {
-  background-color: #98e;
+  background-color: #ddd;
   color: #000;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
 }
 .photon .subject {
-  color: #0F0C5D;
+  color: #000;
 }
 .photon .name {
-  color: #117743;
+  color: #004a99;
 }
 .photon .toggleBuy > div {
-  background-color: #98e;
+  background-color: #ddd;
   color: #000;
 }
 .photon .toggleBuy > div {
-  background-color: #98e;
+  background-color: #ddd;
   color: #000;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
 }
 .photon .toggleBuy > div.active {
   background: white;
   color: #000;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
+  border-bottom: 0;
 }
 .photon .inactive .toggleBuy div {
   background: white;
   color: #000;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
 }
 .photon .inactive .toggleBuy div:hover {
-  background-color: #98e;
+  background-color: #ddd;
 }
 .photon .tradeSection {
   background: white;
-  border: 1px solid #000;
+  border: 1px solid #ccc;
 }
