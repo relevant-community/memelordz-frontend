@@ -1,9 +1,3 @@
-.appLoader {
-  margin: 20px 0;
-  text-align: center;
-  width: 100%;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -25,17 +19,21 @@ body {
   background-attachment: fixed;
   font-size: 10pt;
 }
-
 .container {
   padding: 10px 20px;
 }
 .container > div {
   min-height: calc(100vh - 320px);
 }
-
 header, footer {
   text-align: center;
   margin: 20px;
+}
+footer small {
+  font-size: 10px;
+}
+.nav {
+  text-align: center;
 }
 a.logo,
 a.logo:link,
@@ -46,26 +44,12 @@ a.logo:visited {
 a.logo:hover {
   text-decoration: underline;
 }
-
-.nav {
-  text-align: center;
-}
 a, a:link, a:visited {
   color: #a00;
-}
-.nav a {
-  margin-left: 5px;
   cursor: pointer;
 }
-.nav a.active {
+a.active {
   font-weight: bold;
-}
-
-table.status {
-  margin: 0 auto;
-}
-.status td {
-  text-align: left;
 }
 
 h1 {
@@ -76,8 +60,9 @@ h1 {
   margin-top: 0;
 }
 h2 {
-    font-size: 131%;
-    font-weight: bold;
+  font-size: 131%;
+  font-weight: bold;
+  text-align: center;
 }
 
 hr {
@@ -88,24 +73,23 @@ hr {
 hr.abovePostForm {
   width: 90%;
 }
-
 .hidden {
   opacity: 0;
 }
+
+/* form elements */
 
 button {
   padding: 3px 10px;
   font-size: 12px;
   cursor: pointer;
 }
-
 input[type=text],
 input[type=file] {
   margin: 1px;
   flex: 1;
   width: 100%;
 }
-
 input[type=text], input[type=password], table.postForm>tbody textarea, #recaptcha_response_field {
   margin-right: 2px;
   padding: 2px 4px 3px;
@@ -119,9 +103,14 @@ input[type=text]:focus {
   border: 1px solid maroon;
 }
 
+/* preload */
+
 .loadingMessage {
   text-align: center;
+  padding: 20px;
 }
+
+/* modal form */
 
 .modal {
   position: fixed;
@@ -171,23 +160,6 @@ input[type=text]:focus {
 .modal .content {
   padding: 20px;
 }
-.error {
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  justify-content: center;
-}
-
-.appLoaderError {
-  text-align: center;
-  width: 65%;
-  padding: 30px;
-  justify-content: center;
-  margin: auto;
-  border: 3px solid red;
-  font-size: 40px;
-}
-
 .modal.loader {
   background: transparent;
 }
@@ -203,16 +175,84 @@ input[type=text]:focus {
   padding: 10px;
 }
 
+/* errors */
+
+.error {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  justify-content: center;
+}
+.appLoader {
+  margin: 20px 0;
+  text-align: center;
+  width: 100%;
+}
+.appLoaderError {
+  text-align: center;
+  width: 65%;
+  padding: 30px;
+  justify-content: center;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 40px;
+}
 .warning {
   background: red;
   color: white;
   font-size: 20px;
 }
-.warnign a, .warning a:visited, .warning a:link {
+.warning a, .warning a:visited, .warning a:link {
   color: white;
 }
 
+/* pagination */
 
+.pagelist {
+  display: inline-block;
+  font-size: 13px;
+  margin: 0;
+  padding: 3px 7px;
+  border: none;
+  background: #f0e0d6;
+  border-right: 1px solid #d9bfb7;
+  border-bottom: 1px solid #d9bfb7;
+  list-style: none;
+  overflow: hidden;
+  color: #b86;
+  cursor: pointer;
+}
+.pagelist * {
+  display: inline-block;
+}
+.pagelist .pages {
+  padding: 4px;
+}
+.pagelist .pages span {
+  padding-right: 4px;
+}
+.pagelist a {
+  color: #00e;
+}
+.pagelist .cataloglink {
+  border-left: 1px solid #d9bfb7;
+  padding-left: 12px;
+  margin-left: 7px;
+}
+.pagelist .btn {
+  margin-right: 3px;
+}
+
+/* misc */
+
+table.status {
+  margin: 0 auto;
+}
+.status td {
+  text-align: left;
+}
+
+/* mobile */
 
 @media only screen and (max-width: 1020px) {
   .container {
