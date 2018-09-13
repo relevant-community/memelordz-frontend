@@ -10,11 +10,11 @@
     "compression-webpack-plugin": "^2.0.0",
     "connected-react-router": "^4.3.0",
     "data-uri-to-buffer": "^2.0.0",
-    "drizzle": "git+https://github.com/relevant-community/drizzle.git#fallback",
+    "drizzle": "https://github.com/relevant-community/drizzle.git#fallback",
     "eth-price": "^0.1.5",
     "exifreader": "^2.5.0",
     "history": "^4.7.2",
-    "ipfs-api": "^22.0.1",
+    "ipfs-api": "22.0.1",
     "portis": "^1.2.12",
     "prop-types": "^15.6.1",
     "react": "^16.3.0",
@@ -27,15 +27,16 @@
     "recharts": "^1.2.0",
     "redux": "^4.0.0",
     "redux-saga": "^0.16.0",
-    "web3": "1.0.0-beta.33"
+    "web3": "1.0.0-beta.34"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "",
-    "build": "webpack -p --config ./webpack.config.prod.js",
+    "build": "webpack --config ./webpack.config.prod.js",
     "dev": "webpack-dev-server --config ./webpack.config.dev.js --hot --inline",
-    "buildDev": "webpack --config ./webpack.config.dev.js --watch --colors",
-    "deploy": "webpack --config ./webpack.config.prod.js && git commit -am 'deploy' && git push"
+    "buildDev": "webpack --config ./webpack.config.dev.js --colors",
+    "deploy": "webpack --config ./webpack.config.prod.js && git commit -am 'deploy' && git push",
+    "upgrade": "npm install web3@1.0.0-beta.34 && npm install https://github.com/relevant-community/drizzle.git#fallback"
   },
   "author": {
     "name": "Slava Balasanov",
