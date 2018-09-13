@@ -14,7 +14,7 @@ const storageTag = 'memelordz.theme';
 
 const themeName = localStorage.getItem(storageTag) || 'Yotusba';
 themes.forEach(theme => {
-  if (theme.name === themeName) document.body.classList.add(theme.className);
+  if (theme.name === themeName && theme.className) document.body.classList.add(theme.className);
 });
 
 export default class ThemeSelect extends Component {
