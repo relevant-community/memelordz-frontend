@@ -1,9 +1,3 @@
-.appLoader {
-  margin: 20px 0;
-  text-align: center;
-  width: 100%;
-}
-
 * {
   box-sizing: border-box;
 }
@@ -25,17 +19,18 @@ body {
   background-attachment: fixed;
   font-size: 10pt;
 }
-
 .container {
   padding: 10px 20px;
 }
 .container > div {
   min-height: calc(100vh - 320px);
 }
-
 header, footer {
   text-align: center;
   margin: 20px;
+}
+.nav {
+  text-align: center;
 }
 a.logo,
 a.logo:link,
@@ -52,17 +47,6 @@ a, a:link, a:visited {
 }
 a.active {
   font-weight: bold;
-}
-
-.nav {
-  text-align: center;
-}
-
-table.status {
-  margin: 0 auto;
-}
-.status td {
-  text-align: left;
 }
 
 h1 {
@@ -86,24 +70,23 @@ hr {
 hr.abovePostForm {
   width: 90%;
 }
-
 .hidden {
   opacity: 0;
 }
+
+/* form elements */
 
 button {
   padding: 3px 10px;
   font-size: 12px;
   cursor: pointer;
 }
-
 input[type=text],
 input[type=file] {
   margin: 1px;
   flex: 1;
   width: 100%;
 }
-
 input[type=text], input[type=password], table.postForm>tbody textarea, #recaptcha_response_field {
   margin-right: 2px;
   padding: 2px 4px 3px;
@@ -117,10 +100,14 @@ input[type=text]:focus {
   border: 1px solid maroon;
 }
 
+/* preload */
+
 .loadingMessage {
   text-align: center;
   padding: 20px;
 }
+
+/* modal form */
 
 .modal {
   position: fixed;
@@ -170,23 +157,6 @@ input[type=text]:focus {
 .modal .content {
   padding: 20px;
 }
-.error {
-  width: 100%;
-  text-align: center;
-  padding: 10px;
-  justify-content: center;
-}
-
-.appLoaderError {
-  text-align: center;
-  width: 65%;
-  padding: 30px;
-  justify-content: center;
-  margin: auto;
-  border: 3px solid red;
-  font-size: 40px;
-}
-
 .modal.loader {
   background: transparent;
 }
@@ -202,6 +172,28 @@ input[type=text]:focus {
   padding: 10px;
 }
 
+/* errors */
+
+.error {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  justify-content: center;
+}
+.appLoader {
+  margin: 20px 0;
+  text-align: center;
+  width: 100%;
+}
+.appLoaderError {
+  text-align: center;
+  width: 65%;
+  padding: 30px;
+  justify-content: center;
+  margin: auto;
+  border: 3px solid red;
+  font-size: 40px;
+}
 .warning {
   background: red;
   color: white;
@@ -211,9 +203,11 @@ input[type=text]:focus {
   color: white;
 }
 
+/* pagination */
+
 .pagelist {
   display: inline-block;
-  font-size: 13px!important;
+  font-size: 13px;
   margin: 0;
   padding: 3px 7px;
   border: none;
@@ -245,6 +239,17 @@ input[type=text]:focus {
 .pagelist .btn {
   margin-right: 3px;
 }
+
+/* misc */
+
+table.status {
+  margin: 0 auto;
+}
+.status td {
+  text-align: left;
+}
+
+/* mobile */
 
 @media only screen and (max-width: 1020px) {
   .container {

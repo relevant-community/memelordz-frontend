@@ -8,7 +8,11 @@ const pageUrl = (board, index, catalog) => '/' + board + '/' + (index < 2 ? '' :
 
 function Pagination({ board, page, total, perPage, loading, catalog }) {
   if (loading) {
-    return null;
+    return (
+      <div className='pagelist'>
+        <div className='pages'>Loading</div>
+      </div>
+    );
   }
   const pages = [];
   const count = Math.ceil(total / perPage);
@@ -26,7 +30,7 @@ function Pagination({ board, page, total, perPage, loading, catalog }) {
       {page > 1
         && <Link className='btn' to={pageUrl(board, page - 1, catalog)}><button>Previous</button></Link>}
       {page === 1
-        && <Link to={'/' + board + '/'}>All</Link>}
+        && <Link className='alllink' to={'/' + board + '/'}>All</Link>}
       <div className='pages'>
         {pages}
       </div>

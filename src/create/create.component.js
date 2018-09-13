@@ -25,7 +25,7 @@ const initialState = {
   lastTxHash: null,
   amount: '',
   modal: false,
-  createStatus: ''
+  createStatus: '',
 };
 
 class Create extends Component {

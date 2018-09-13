@@ -1,0 +1,408 @@
+/* yotsuba-b style */
+
+body.yotsuba-b {
+  background: linear-gradient(#D1D5EE, #EEF2FF 20%);
+  background-color: #EEF2FF;
+  color: black;
+}
+.yotsuba-b a,
+.yotsuba-b a:link,
+.yotsuba-b a:visited {
+  color: #34345c;
+}
+.yotsuba-b hr {
+  border-top: 1px solid #b7c5d9;
+}
+.yotsuba-b input[type=text]:focus {
+  border: 1px solid #b7c5d9;
+}
+.yotsuba-b .modal .inner {
+  border: 1px solid #b7c5d9;
+}
+.yotsuba-b .modal .heading {
+  background: #d6daf0;
+}
+.yotsuba-b .pagelist {
+  background: #d6daf0;
+  border-right: 1px solid #b7c5d9;
+  border-bottom: 1px solid #b7c5d9;
+  color: #89a;
+}
+.yotsuba-b .pagelist a {
+  color: #34345c;
+}
+.yotsuba-b .pagelist .cataloglink {
+  border-left: 1px solid #b7c5d9;
+}
+.yotsuba-b .newForm label {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.yotsuba-b .subject {
+  color: #0F0C5D;
+}
+.yotsuba-b .name {
+  color: #117743;
+}
+.yotsuba-b .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+}
+.yotsuba-b .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.yotsuba-b .toggleBuy > div.active {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.yotsuba-b .inactive .toggleBuy div {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.yotsuba-b .inactive .toggleBuy div:hover {
+  background-color: #98e;
+}
+.yotsuba-b .tradeSection {
+  background: white;
+  border: 1px solid #000;
+}
+
+
+/* futaba style */
+
+body.futaba {
+  font-family: serif;
+  font-size: 12pt;
+}
+.futaba h1 {
+  font-family: serif;
+  letter-spacing: 0px;
+}
+.futaba .pagelist {
+  padding: 1px;
+}
+.futaba .pagelist,
+.futaba .pagelist .pages {
+  color: maroon;
+}
+.futaba .pagelist,
+.futaba .pagelist .pages,
+.futaba .pagelist .alllink,
+.futaba .pagelist .cataloglink {
+  margin: 1px;
+  border: 1px solid gray;
+  border-left-color: #000;
+  border-top-color: #000;
+  background: transparent;
+  font-size: 12pt;
+}
+.futaba .pagelist .alllink {
+  color: #00e;
+}
+.futaba .newForm label {
+  border: 0;
+  padding: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.futaba .pagelist .cataloglink {
+  padding: 4px;
+}
+.futaba .pagelist > a,
+.futaba .pagelist .btn {
+  padding: 4px;
+}
+.futaba .pagelist .alllink:before {
+  content: '[';
+}
+.futaba .pagelist .alllink:after {
+  content: ']';
+}
+.futaba .footer small {
+  font-size: 8pt;
+}
+
+/* burichan style is a hybrid of yotsuba-b and futaba */
+
+body.burichan {
+  background: linear-gradient(#D1D5EE, #EEF2FF 20%);
+  background-color: #EEF2FF;
+  color: black;
+}
+.burichan a,
+.burichan a:link,
+.burichan a:visited {
+  color: #34345c;
+}
+.burichan hr {
+  border-top: 1px solid #b7c5d9;
+}
+.burichan input[type=text]:focus {
+  border: 1px solid #b7c5d9;
+}
+.burichan .modal .inner {
+  border: 1px solid #b7c5d9;
+}
+.burichan .modal .heading {
+  background: #d6daf0;
+}
+.burichan .pagelist {
+  background: #d6daf0;
+  border-right: 1px solid #b7c5d9;
+  border-bottom: 1px solid #b7c5d9;
+  color: #89a;
+}
+.burichan .pagelist a {
+  color: #34345c;
+}
+.burichan .pagelist .cataloglink {
+  border-left: 1px solid #b7c5d9;
+}
+.burichan .newForm label {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.burichan .subject {
+  color: #0F0C5D;
+}
+.burichan .name {
+  color: #117743;
+}
+.burichan .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+}
+.burichan .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.burichan .toggleBuy > div.active {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.burichan .inactive .toggleBuy div {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.burichan .inactive .toggleBuy div:hover {
+  background-color: #98e;
+}
+.burichan .tradeSection {
+  background: white;
+  border: 1px solid #000;
+}
+body.burichan {
+  font-family: serif;
+  font-size: 12pt;
+}
+.burichan h1 {
+  font-family: serif;
+  letter-spacing: 0px;
+}
+.burichan .pagelist {
+  padding: 1px;
+}
+.burichan .pagelist,
+.burichan .pagelist .pages {
+  color: maroon;
+}
+.burichan .pagelist,
+.burichan .pagelist .pages,
+.burichan .pagelist .alllink,
+.burichan .pagelist .cataloglink {
+  margin: 1px;
+  border: 1px solid gray;
+  border-left-color: #000;
+  border-top-color: #000;
+  background: transparent;
+  font-size: 12pt;
+}
+.burichan .pagelist .alllink {
+  color: #00e;
+}
+.burichan .newForm label {
+  border: 0;
+  padding: 0;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+.burichan .pagelist .cataloglink {
+  padding: 4px;
+}
+.burichan .pagelist > a,
+.burichan .pagelist .btn {
+  padding: 4px;
+}
+.burichan .pagelist .alllink:before {
+  content: '[';
+}
+.burichan .pagelist .alllink:after {
+  content: ']';
+}
+.burichan .footer small {
+  font-size: 8pt;
+}
+
+/* photon is a black theme */
+
+body.tomorrow {
+  background: none;
+  background-color: #1d1f21;
+  color: #c5c8c6;
+}
+.tomorrow a,
+.tomorrow a:link,
+.tomorrow a:visited {
+  color: #81a2be !important;
+}
+.tomorrow a:hover {
+  color: #5f89ac !important;
+}
+.tomorrow h1 {
+  color: #c5c8c6;
+}
+.tomorrow hr {
+  border-top: 1px solid #282a2e;
+}
+.tomorrow input[type=text]:focus {
+  border: 1px solid #282a2e;
+}
+.tomorrow .modal .inner {
+  border: 1px solid #282a2e;
+}
+.tomorrow .modal .heading {
+  background: #282a2e;
+  border-bottom: 1px solid #282a2e;
+}
+.tomorrow .pagelist {
+  background: #282a2e;
+  border-right: 1px solid #111;
+  border-bottom: 1px solid #111;
+  color: #89a;
+}
+.tomorrow .pagelist .cataloglink {
+  border-left: 1px solid #111;
+}
+.tomorrow .newForm label {
+  background-color: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #111;
+  justify-content: flex-start;
+}
+.tomorrow .subject {
+  color: #b294bb;
+}
+.tomorrow .name {
+  color: #c5c8c6;
+}
+.tomorrow .toggleBuy > div {
+  background-color: #282a2e;
+  color: #000;
+}
+.tomorrow .toggleBuy > div {
+  background-color: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #111;
+}
+.tomorrow .toggleBuy > div.active {
+  background: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #000;
+  border-bottom: 0;
+}
+.tomorrow .inactive .toggleBuy div {
+  background: #282a2e;
+  color: #c5c8c6;
+  border: 1px solid #282a2e;
+}
+.tomorrow .inactive .toggleBuy div:hover {
+  background-color: #484a4e;
+  color: #e5e8e6;
+}
+.tomorrow .tradeSection {
+  background: #282a2e;
+  border: 1px solid #000;
+}
+
+/* photon is a gray / orange theme */
+
+body.photon {
+  background: linear-gradient(#D1D5EE, #EEF2FF 20%);
+  background-color: #EEF2FF;
+  color: black;
+}
+.photon a,
+.photon a:link,
+.photon a:visited {
+  color: #34345c;
+}
+.photon hr {
+  border-top: 1px solid #b7c5d9;
+}
+.photon input[type=text]:focus {
+  border: 1px solid #b7c5d9;
+}
+.photon .modal .inner {
+  border: 1px solid #b7c5d9;
+}
+.photon .modal .heading {
+  background: #d6daf0;
+}
+.photon .pagelist {
+  background: #d6daf0;
+  border-right: 1px solid #b7c5d9;
+  border-bottom: 1px solid #b7c5d9;
+  color: #89a;
+}
+.photon .pagelist a {
+  color: #34345c;
+}
+.photon .pagelist .cataloglink {
+  border-left: 1px solid #b7c5d9;
+}
+.photon .newForm label {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.photon .subject {
+  color: #0F0C5D;
+}
+.photon .name {
+  color: #117743;
+}
+.photon .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+}
+.photon .toggleBuy > div {
+  background-color: #98e;
+  color: #000;
+  border: 1px solid #000;
+}
+.photon .toggleBuy > div.active {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.photon .inactive .toggleBuy div {
+  background: white;
+  color: #000;
+  border: 1px solid #000;
+}
+.photon .inactive .toggleBuy div:hover {
+  background-color: #98e;
+}
+.photon .tradeSection {
+  background: white;
+  border: 1px solid #000;
+}

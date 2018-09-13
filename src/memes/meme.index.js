@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Meme from './meme.component';
 import Create from '../create/create.component';
-import { Nav, Pagination } from '../common';
+import { Nav, Pagination, ThemeSelect } from '../common';
 import { toNumber, calculateSaleReturn } from '../util';
 
 const defaultPage = {
@@ -200,8 +200,8 @@ class MemeIndex extends Component {
         <hr />
         <Nav board={board} catalog={catalog} />
         <hr />
+        {board === 'portfolio' && <h2>Your Portfolio</h2>}
         <div className={catalog ? 'catalog' : 'memes'}>
-          {board === 'portfolio' && <h2>Your Portfolio</h2>}
           {loading
             ? <div className='loadingMessage'>
                 Loading memes...
@@ -209,14 +209,17 @@ class MemeIndex extends Component {
             : memes
           }
         </div>
-        <Pagination
-          board={sort ? board + '/' + sort : board}
-          page={page + 1}
-          total={total}
-          perPage={perPage}
-          loading={loading}
-          catalog={catalog}
-        />
+        <div className="bottom_nav">
+          <Pagination
+            board={sort ? board + '/' + sort : board}
+            page={page + 1}
+            total={total}
+            perPage={perPage}
+            loading={loading}
+            catalog={catalog}
+          />
+          <ThemeSelect />
+        </div>
       </div>
     );
   }

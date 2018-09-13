@@ -1,35 +1,33 @@
-.memeImage {
-  max-width: 300px;
-  flex: 1;
-}
-
-.memeImage img {
-  max-width: 100%;
-  max-height: 300px;
-}
-
-.memeImage.bigImg{
-  max-width: 65%;
-}
-
-.memeImage.bigImg img{
-  max-height: none;
-}
-
-
 .memeContainer {
   display: flex;
   margin-top: 5px;
 }
 
+/* meme image */
+
+.memeImage {
+  max-width: 300px;
+  flex: 1;
+}
+.memeImage img {
+  max-width: 100%;
+  max-height: 300px;
+}
+.memeImage.bigImg {
+  max-width: 65%;
+}
+.memeImage.bigImg img {
+  max-height: none;
+}
 .toggleBuy.active {
   font-weight: bold;
 }
 
+/* metadata */
+
 .memeMeta {
   margin-left: 20px;
 }
-
 .memeHeading {
   margin-bottom: 10px;
 }
@@ -45,11 +43,8 @@
 .name:after {
   content: ' ';
 }
-.pagination {
-  display: inline-block;
-  width: 50%;
-  text-align: center;
-}
+
+/* catalog view */
 
 .catalog {
   display: flex;
@@ -78,6 +73,15 @@
   min-width: 50px;
   max-height: 150px;
   max-width: 150px;
+}
+
+/* footer */
+
+.bottom_nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }
 
 @media only screen and (max-width: 700px) {
