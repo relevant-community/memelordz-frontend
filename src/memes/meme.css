@@ -89,4 +89,10 @@
    flex-direction: column;
    display: block;
   }
+  .bottom_nav {
+    flex-direction: column;
+  }
+  button {
+    background: lightgrey;
+  }
 }

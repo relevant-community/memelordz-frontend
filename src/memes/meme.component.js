@@ -6,6 +6,7 @@ import { BondingCurveChart } from '../common';
 import Trade from '../trade/trade.component';
 import { ChanDate } from '../util';
 import { toNumber, toFixed, calculateSaleReturn } from '../util';
+import { drizzle } from '../eth/drizzle.config';
 
 import './meme.css';
 
@@ -23,6 +24,10 @@ class Meme extends Component {
 
   componentDidMount() {
     this.queryParams();
+    if (this.props.singleView) {
+      drizzle.contracts[this.props.address].syncEvent(null, 'Burned');
+      drizzle.contracts[this.props.address].syncEvent(null, 'Minted');
+    }
   }
 
   componentDidUpdate(prevProps) {
