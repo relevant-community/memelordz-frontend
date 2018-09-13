@@ -17,7 +17,7 @@ class MemeShow extends Component {
     return (
       <div>
         <hr />
-        <Meme address={address} showChart />
+        <Meme address={address} showChart singleView />
       </div>
     );
   }
