@@ -1,6 +1,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -17,6 +18,7 @@ module.exports = {
     new UglifyJsPlugin(),
     new webpack.optimize.AggressiveMergingPlugin()
   ],
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {
