@@ -2,10 +2,9 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import * as multihash from '../eth/multihash';
-import { BondingCurveChart } from '../common';
+import { BondingCurveChart, BlockHistory, BlockHash } from '../common';
 import Trade from '../trade/trade.component';
-import { ChanDate } from '../util';
-import { toNumber, toFixed, calculateSaleReturn } from '../util';
+import { toNumber, toFixed, ChanDate, calculateSaleReturn } from '../util';
 import { drizzle } from '../eth/drizzle.config';
 
 import './meme.css';
@@ -20,6 +19,7 @@ class Meme extends Component {
     img: '',
     bigImg: false,
     tokens: 0,
+    events: {},
   };
 
   componentDidMount() {
@@ -42,6 +42,7 @@ class Meme extends Component {
     if (account) {
       contract.methods.balanceOf.cacheCall(account);
     }
+    // console.log(contract.methods)
     contract.methods.name.cacheCall();
     contract.methods.symbol.cacheCall();
     contract.methods.poolBalance.cacheCall();
@@ -85,6 +86,7 @@ class Meme extends Component {
       let ipfsHash = multihash.getMultihashFromContractResponse(ipfsImg);
       updatedState.hash = ipfsHash;
     }
+
     return updatedState;
   }
 
@@ -105,6 +107,7 @@ class Meme extends Component {
     if (state.tokens) {
       saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
     }
+    // console.log(contract.events[0])
 
     return (
       <div className={'meme'}>
@@ -123,7 +126,7 @@ class Meme extends Component {
               <input type="checkbox" disabled />
               <span className="subject">{state.name}</span>
               <span className="name">Anonymous</span>
-              {ChanDate(state.timestamp)}
+              <BlockHash event={contract.events[0]} timestamp />
             </div>
 
             {state.symbol && <div>Ticker: {state.symbol} </div>}
@@ -152,6 +155,7 @@ class Meme extends Component {
             <Trade address={this.props.address} contract={contract} showToggles />
 
             {this.props.showChart && <BondingCurveChart data={state} />}
+            {this.props.singleView && <BlockHistory contract={contract} />}
           </div>
         </div>
         <hr />

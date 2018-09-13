@@ -77,6 +77,17 @@ hr.abovePostForm {
   opacity: 0;
 }
 
+/* flex box */
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
 /* form elements */
 
 button {
@@ -250,6 +261,18 @@ table.status {
 }
 .status td {
   text-align: left;
+}
+
+/* block history */
+
+.hash {
+  display: inline-block;
+  max-width: 64px;
+  overflow: hidden;
+  color: #888;
+}
+.hash.open {
+  max-width: auto;
 }
 
 /* mobile */
