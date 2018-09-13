@@ -29,6 +29,9 @@ header, footer {
   text-align: center;
   margin: 20px;
 }
+footer small {
+  font-size: 10px;
+}
 .nav {
   text-align: center;
 }

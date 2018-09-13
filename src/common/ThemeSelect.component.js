@@ -41,6 +41,7 @@ export default class ThemeSelect extends Component {
   render() {
     return (
       <div className='themeSelect'>
+        {'Style: '}
         <select value={this.state.theme} onChange={this.handleChange}>
           {themes.map(theme => (
             <option key={theme.name} value={theme.name}>{theme.name}</option>

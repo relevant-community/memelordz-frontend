@@ -30,7 +30,7 @@ function Pagination({ board, page, total, perPage, loading, catalog }) {
       {page > 1
         && <Link className='btn' to={pageUrl(board, page - 1, catalog)}><button>Previous</button></Link>}
       {page === 1
-        && <Link className='alllink' to={'/' + board + '/'}>All</Link>}
+        && <span>{'['}<Link className='alllink' to={'/' + board + '/'}>All</Link>{']'}</span>}
       <div className='pages'>
         {pages}
       </div>
