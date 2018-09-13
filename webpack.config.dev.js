@@ -15,7 +15,8 @@ module.exports = {
   devServer: {
     port: 9000,
     headers: {
-      'Access-Control-Allow-Origin': '*'
+      'Access-Control-Allow-Origin': '*',
+      // 'Access-Control-Allow-Origin': 'http://rinkeby.infura.io'
     },
     publicPath: '/dist/',
     hot: true,

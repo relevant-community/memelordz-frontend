@@ -13,11 +13,11 @@ import Portfolio from './memes/meme.portfolio';
 import actions from './actions';
 
 // if (typeof web3 === 'undefined') {
-//   // let provider = new PortisProvider({
-//   //   apiKey: '17d7077c4a5c6ad652a374149fca6a08',
-//   //   network: 'rinkeby'
-//   // });
-//   // let Web3 = require('web3');
+//   let provider = new PortisProvider({
+//     apiKey: '17d7077c4a5c6ad652a374149fca6a08',
+//     network: 'rinkeby'
+//   });
+//   let Web3 = require('web3');
 //   global.web3 = new Web3(provider);
 //   web3.currentProvider.isMetaMask = true;
 // }
