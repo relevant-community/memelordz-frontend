@@ -46,11 +46,11 @@ export const options = {
   web3: {
     ignoreMetamask: true,
     useMetamask: true,
-    fallback: global.web3 ? null : {
+    fallback: window.web3 ? null : {
       type: 'https',
       url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
       // type: 'ws',
-      // url: 'wss://gethnode.com/ws',
+      // url: 'ws://rinkeby.infura.io/_ws',
       // type: 'ws',
       // url: 'wss://rinkeby.infura.io/ws',
       networkId: 4,
