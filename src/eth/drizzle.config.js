@@ -47,12 +47,12 @@ export const options = {
     ignoreMetamask: true,
     useMetamask: true,
     fallback: window.web3 ? null : {
-      // type: 'http',
-      // url: 'http://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
+      type: 'https',
+      url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
       // type: 'ws',
       // url: 'ws://rinkeby.infura.io/_ws',
-      type: 'ws',
-      url: 'wss://rinkeby.infura.io/ws',
+      // type: 'ws',
+      // url: 'wss://rinkeby.infura.io/ws',
       networkId: 4,
     }
   }
