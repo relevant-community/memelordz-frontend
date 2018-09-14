@@ -81,7 +81,6 @@ class PriceChart extends React.Component {
     time *= 1000;
     const date = new Date(time);
     if (!date) return '';
-    console.log(date, time);
     return date.getMonth() + '/' + pad(date.getDate(), 2) + ' ' + date.getHours() + ':' + pad(date.getMinutes(), 2);
   }
 
@@ -94,6 +93,7 @@ class PriceChart extends React.Component {
     let { events, currentPrice, symbol } = this.props;
     if (!events || !events.length) return null;
     let values = this.getChartData(events);
+    let price = values[values.length - 1];
     let width = Math.min(600, (window.innerWidth < 480 ? window.innerWidth : 480) - 30);
     let height = width * 2 / 3;
     return (
@@ -110,18 +110,28 @@ class PriceChart extends React.Component {
             dataKey="time"
             type="number"
             tickFormatter={this.formatTick}
+            domain={['dataMin', 'dataMax']}
           />
           <YAxis
-            label={this.state.priceInEth ? 'ETH' : symbol}
+            label={{ value: this.state.priceInEth ? 'ETH' : symbol, angle: -90, position: 'insideLeft' }} 
             dataKey="value"
             type='number'
           />
-          <Line type="stepAfter" dataKey="value" stroke="#8884d8" />
+          <Area isAnimationActive={false} type="stepAfter" dataKey="value" stroke="blue" fill="blue" />
+          <ReferenceDot
+            isFront={true}
+            ifOverflow="extendDomain"
+            x={price.time}
+            y={price.value}
+            r={5}
+            fill="white"
+            stroke="blue"
+          />
           <Tooltip />
         </ComposedChart>
         <div className='row'>
           <button onClick={this.toggle}>
-            {this.state.priceInEth ? 'View prices in ' + symbol : 'View prices in ETH'}
+            {this.state.priceInEth ? 'View ' + symbol + ' supply' : 'View prices in ETH'}
           </button>
         </div>
       </div>
