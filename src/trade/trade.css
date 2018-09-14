@@ -38,7 +38,7 @@
   border: 1px solid #800;
   z-index: 1;
 }
-.inactive .toggleBuy div:hover {
+.desktop .inactive .toggleBuy div:hover {
   background-color: #ea8;
 }
 
