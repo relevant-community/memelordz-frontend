@@ -265,14 +265,25 @@ table.status {
 
 /* block history */
 
+.blockHistory .pagelist {
+  padding: 4px;
+  margin-top: 10px;
+}
+.blockHistory .row > * {
+  display: inline-block;
+  margin-right: 4px;
+}
 .hash {
   display: inline-block;
-  max-width: 64px;
-  overflow: hidden;
   color: #888;
+  cursor: pointer;
+  width: 40px;
 }
 .hash.open {
-  max-width: auto;
+  width: auto;
+}
+.gray {
+  color: #888;
 }
 
 /* mobile */

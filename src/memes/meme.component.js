@@ -107,7 +107,6 @@ class Meme extends Component {
     if (state.tokens) {
       saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
     }
-    // console.log(contract.events[0])
 
     return (
       <div className={'meme'}>
@@ -155,7 +154,7 @@ class Meme extends Component {
             <Trade address={this.props.address} contract={contract} showToggles />
 
             {this.props.showChart && <BondingCurveChart data={state} />}
-            {this.props.singleView && <BlockHistory contract={contract} />}
+            {this.props.singleView && <BlockHistory symbol={state.symbol} contract={contract} showChart />}
           </div>
         </div>
         <hr />
