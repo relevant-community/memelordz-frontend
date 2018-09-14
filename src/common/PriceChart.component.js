@@ -22,7 +22,7 @@ class PriceChart extends React.Component {
   }
 
   state = {
-    priceInEth: false,
+    priceInEth: true,
   }
 
   constructor(props) {

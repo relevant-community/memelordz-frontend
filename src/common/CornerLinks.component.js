@@ -8,6 +8,9 @@ export default function CornerLinks() {
         <Link to="/">Index</Link>
       </div>
       <div className='cataloglink'>
+        <Link to="/memes/catalog/">Catalog</Link>
+      </div>
+      <div className='cataloglink'>
         <Link to="/portfolio/">Portfolio</Link>
       </div>
     </div>
