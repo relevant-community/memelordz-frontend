@@ -123,7 +123,7 @@ class Meme extends Component {
           <div className="memeMeta">
             <div className="memeHeading">
               <input type="checkbox" disabled />
-              <span className="subject">{state.name}</span>
+              <span className="subject"><Link to={'/meme/' + this.props.address}>{state.name}</Link></span>
               <span className="name">Anonymous</span>
               <BlockHash event={contract.events[0]} timestamp />
             </div>

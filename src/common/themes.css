@@ -39,7 +39,8 @@ body.yotsuba-b {
   color: #000;
   border: 1px solid #000;
 }
-.yotsuba-b .subject {
+.yotsuba-b .subject,
+.yotsuba-b .subject a {
   color: #0F0C5D;
 }
 .yotsuba-b .name {
@@ -64,7 +65,7 @@ body.yotsuba-b {
   color: #000;
   border: 1px solid #000;
 }
-.yotsuba-b .inactive .toggleBuy div:hover {
+.desktop .yotsuba-b .inactive .toggleBuy div:hover {
   background-color: #98e;
 }
 .yotsuba-b .tradeSection {
@@ -168,7 +169,8 @@ body.burichan {
   color: #000;
   border: 1px solid #000;
 }
-.burichan .subject {
+.burichan .subject,
+.burichan .subject a {
   color: #0F0C5D;
 }
 .burichan .name {
@@ -193,7 +195,7 @@ body.burichan {
   color: #000;
   border: 1px solid #000;
 }
-.burichan .inactive .toggleBuy div:hover {
+.desktop .burichan .inactive .toggleBuy div:hover {
   background-color: #98e;
 }
 .burichan .tradeSection {
@@ -264,11 +266,13 @@ body.tomorrow {
 .tomorrow a:visited {
   color: #81a2be !important;
 }
-.tomorrow a:hover {
+.desktop .tomorrow a:hover {
   color: #5f89ac !important;
 }
-.tomorrow h1 {
-  color: #c5c8c6;
+.tomorrow h1,
+.tomorrow a.logo,
+.desktop .tomorrow a.logo:hover {
+  color: #c5c8c6 !important;
 }
 .tomorrow hr {
   border-top: 1px solid #282a2e;
@@ -298,7 +302,8 @@ body.tomorrow {
   border: 1px solid #111;
   justify-content: flex-start;
 }
-.tomorrow .subject {
+.tomorrow .subject,
+.tomorrow .subject a {
   color: #b294bb;
 }
 .tomorrow .name {
@@ -324,7 +329,7 @@ body.tomorrow {
   color: #c5c8c6;
   border: 1px solid #282a2e;
 }
-.tomorrow .inactive .toggleBuy div:hover {
+.desktop .tomorrow .inactive .toggleBuy div:hover {
   background-color: #484a4e;
   color: #e5e8e6;
 }
@@ -345,11 +350,13 @@ body.photon {
 .photon a:visited {
   color: #f60!important;
 }
-.photon a:hover {
+.desktop .photon a:hover {
   color: #f30!important;
 }
-.photon h1 {
-  color: #004a99;
+.photon h1,
+.photon a.logo,
+.desktop .photon a.logo:hover {
+  color: #004a99!important;
 }
 .photon hr {
   border-top: 1px solid #ddd;
@@ -377,7 +384,8 @@ body.photon {
   color: #000;
   border: 1px solid #ccc;
 }
-.photon .subject {
+.photon .subject,
+.photon .subject a {
   color: #000;
 }
 .photon .name {
@@ -403,7 +411,7 @@ body.photon {
   color: #000;
   border: 1px solid #ccc;
 }
-.photon .inactive .toggleBuy div:hover {
+.desktop .photon .inactive .toggleBuy div:hover {
   background-color: #ddd;
 }
 .photon .tradeSection {

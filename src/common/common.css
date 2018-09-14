@@ -41,7 +41,7 @@ a.logo:visited {
   color: maroon;
   text-decoration: none;
 }
-a.logo:hover {
+.desktop a.logo:hover {
   text-decoration: underline;
 }
 a, a:link, a:visited {

@@ -22,6 +22,18 @@ export function toFixed(num, dec) {
 }
 
 
+/* Mobile check */
+
+export const isiPhone = !!((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)));
+export const isiPad = !!(navigator.userAgent.match(/iPad/i));
+export const isAndroid = !!(navigator.userAgent.match(/Android/i));
+export const isMobile = isiPhone || isiPad || isAndroid;
+export const isDesktop = !isMobile;
+
+const htmlClassList = document.body.parentNode.classList;
+htmlClassList.add(isDesktop ? 'desktop' : 'mobile');
+
+
 /* Date functions */
 
 export const weekdays = 'Sun Mon Tue Wed Thu Fri Sat'.split(' ');

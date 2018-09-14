@@ -35,6 +35,10 @@
   color: #0F0C5D;
   font-weight: bold;
 }
+.subject a {
+  color: #0F0C5D;
+  text-decoration: none;
+}
 .name {
   color: #117743;
   font-weight: bold;
