@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Meme from './meme.component';
 
+import { CornerLinks, ThemeSelect } from '../common';
+
 class MemeShow extends Component {
   render() {
     if (!this.props.memes.length) {
@@ -18,6 +20,10 @@ class MemeShow extends Component {
       <div>
         <hr />
         <Meme address={address} showChart singleView />
+        <div className="bottom_nav">
+          <CornerLinks />
+          <ThemeSelect />
+        </div>
       </div>
     );
   }
