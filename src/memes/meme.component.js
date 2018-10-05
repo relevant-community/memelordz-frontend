@@ -32,7 +32,7 @@ class Meme extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.accounts[0] !== prevProps.accounts[0]) {
-      this.quaryParams();
+      this.queryParams();
     }
   }
 
