@@ -9162,6 +9162,12 @@
       "links": {},
       "address": "0x146caec268b591a3b5f6cebd02f1e9af3a98a69b",
       "transactionHash": "0x154f91aef3f70c7f8bebf5db2525cc0c2a86ed451551e11d56449f6a768cc984"
+    },
+
+    "9000": {
+      "events": {},
+      "links": {},
+      "address": "0x6bc1e8600af6fc3ed7d2ef29ce72b6099d508181"
     }
   },
   "schemaVersion": "2.0.1",

@@ -5083,6 +5083,12 @@
       "links": {},
       "address": "0x345ca3e014aaf5dca488057592ee47305d9b3e10",
       "transactionHash": "0x23d028d0352beb429ddfc21e55b1f780a055253419a7864d96ac233c2cd76159"
+    },
+
+    "9000": {
+      "events": {},
+      "links": {},
+      "address": "0x1efd19a8fa72081ad46ea4e126dcff165339a51c"
     }
   },
   "schemaVersion": "2.0.0",

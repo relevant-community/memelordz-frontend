@@ -10,7 +10,7 @@ export {
   BondingCurveContract,
 };
 
-const networkId = 4;
+const networkId = 9000;
 
 export const PROXY_FACTORY = '0x14bbea4b804cabe1742056915829eba8f13a4fd9';
 
@@ -48,12 +48,12 @@ export const options = {
     useMetamask: true,
     fallback: window.web3 ? null : {
       type: 'https',
-      url: 'https://rinkeby.infura.io/' + 'eAeL7I8caPNjDe66XRTq',
+      url: 'https://ethereum.rpc.evmos.dev',
       // type: 'ws',
       // url: 'ws://rinkeby.infura.io/_ws',
       // type: 'ws',
       // url: 'wss://rinkeby.infura.io/ws',
-      networkId: 4,
+      networkId,
     }
   }
 };

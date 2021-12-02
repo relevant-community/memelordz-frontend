@@ -2555,6 +2555,12 @@
       "links": {},
       "address": "0xa9c0e6f7e05da0fba6f65892fd08f8b1cc8c71bb",
       "transactionHash": "0xf99bed0c66c1cb36a0f98adfbd74eaeeaad379b2d21584c858eae9b04756379d"
+    },
+
+    "9000": {
+      "events": {},
+      "links": {},
+      "address": "0xd32573e4d8b1e6c6c0a3bcec473f1f6903f0cf23"
     }
   },
   "schemaVersion": "2.0.0",

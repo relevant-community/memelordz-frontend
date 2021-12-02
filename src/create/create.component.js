@@ -152,7 +152,8 @@ class Create extends Component {
       console.log('data ', data);
       let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(
         BONDING_CURVE_CONTRACT,
-        data
+        data,
+        { from: '0x2116d9fb8f7F373df0190465559B9082FF4eAE73' }
       );
       console.log('tx ', txId);
       this.setState({ lastTxId: txId });

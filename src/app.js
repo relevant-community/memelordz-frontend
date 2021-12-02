@@ -21,6 +21,8 @@ import actions from './actions';
 //   web3.currentProvider.isMetaMask = true;
 // }
 
+global.ethereum.request({ method: 'eth_requestAccounts' });
+
 class App extends Component {
   componentDidMount() {
     // window.addEventListener('focus', () => {
