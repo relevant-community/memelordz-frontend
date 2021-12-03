@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Route, Switch } from 'react-router';
 import { withRouter } from 'react-router-dom';
 import { PortisProvider } from 'portis';
-import { drizzle, BondingCurveContract } from './eth/drizzle.config';
+import { drizzle, BondingCurveContract, getEthPrice } from './eth/drizzle.config';
 
 import { AppLoader, Header, Footer } from './common';
 import { MemeIndex, MemeShow } from './memes';
@@ -23,19 +23,15 @@ import actions from './actions';
 
 class App extends Component {
   componentDidMount() {
-    // window.addEventListener('focus', () => {
-    //   console.log('focus!');
-    //   drizzle.contracts.ProxyFactory.syncEvents();
-    // }, false);
     window.addEventListener(
       'hashchange',
       () => {
         window.scroll(0, 0);
-        // TODO: says this is not a function?
         drizzle.contracts.ProxyFactory.syncEvents();
       },
       false
     );
+    this.getEthPrice();
   }
 
   componentDidUpdate(lastProps) {
@@ -57,6 +53,14 @@ class App extends Component {
       });
       this.props.actions.addMeme(address);
     });
+  }
+
+  getEthPrice() {
+    getEthPrice()
+      .then(price => {
+        console.log('got eth price ', price);
+        this.props.actions.setEthPrice(price);
+      });
   }
 
   render() {
@@ -86,7 +90,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  actions: bindActionCreators({ ...actions.memeActions }, dispatch)
+  actions: bindActionCreators({ ...actions.memeActions, ...actions.ethActions }, dispatch)
 });
 
 export default withRouter(

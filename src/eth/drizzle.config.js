@@ -1,9 +1,11 @@
 import { Drizzle, generateStore } from 'drizzle';
+import ethPrice from 'eth-price';
 
 import { store } from '../store';
 
 import ProxyFactory from './contracts/ProxyFactory.json';
 import BondingCurveContract from './contracts/BondingCurveContract.json';
+
 
 export {
   ProxyFactory,
@@ -57,5 +59,14 @@ export const options = {
     }
   }
 };
+
+export function getEthPrice() {
+  return ethPrice('usd')
+    .then(ETHUSD => {
+      ETHUSD = ETHUSD[0].replace('USD: ','');
+      return parseFloat(ETHUSD);
+    })
+    .catch(err => console.log(err));
+}
 
 export const drizzle = new Drizzle(options, store);

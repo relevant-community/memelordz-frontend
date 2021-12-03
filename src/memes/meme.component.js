@@ -20,6 +20,7 @@ class Meme extends Component {
     bigImg: false,
     tokens: 0,
     events: {},
+    ethPrice: null
   };
 
   componentDidMount() {
@@ -30,9 +31,13 @@ class Meme extends Component {
     }
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState) {
     if (this.props.accounts[0] !== prevProps.accounts[0]) {
       this.queryParams();
+    }
+    if (this.state.tokens && this.state.tokens !== prevState.tokens) {
+      drizzle.contracts[this.props.address].syncEvent(null, 'Burned');
+      drizzle.contracts[this.props.address].syncEvent(null, 'Minted');
     }
   }
 
@@ -51,6 +56,7 @@ class Meme extends Component {
     contract.methods.exponent.cacheCall();
   }
 
+
   static getDerivedStateFromProps(props, state) {
     let contract = props.contracts[props.address];
     let account = props.accounts[0];
@@ -67,7 +73,8 @@ class Meme extends Component {
       totalSupply: toNumber(contract.methods.totalSupply.fromCache(), 18),
       slope: toNumber(contract.methods.slope.fromCache(), 0),
       exponent: toNumber(contract.methods.exponent.fromCache(), 0),
-      tokens
+      tokens,
+      // spent: 0
     };
 
     let ipfsImg;
@@ -81,6 +88,21 @@ class Meme extends Component {
       updatedState.timestamp = event.returnValues.timestamp;
     }
 
+    // updatedState.spent = 0;
+    // contract.events.map((e) => {
+    //   if (e.addess !== account) return;
+    //   switch (e.event) {
+    //     case 'Minted':
+    //       updatedState.spent += toNumber(e.returnValues.totalCost, 18);
+    //       break;
+    //     case 'Burned':
+    //       updatedState.spent -= toNumber(e.returnValues.reward, 18);
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // });
+
     // assume hash does not update
     if (!state.hash && ipfsImg) {
       let ipfsHash = multihash.getMultihashFromContractResponse(ipfsImg);
@@ -92,8 +114,12 @@ class Meme extends Component {
 
   render() {
     let { state } = this;
-    let { bigImg } = this.state;
-    let contract = this.props.contracts[this.props.address];
+    let { bigImg, totalSupply, exponent, spent, tokens } = this.state;
+    let { eth, contracts } = this.props;
+    let contract = contracts[this.props.address];
+    let price = ((1 / state.slope) * totalSupply ** exponent) || 0;
+    let priceUSD = eth.price && (price * eth.price).toFixed(2);
+    price = price.toFixed(2);
 
     if (this.props.catalog) {
       return this.renderCatalog();
@@ -104,8 +130,16 @@ class Meme extends Component {
     }
 
     let saleReturn;
-    if (state.tokens) {
+    let saleReturnUSD;
+    let profit;
+    let profitUSD;
+    if (tokens) {
       saleReturn = calculateSaleReturn({ ...this.state, amount: state.tokens });
+      saleReturnUSD = eth.price && (saleReturn * eth.price).toFixed();
+      profit = spent && (saleReturn - spent);
+      console.log(profit);
+      profitUSD = (profit && eth.price) && (profit * eth.price).toFixed();
+      console.log(spent);
     }
 
     return (
@@ -132,7 +166,7 @@ class Meme extends Component {
             {
               <p>
                 <b>
-                  Price: {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)} ETH
+                  Price: {price} ETH {priceUSD ? ' · $' + priceUSD : null }
                 </b>
               </p>
             }
@@ -144,10 +178,12 @@ class Meme extends Component {
               </div>
             }
 
-            {state.tokens ? (
+            {tokens ? (
               <p>
                 <b>
-                  You Own: {state.tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH){' '}
+                  You Own: {tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH{saleReturnUSD ? ' · $' + saleReturnUSD : null }{') '}
+                  {/*<br/>
+                  Profit: {profit.toFixed(2)} ETH · ${profitUSD}*/}
                 </b>
               </p>
             ) : null}
@@ -225,7 +261,8 @@ class MemeWrapper extends Component {
 
 const mapStateToProps = state => ({
   contracts: state.contracts,
-  accounts: state.accounts
+  accounts: state.accounts,
+  eth: state.eth
 });
 
 const mapDispatchToProps = dispatch => ({
