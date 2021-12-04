@@ -8,7 +8,7 @@ class MemeShow extends Component {
   render() {
     if (!this.props.memes.length) {
       return (
-        <div className='loadingMessage'>
+        <div className="loadingMessage">
           <hr />
           Loading meme...
         </div>
@@ -30,7 +30,7 @@ class MemeShow extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  ProxyFactory: state.contracts.ProxyFactory || {},
+  ProxyFactory: state.contracts?.ProxyFactory || {},
   memes: state.memes.all
 });
 

@@ -1,15 +1,14 @@
 const webpack = require('webpack');
 const path = require('path');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './src/index.js',
+    main: './src/index.js'
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index.js',
+    filename: 'index.js'
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -38,10 +37,10 @@ module.exports = {
             require('babel-plugin-transform-object-rest-spread'),
             require('babel-plugin-transform-class-properties'),
             require('babel-plugin-transform-react-jsx'),
-            require('react-hot-loader/babel'),
+            require('react-hot-loader/babel')
           ]
         }
       }
     ]
-  },
+  }
 };

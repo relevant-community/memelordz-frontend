@@ -5,7 +5,6 @@ import * as multihash from '../eth/multihash';
 import { BondingCurveChart, BlockHistory, BlockHash } from '../common';
 import Trade from '../trade/trade.component';
 import { toNumber, toFixed, ChanDate, calculateSaleReturn } from '../util';
-import { drizzle } from '../eth/drizzle.config';
 
 import './meme.css';
 
@@ -19,14 +18,14 @@ class Meme extends Component {
     img: '',
     bigImg: false,
     tokens: 0,
-    events: {},
+    events: {}
   };
 
   componentDidMount() {
     this.queryParams();
     if (this.props.singleView) {
-      drizzle.contracts[this.props.address].syncEvent(null, 'Burned');
-      drizzle.contracts[this.props.address].syncEvent(null, 'Minted');
+      // drizzle.contracts[this.props.address].syncEvent(null, 'Burned');
+      // drizzle.contracts[this.props.address].syncEvent(null, 'Minted');
     }
   }
 
@@ -111,19 +110,24 @@ class Meme extends Component {
     return (
       <div className={'meme'}>
         <div>
-          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
+          Contract:{' '}
+          <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>
         </div>
         <div className="memeContainer">
           <div
             className={'memeImage ' + (bigImg ? 'bigImg' : '')}
             onClick={() => this.setState({ bigImg: !bigImg })}
           >
-            {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
+            {state.hash ? (
+              <img src={'https://ipfs.infura.io/ipfs/' + state.hash} />
+            ) : null}
           </div>
           <div className="memeMeta">
             <div className="memeHeading">
               <input type="checkbox" disabled />
-              <span className="subject"><Link to={'/meme/' + this.props.address}>{state.name}</Link></span>
+              <span className="subject">
+                <Link to={'/meme/' + this.props.address}>{state.name}</Link>
+              </span>
               <span className="name">Anonymous</span>
               <BlockHash event={contract.events[0]} timestamp />
             </div>
@@ -132,29 +136,52 @@ class Meme extends Component {
             {
               <p>
                 <b>
-                  Price: {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)} ETH
+                  Price:{' '}
+                  {(
+                    (1 / state.slope) *
+                    state.totalSupply ** state.exponent
+                  ).toFixed(2)}{' '}
+                  ETH
                 </b>
               </p>
             }
 
-            {<div>Pool balance: {state.poolBalance && state.poolBalance.toFixed(2)} ETH</div>}
             {
               <div>
-                Total supply: {state.totalSupply && state.totalSupply.toFixed(2)} {state.symbol}
+                Pool balance:{' '}
+                {state.poolBalance && state.poolBalance.toFixed(2)} ETH
+              </div>
+            }
+            {
+              <div>
+                Total supply:{' '}
+                {state.totalSupply && state.totalSupply.toFixed(2)}{' '}
+                {state.symbol}
               </div>
             }
 
             {state.tokens ? (
               <p>
                 <b>
-                  You Own: {state.tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH){' '}
+                  You Own: {state.tokens.toFixed(2)} {state.symbol} (
+                  {saleReturn.toFixed(2)} ETH){' '}
                 </b>
               </p>
             ) : null}
-            <Trade address={this.props.address} contract={contract} showToggles />
+            <Trade
+              address={this.props.address}
+              contract={contract}
+              showToggles
+            />
 
             {this.props.showChart && <BondingCurveChart data={state} />}
-            {this.props.singleView && <BlockHistory symbol={state.symbol} contract={contract} showChart />}
+            {this.props.singleView && (
+              <BlockHistory
+                symbol={state.symbol}
+                contract={contract}
+                showChart
+              />
+            )}
           </div>
         </div>
         <hr />
@@ -166,7 +193,9 @@ class Meme extends Component {
     return (
       <div className="meme">
         <div>
-          Contract: <Link to={'/meme/' + this.props.address}>{this.props.address}</Link> (Loading)
+          Contract:{' '}
+          <Link to={'/meme/' + this.props.address}>{this.props.address}</Link>{' '}
+          (Loading)
         </div>
         <hr />
       </div>
@@ -181,17 +210,22 @@ class Meme extends Component {
     }
 
     return (
-      <div className='meme'>
+      <div className="meme">
         <Link to={'/meme/' + this.props.address}>
-          {state.hash ? <img src={'https://ipfs.infura.io/ipfs/' + state.hash} /> : null}
+          {state.hash ? (
+            <img src={'https://ipfs.infura.io/ipfs/' + state.hash} />
+          ) : null}
         </Link>
         <br />
         <small>
-          Price: {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)} ETH
+          Price:{' '}
+          {((1 / state.slope) * state.totalSupply ** state.exponent).toFixed(2)}{' '}
+          ETH
           {' / '}
           {state.tokens ? (
             <span>
-              You Own: {state.tokens.toFixed(2)} {state.symbol} ({saleReturn.toFixed(2)} ETH)
+              You Own: {state.tokens.toFixed(2)} {state.symbol} (
+              {saleReturn.toFixed(2)} ETH)
             </span>
           ) : null}
         </small>
@@ -223,16 +257,13 @@ class MemeWrapper extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   contracts: state.contracts,
   accounts: state.accounts
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   // actions: bindActionCreators({ ...authActions }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MemeWrapper);
+export default connect(mapStateToProps, mapDispatchToProps)(MemeWrapper);

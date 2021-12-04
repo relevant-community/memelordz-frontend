@@ -2,6 +2,8 @@
 import ExifReader from 'exifreader';
 import dataUriToBuffer from 'data-uri-to-buffer';
 
+window.Buffer = window.Buffer || require('buffer').Buffer;
+
 /* (Big) Number functions */
 
 // const { BN } = Web3.utils;
@@ -13,7 +15,7 @@ export function toNumber(num, dec) {
   // dec = (10 ** dec).toString();
   // let d = new BN(dec);
   // return Number(n.div(d));
-  return num / (10 ** dec);
+  return num / 10 ** dec;
 }
 
 export function toFixed(num, dec) {
@@ -21,38 +23,43 @@ export function toFixed(num, dec) {
   return num.toFixed(dec);
 }
 
-
 /* Mobile check */
 
-export const isiPhone = !!((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i)));
-export const isiPad = !!(navigator.userAgent.match(/iPad/i));
-export const isAndroid = !!(navigator.userAgent.match(/Android/i));
+export const isiPhone = !!(
+  navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPod/i)
+);
+export const isiPad = !!navigator.userAgent.match(/iPad/i);
+export const isAndroid = !!navigator.userAgent.match(/Android/i);
 export const isMobile = isiPhone || isiPad || isAndroid;
 export const isDesktop = !isMobile;
 
 const htmlClassList = document.body.parentNode.classList;
 htmlClassList.add(isDesktop ? 'desktop' : 'mobile');
 
-
 /* Date functions */
 
 export const weekdays = 'Sun Mon Tue Wed Thu Fri Sat'.split(' ');
-export const pad = (n) => n < 10 ? '0' + n : n;
+export const pad = (n) => (n < 10 ? '0' + n : n);
 
 export function ChanDate(d = Date.now()) {
   // 09/08/18(Sat)12:06:03
   const date = new Date(d);
   return (
-    pad(date.getDate()) + '/'
-  + pad(date.getMonth() + 1) + '/'
-  + (date.getYear() - 100) + '('
-  + weekdays[date.getDay()] + ')'
-  + pad(date.getHours()) + ':'
-  + pad(date.getMinutes()) + ':'
-  + pad(date.getSeconds())
+    pad(date.getDate()) +
+    '/' +
+    pad(date.getMonth() + 1) +
+    '/' +
+    (date.getYear() - 100) +
+    '(' +
+    weekdays[date.getDay()] +
+    ')' +
+    pad(date.getHours()) +
+    ':' +
+    pad(date.getMinutes()) +
+    ':' +
+    pad(date.getSeconds())
   );
 }
-
 
 /* Price functions */
 
@@ -70,16 +77,15 @@ export function calculateSaleReturn(state) {
   return poolBalance - pool;
 }
 
-
 /* Image resize / EXIF processing functions */
 
 export const MAX_IMAGE_DIMENSION = 1024;
 export const MAX_FILE_SIZE = 1024 * 100;
 
 export function loadFile(file) {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     const reader = new FileReader();
-    reader.onload = e => resolve(e.target.result);
+    reader.onload = (e) => resolve(e.target.result);
     reader.readAsArrayBuffer(file);
   });
 }
@@ -92,7 +98,7 @@ function getScale(width, height, viewportWidth, viewportHeight, fillViewport) {
     return viewportHeight / height;
   }
   fillViewport = !!fillViewport;
-  const landscape = (width / height) > (viewportWidth / viewportHeight);
+  const landscape = width / height > viewportWidth / viewportHeight;
   if (landscape) {
     if (fillViewport) {
       return fitVertical();
@@ -193,8 +199,13 @@ export function renderToCanvas(img, options) {
   const ctx = canvas.getContext('2d');
   const initialScale = options.scale || 1;
   // Scale to needed to constrain canvas to max size
-  let scale = getScale(img.width * initialScale, img.height * initialScale,
-    MAX_IMAGE_DIMENSION, MAX_IMAGE_DIMENSION, true);
+  let scale = getScale(
+    img.width * initialScale,
+    img.height * initialScale,
+    MAX_IMAGE_DIMENSION,
+    MAX_IMAGE_DIMENSION,
+    true
+  );
   // Still need to apply the user defined scale
   scale *= initialScale;
   canvas.width = Math.round(img.width * scale);
@@ -240,7 +251,7 @@ export function loadImage(file) {
   return new Promise((resolve, reject) => {
     if (file) {
       const reader = new FileReader();
-      reader.onload = e => {
+      reader.onload = (e) => {
         reader.onload = null;
         reader.onerror = null;
         let dataURL = e.target.result;
@@ -257,7 +268,7 @@ export function loadImage(file) {
           img.onerror = () => {
             img.onload = null;
             img.onerror = null;
-            reject()
+            reject();
           };
           img.src = dataURL;
         }

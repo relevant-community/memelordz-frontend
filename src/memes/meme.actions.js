@@ -13,6 +13,3 @@ export function addMemes(addresses) {
     addresses
   };
 }
-export function noop() {
-  return;
-}

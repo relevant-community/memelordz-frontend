@@ -1,18 +1,15 @@
 import React, { Component } from 'react';
-import ipfsAPI from 'ipfs-api';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Web3 from 'web3';
-import dataUriToBuffer from 'data-uri-to-buffer';
-import * as multihash from '../eth/multihash';
-import { drizzle, BONDING_CURVE_CONTRACT, BondingCurveContract } from '../eth/drizzle.config';
+import { BONDING_CURVE_CONTRACT, BondingCurveContract } from '../eth/config';
 import { calculatePurchaseReturn, toNumber, toFixed, loadImage } from '../util';
 import actions from '../actions';
 
 import './create.css';
 
-const ipfs = ipfsAPI('ipfs.infura.io', '5001', { protocol: 'https' });
-const { Buffer } = ipfs;
+// setUploadStatus('Waiting for contract to be confirmed - this may take a while!');
+
 const { BN } = Web3.utils;
 
 const initialState = {
@@ -25,7 +22,7 @@ const initialState = {
   lastTxHash: null,
   amount: '',
   modal: false,
-  createStatus: '',
+  createStatus: ''
 };
 
 class Create extends Component {
@@ -46,7 +43,8 @@ class Create extends Component {
       if (status === 'pending') {
         return {
           ...state,
-          createStatus: 'Waiting for contract to post to the blockchain - this may take a while!'
+          createStatus:
+            'Waiting for contract to post to the blockchain - this may take a while!'
         };
       }
       if (status === 'error') {
@@ -56,21 +54,23 @@ class Create extends Component {
       if (status === 'success') {
         window.alert('Your transaction has been confirmed!');
         // console.log(lastTxHash)
-        const { address, blockNumber } = props.transactions[lastTxHash].receipt.events[0];
+        const { address, blockNumber } = props.transactions[
+          lastTxHash
+        ].receipt.events[0];
         console.log(props.transactions[lastTxHash].receipt.events);
 
-        drizzle.addContract(BondingCurveContract, {
-          name: address,
-          address,
-          events: [
-            {
-              eventName: 'StoreHash',
-              eventOptions: {
-                fromBlock: blockNumber
-              }
-            }
-          ]
-        });
+        // drizzle.addContract(BondingCurveContract, {
+        //   name: address,
+        //   address,
+        //   events: [
+        //     {
+        //       eventName: 'StoreHash',
+        //       eventOptions: {
+        //         fromBlock: blockNumber
+        //       }
+        //     }
+        //   ]
+        // });
         props.actions.addMeme(address);
 
         setTimeout(() => {
@@ -84,156 +84,16 @@ class Create extends Component {
     return null;
   }
 
-  componentDidMount() {}
-
-  getContractData() {
-    let ipfsHash = multihash.getBytes32FromMultiash(this.state.hash);
-
-    // need this?
-    let web3 = drizzle.web3;
-
-    let data = web3.eth.abi.encodeFunctionCall(
-      {
-        name: 'initContract',
-        type: 'function',
-        inputs: [
-          {
-            type: 'string',
-            name: '_name'
-          },
-          {
-            type: 'uint8',
-            name: '_decimals'
-          },
-          {
-            type: 'string',
-            name: '_symbol'
-          },
-          {
-            type: 'uint8',
-            name: '_exponent'
-          },
-          {
-            type: 'uint32',
-            name: '_slope'
-          },
-          {
-            type: 'bytes32',
-            name: '_hash'
-          },
-          {
-            type: 'uint8',
-            name: '_hashFunction'
-          },
-          {
-            type: 'uint8',
-            name: '_size'
-          }
-        ]
-      },
-      [
-        this.state.name,
-        '18',
-        this.state.symbol,
-        '2',
-        '1000',
-        ipfsHash.digest,
-        ipfsHash.hashFunction,
-        ipfsHash.size
-      ]
-    );
-    return data;
-  }
-
-  async createMemeContract() {
-    try {
-      let data = this.getContractData();
-      console.log('state', this.state);
-      console.log('data ', data);
-      let txId = await this.props.ProxyFactory.methods.createProxy.cacheSend(
-        BONDING_CURVE_CONTRACT,
-        data,
-        { from: '0x2116d9fb8f7F373df0190465559B9082FF4eAE73' }
-      );
-      console.log('tx ', txId);
-      this.setState({ lastTxId: txId });
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   displayPreview() {
     this.validate();
     const file = this.fileInput.files[0];
-    loadImage(file).then(dataURL => {
-      this.setState({ preview: dataURL });
-    }).catch(() => {
-      console.log('invalid image');
-    });
-  }
-
-  async upload() {
-    try {
-      if (this.state.processing) {
-        return window.alert('still processing previous transaction');
-      }
-      this.setState({
-        modal: false,
-        processing: true,
-        createStatus: 'Starting upload to IPFS'
+    loadImage(file)
+      .then((dataURL) => {
+        this.setState({ preview: dataURL });
+      })
+      .catch(() => {
+        console.log('invalid image');
       });
-
-      let { account } = this.props;
-      // let { amount } = this.state;
-
-      if (!account) {
-        return window.alert('Missing account — please log into Metamask');
-      }
-
-      const buff = dataUriToBuffer(this.state.preview);
-      const result = await ipfs.add(buff, {
-        progress: prog => {
-          this.setState({
-            createStatus: 'Uploaded ' + prog + '% to IPFS'
-          });
-        }
-      });
-      console.log(result);
-      this.setState({
-        createStatus: 'Creating contract...'
-      });
-
-      this.setState({ hash: result[0].path });
-      this.createMemeContract(result[0].path);
-
-      this.setState({
-        createStatus: 'Waiting for contract to be confirmed - this may take a while!'
-      });
-
-      // TODO: execute initial trade when creating the contract
-      // this was copied from the trade component:
-      /*
-      if (!!amount && amount > 0) {
-        let numOfTokens = calculatePurchaseReturn(this.state);
-        numOfTokens = Web3.utils.toWei(amount.toString());
-        // numOfTokens = new BN(numOfTokens.toString());
-        // amount += .1;
-        amount = Web3.utils.toWei(amount.toString());
-        amount = new BN(amount.toString());
-
-        // let priceToMint = await this.props.contract.methods.priceToMint.call(amount);
-        // console.log('price to mint ', priceToMint);
-        // console.log('our price     ', amount);
-
-        contract.methods.mint.cacheSend(numOfTokens, {
-          value: amount, from: account
-        });
-      }
-      */
-    } catch (err) {
-      console.log(err);
-    }
-    return null;
   }
 
   handleInputChange(e) {
@@ -297,7 +157,7 @@ class Create extends Component {
               type="text"
               placeholder="Name your meme"
               autoComplete="off"
-              ref={c => (this.nameInput = c)}
+              ref={(c) => (this.nameInput = c)}
               value={this.state.name}
               onChange={this.handleInputChange}
             />
@@ -310,7 +170,7 @@ class Create extends Component {
               type="text"
               placeholder="SYMB"
               autoComplete="off"
-              ref={c => (this.symbolInput = c)}
+              ref={(c) => (this.symbolInput = c)}
               value={this.state.symbol}
               onChange={this.handleInputChange}
             />
@@ -318,7 +178,7 @@ class Create extends Component {
           <div>
             <label>Image</label>
             <input
-              ref={c => (this.fileInput = c)}
+              ref={(c) => (this.fileInput = c)}
               onChange={this.displayPreview.bind(this)}
               accept="image/*"
               name="meme"
@@ -327,7 +187,9 @@ class Create extends Component {
           </div>
           <div>
             <label className="hidden" />
-            <button onClick={this.upload.bind(this)}>Create Meme Contract</button>
+            <button onClick={this.upload.bind(this)}>
+              Create Meme Contract
+            </button>
           </div>
           <div className="error">{this.state.error}</div>
         </div>
@@ -359,7 +221,9 @@ class Create extends Component {
     let processing;
     if (this.state.lastTxHash) {
       processing = (
-        <div className="processing">processing transaction: {this.state.lastTxHash}</div>
+        <div className="processing">
+          processing transaction: {this.state.lastTxHash}
+        </div>
       );
     }
 
@@ -367,7 +231,10 @@ class Create extends Component {
     let otherTokenValue;
     let available;
 
-    walletBalance = toNumber(this.props.accountBalances[this.props.account], 18);
+    walletBalance = toNumber(
+      this.props.accountBalances[this.props.account],
+      18
+    );
     otherTokenValue = (
       calculatePurchaseReturn({
         exponent: 2,
@@ -388,7 +255,7 @@ class Create extends Component {
         className={this.state.modal ? 'modal visible' : 'modal'}
         onClick={this.hideModal.bind(this)}
       >
-        <div className="inner" onClick={e => e.stopPropagation()}>
+        <div className="inner" onClick={(e) => e.stopPropagation()}>
           <div className="heading">
             Almost there!
             <div className="close" onClick={this.hideModal.bind(this)}>
@@ -397,7 +264,8 @@ class Create extends Component {
           </div>
           <div className="content">
             <div>
-              Be the first to invest in your meme:<br />
+              Be the first to invest in your meme:
+              <br />
               <b>{this.state.name}</b>
             </div>
 
@@ -413,7 +281,7 @@ class Create extends Component {
                 <span>
                   <input
                     placeholder=""
-                    onFocus={e => {
+                    onFocus={(e) => {
                       if (e.target.value === '0') this.setState({ amount: '' });
                     }}
                     autoFocus
@@ -457,10 +325,10 @@ class Create extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  account: state.accounts[0],
+const mapStateToProps = (state) => ({
+  account: state.accounts?.[0],
   accountBalances: state.accountBalances || {},
-  ProxyFactory: state.contracts.ProxyFactory,
+  ProxyFactory: state.contracts?.ProxyFactory,
   network: state.web3.networkId,
   status: state.web3.status,
   drizzleStatus: state.drizzleStatus.initialized,
@@ -468,11 +336,8 @@ const mapStateToProps = state => ({
   transactionStack: state.transactionStack
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch) => ({
   actions: bindActionCreators({ ...actions.memeActions }, dispatch)
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Create);
+export default connect(mapStateToProps, mapDispatchToProps)(Create);

@@ -1,20 +1,19 @@
 import React, { Component } from 'react';
-import { drizzle } from '../eth/drizzle.config';
 import { toNumber, ChanDate } from '../util';
 import PriceChart from './PriceChart.component';
 
 class BlockHistory extends Component {
   state = {
     timestamps: {},
-    sort: [],
-  }
+    sort: []
+  };
 
   handleBlockLoad(block, event) {
     if (block) {
       this.setState({
         timestamps: {
           ...this.state.timestamps,
-          [event.blockHash]: parseInt(block.timestamp, 10),
+          [event.blockHash]: parseInt(block.timestamp, 10)
         }
       });
     }
@@ -25,13 +24,19 @@ class BlockHistory extends Component {
     const { timestamps } = this.state;
 
     const sortedEvents = contract.events
-      .map(event => [event, timestamps[event.blockHash] || Infinity])
+      .map((event) => [event, timestamps[event.blockHash] || Infinity])
       .sort((a, b) => a[1] - b[1]);
 
     return (
-      <div className='blockHistory'>
-        {showChart && <PriceChart events={sortedEvents} symbol={symbol} currentPrice={currentPrice} />}
-        <div className='pagelist'>
+      <div className="blockHistory">
+        {showChart && (
+          <PriceChart
+            events={sortedEvents}
+            symbol={symbol}
+            currentPrice={currentPrice}
+          />
+        )}
+        <div className="pagelist">
           {sortedEvents.map(([event]) => (
             <BlockHash
               key={event.blockHash}
@@ -48,19 +53,19 @@ class BlockHistory extends Component {
 
 class BlockHash extends Component {
   state = {
-    block: {},
-  }
+    block: {}
+  };
 
   componentDidMount() {
     const { event } = this.props;
     // console.log(event);
     if (event) {
-      drizzle.web3.eth.getBlock(event.blockHash).then(block => {
-        if (this.props.onBlockLoad) {
-          this.props.onBlockLoad(block, event);
-        }
-        this.setState({ block });
-      });
+      // drizzle.web3.eth.getBlock(event.blockHash).then((block) => {
+      //   if (this.props.onBlockLoad) {
+      //     this.props.onBlockLoad(block, event);
+      //   }
+      //   this.setState({ block });
+      // });
     }
   }
 
@@ -74,8 +79,10 @@ class BlockHash extends Component {
   render() {
     if (this.props.timestamp) {
       return (
-        <span className='timestamp'>
-          {this.state.block.timestamp ? ChanDate(this.state.block.timestamp * 1000) : 'Loading'}
+        <span className="timestamp">
+          {this.state.block.timestamp
+            ? ChanDate(this.state.block.timestamp * 1000)
+            : 'Loading'}
         </span>
       );
     }
@@ -91,12 +98,9 @@ class BlockHash extends Component {
         const { amount, totalCost } = this.props.event.returnValues;
         message = (
           <span>
-            <span className='subject'>
-              {toNumber(amount, 18).toFixed(2)}
-              {' '}
-              {this.props.symbol}
-            </span>
-            {' '}
+            <span className="subject">
+              {toNumber(amount, 18).toFixed(2)} {this.props.symbol}
+            </span>{' '}
             <i>
               {'spent '}
               {toNumber(totalCost, 18).toFixed(2)}
@@ -111,12 +115,9 @@ class BlockHash extends Component {
         const { amount, reward } = this.props.event.returnValues;
         message = (
           <span>
-            <span className='subject'>
-              {toNumber(amount, 18).toFixed(2)}
-              {' '}
-              {this.props.symbol}
-            </span>
-            {' '}
+            <span className="subject">
+              {toNumber(amount, 18).toFixed(2)} {this.props.symbol}
+            </span>{' '}
             <i>
               {'rewarded '}
               {toNumber(reward, 18).toFixed(2)}
@@ -135,10 +136,14 @@ class BlockHash extends Component {
     }
 
     return (
-      <div className='row'>
+      <div className="row">
         <Hash hash={this.props.event.blockHash} />
-        <span className='gray timestamp'>{this.state.block.timestamp ? ChanDate(this.state.block.timestamp * 1000) : 'Loading'}</span>
-        <span className='subject'>{this.props.event.event}</span>
+        <span className="gray timestamp">
+          {this.state.block.timestamp
+            ? ChanDate(this.state.block.timestamp * 1000)
+            : 'Loading'}
+        </span>
+        <span className="subject">{this.props.event.event}</span>
         <span>{message}</span>
       </div>
     );
@@ -147,8 +152,8 @@ class BlockHash extends Component {
 
 class Hash extends Component {
   state = {
-    open: false,
-  }
+    open: false
+  };
 
   render() {
     return (
@@ -156,7 +161,7 @@ class Hash extends Component {
         onClick={() => this.setState({ open: !this.state.open })}
         className={this.state.open ? 'open hash' : 'hash'}
       >
-        {this.props.hash.substr(2, this.state.open ? 66 : 6 )}
+        {this.props.hash.substr(2, this.state.open ? 66 : 6)}
       </span>
     );
   }

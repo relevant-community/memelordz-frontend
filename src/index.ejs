@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="description" content="The first decentralized meme market." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+    <title>Meme Lordz</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <% for (var css in htmlWebpackPlugin.files.css) { %><link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet"><% } %>
+    <% for (var chunk in htmlWebpackPlugin.files.js) { %><script src="<%= htmlWebpackPlugin.files.js[chunk] %>"></script><% } %>
+</body>
+</html>

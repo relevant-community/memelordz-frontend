@@ -1,49 +1,45 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { useState } from 'react';
+import { useWeb3React, useAsync } from '../eth/hooks';
+import { networkId } from '../eth/config';
+import { chainIdToNetwork } from '../eth/utils';
 
 function AppLoaderComponent(props) {
   return (
-    <div className='appLoader'>
+    <div className="appLoader">
       <div>{props.message || props.children}</div>
     </div>
   );
 }
 
-function AppLoaderContainer(props) {
-  if (props.drizzleStatus.error) {
-    switch (props.drizzleStatus.error) {
-      case 'network':
-        return <AppLoaderComponent>
-            <div className="appLoaderError">
-              Please connect Metamask to the Rinkeby network
-            </div>
-          </AppLoaderComponent>;
-      case 'web3':
-        return <AppLoaderComponent>
-            <div className='appLoaderError'>
-              You need the <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">Metamask</a> browser extention to use this app.
-            </div>
-          </AppLoaderComponent>;
-      default:
-        break;
-    }
-  }
-  if (!props.drizzleStatus.initialized) {
-    return <AppLoaderComponent message="Connecting..." />;
-  }
+export default function AppLoaderContainer(props) {
+  const { library, active, chainId } = useWeb3React();
+
+  if (!library)
+    return (
+      <AppLoaderComponent>
+        <div className="appLoaderError">
+          You need the{' '}
+          <a href="https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn?hl=en">
+            Metamask
+          </a>{' '}
+          browser extention to use this app.
+        </div>
+      </AppLoaderComponent>
+    );
+
+  // TODO MAKE THIS A BUTTON
+  if (active && chainId !== networkId)
+    return (
+      <AppLoaderComponent>
+        <div className="appLoaderError">
+          Please connect Metamask to the{' '}
+          {chainIdToNetwork?.[networkId]?.toUpperCase()} network
+        </div>
+      </AppLoaderComponent>
+    );
+
   if (!props.ProxyFactory || !props.ProxyFactory.events) {
     return <AppLoaderComponent message="Retrieving Memes..." />;
   }
   return props.children;
 }
-
-const mapStateToProps = (state) => ({
-  ProxyFactory: state.contracts.ProxyFactory,
-  drizzleStatus: state.drizzleStatus,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  // actions: bindActionCreators({ ...authActions }, dispatch)
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(AppLoaderContainer);

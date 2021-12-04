@@ -2,7 +2,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Web3 from 'web3';
-import { toNumber, toFixed, calculatePurchaseReturn, calculateSaleReturn } from '../util';
+import {
+  toNumber,
+  toFixed,
+  calculatePurchaseReturn,
+  calculateSaleReturn
+} from '../util';
 import './trade.css';
 
 const { BN } = Web3.utils;
@@ -63,8 +68,14 @@ class Trade extends Component {
     let { contract, accounts, accountBalances } = props;
 
     let decimals = contract.methods.decimals.fromCache();
-    let totalSupply = toNumber(contract.methods.totalSupply.fromCache(), decimals);
-    let poolBalance = toNumber(contract.methods.poolBalance.fromCache(), decimals);
+    let totalSupply = toNumber(
+      contract.methods.totalSupply.fromCache(),
+      decimals
+    );
+    let poolBalance = toNumber(
+      contract.methods.poolBalance.fromCache(),
+      decimals
+    );
     let exponent = toNumber(contract.methods.exponent.fromCache(), 0);
     let slope = toNumber(contract.methods.slope.fromCache(), 0);
     let symbol = contract.methods.symbol.fromCache();
@@ -73,7 +84,10 @@ class Trade extends Component {
     let walletBalance = toNumber(accountBalances[account], 18);
     let tokenBalance = 0;
     if (account) {
-      tokenBalance = toNumber(contract.methods.balanceOf.fromCache(account) || 0, decimals);
+      tokenBalance = toNumber(
+        contract.methods.balanceOf.fromCache(account) || 0,
+        decimals
+      );
     }
 
     return {
@@ -199,10 +213,16 @@ class Trade extends Component {
       <div className="tradeContainer">
         <div className="row">
           <div className="row toggleBuy">
-            <div onClick={() => this.toggleBuy(true)} className={isBuy ? 'active' : ''}>
+            <div
+              onClick={() => this.toggleBuy(true)}
+              className={isBuy ? 'active' : ''}
+            >
               Buy
             </div>
-            <div onClick={() => this.toggleBuy(false)} className={!isBuy ? 'active' : ''}>
+            <div
+              onClick={() => this.toggleBuy(false)}
+              className={!isBuy ? 'active' : ''}
+            >
               Sell
             </div>
           </div>
@@ -216,7 +236,7 @@ class Trade extends Component {
             </label>
 
             <input
-              onFocus={e => {
+              onFocus={(e) => {
                 if (e.target.value === '0') this.setState({ amount: '' });
               }}
               type="number"
@@ -276,9 +296,6 @@ function mapStateToProps(state) {
   };
 }
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = (dispatch) => ({});
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Trade);
+export default connect(mapStateToProps, mapDispatchToProps)(Trade);
